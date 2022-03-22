@@ -50,7 +50,7 @@ public class UserController {
     // convert API user to internal representation
     User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
 
-    // create user
+    // create user 
     User createdUser = userService.createUser(userInput);
 
     // convert internal representation of user back to API
