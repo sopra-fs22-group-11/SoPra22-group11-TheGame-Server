@@ -63,7 +63,7 @@ public class PlayerControllerTest {
     // then
     mockMvc.perform(getRequest).andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0].name", is(player.getPassword())))
+        .andExpect(jsonPath("$[0].password", is(player.getPassword())))
         .andExpect(jsonPath("$[0].username", is(player.getUsername())))
         .andExpect(jsonPath("$[0].status", is(player.getStatus().toString())));
   }
@@ -93,7 +93,7 @@ public class PlayerControllerTest {
     mockMvc.perform(postRequest)
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.id", is(player.getId().intValue())))
-        .andExpect(jsonPath("$.name", is(player.getPassword())))
+        .andExpect(jsonPath("$.password", is(player.getPassword())))
         .andExpect(jsonPath("$.username", is(player.getUsername())))
         .andExpect(jsonPath("$.status", is(player.getStatus().toString())));
   }
