@@ -1,9 +1,10 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
-import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Internal User Representation
@@ -25,17 +26,31 @@ public class User implements Serializable {
   @GeneratedValue
   private Long id;
 
-  @Column(nullable = false)
-  private String name;
-
   @Column(nullable = false, unique = true)
   private String username;
+
+  @Column(nullable = false)
+  private String password;
 
   @Column(nullable = false, unique = true)
   private String token;
 
   @Column(nullable = false)
-  private UserStatus status;
+  private PlayerStatus status;
+
+  @Column(nullable = true) // It is either your turn: true, not your turn: false, or if you are not in a game then: null
+  private Boolean yourTurn;
+
+  @Column(nullable = false)
+  private int winningCount;
+
+  @Column(nullable = false)
+  private int gameCount;
+
+  @Column
+  private List<Card> CardsOnHand;
+
+
 
   public Long getId() {
     return id;
@@ -45,13 +60,13 @@ public class User implements Serializable {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+
+  public String getPassword() {return password;}
+
+  public void setPassword(String name) {
+    this.password = password;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
 
   public String getUsername() {
     return username;
@@ -61,6 +76,7 @@ public class User implements Serializable {
     this.username = username;
   }
 
+
   public String getToken() {
     return token;
   }
@@ -69,11 +85,28 @@ public class User implements Serializable {
     this.token = token;
   }
 
-  public UserStatus getStatus() {
+
+  public PlayerStatus getStatus() {
     return status;
   }
 
-  public void setStatus(UserStatus status) {
+  public void setStatus(PlayerStatus status) {
     this.status = status;
   }
+
+
+  public Boolean getYourTurn(){return yourTurn;}
+
+  public void setYourTurn(Boolean yourTurn){this.yourTurn = yourTurn;}
+
+
+  public int getWinningCount(){return winningCount;}
+
+  public void setWinningCount(int winningCount){this.winningCount = winningCount;}
+
+
+  public int getGameCount(){return gameCount;}
+
+  public void setGameCount(int gameCount){this.gameCount = gameCount;}
+
 }
