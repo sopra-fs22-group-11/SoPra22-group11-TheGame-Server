@@ -2,7 +2,7 @@ package ch.uzh.ifi.hase.soprafs22.service;
 
 import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.Player;
-import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs22.repository.PlayerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,35 +16,35 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Test class for the UserResource REST resource.
  *
- * @see UserService
+ * @see PlayerService
  */
 @WebAppConfiguration
 @SpringBootTest
 public class PlayerServiceIntegrationTest {
 
-  @Qualifier("userRepository")
+  @Qualifier("playerRepository")
   @Autowired
-  private UserRepository userRepository;
+  private PlayerRepository playerRepository;
 
   @Autowired
-  private UserService userService;
+  private PlayerService playerService;
 
   @BeforeEach
   public void setup() {
-    userRepository.deleteAll();
+    playerRepository.deleteAll();
   }
 
   @Test
-  public void createUser_validInputs_success() {
+  public void createPlayer_validInputs_success() {
     // given
-    assertNull(userRepository.findByUsername("testUsername"));
+    assertNull(playerRepository.findByUsername("testUsername"));
 
     Player testPlayer = new Player();
     testPlayer.setPassword("testName");
     testPlayer.setUsername("testUsername");
 
     // when
-    Player createdPlayer = userService.createUser(testPlayer);
+    Player createdPlayer = playerService.createPlayer(testPlayer);
 
     // then
     assertEquals(testPlayer.getId(), createdPlayer.getId());
@@ -55,13 +55,13 @@ public class PlayerServiceIntegrationTest {
   }
 
   @Test
-  public void createUser_duplicateUsername_throwsException() {
-    assertNull(userRepository.findByUsername("testUsername"));
+  public void createPlayer_duplicateUsername_throwsException() {
+    assertNull(playerRepository.findByUsername("testUsername"));
 
     Player testPlayer = new Player();
     testPlayer.setPassword("testName");
     testPlayer.setUsername("testUsername");
-    Player createdPlayer = userService.createUser(testPlayer);
+    Player createdPlayer = playerService.createPlayer(testPlayer);
 
     // attempt to create second user with same username
     Player testPlayer2 = new Player();
@@ -71,6 +71,6 @@ public class PlayerServiceIntegrationTest {
     testPlayer2.setUsername("testUsername");
 
     // check that an error is thrown
-    assertThrows(ResponseStatusException.class, () -> userService.createUser(testPlayer2));
+    assertThrows(ResponseStatusException.class, () -> playerService.createPlayer(testPlayer2));
   }
 }

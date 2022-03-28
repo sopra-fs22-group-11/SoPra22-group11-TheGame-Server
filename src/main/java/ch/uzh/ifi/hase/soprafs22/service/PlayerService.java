@@ -2,7 +2,7 @@ package ch.uzh.ifi.hase.soprafs22.service;
 
 import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.Player;
-import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs22.repository.PlayerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,31 +24,31 @@ import java.util.UUID;
  */
 @Service
 @Transactional
-public class UserService {
+public class PlayerService {
 
-  private final Logger log = LoggerFactory.getLogger(UserService.class);
+  private final Logger log = LoggerFactory.getLogger(PlayerService.class);
 
-  private final UserRepository userRepository;
+  private final PlayerRepository playerRepository;
 
   @Autowired
-  public UserService(@Qualifier("userRepository") UserRepository userRepository) {
-    this.userRepository = userRepository;
+  public PlayerService(@Qualifier("playerRepository") PlayerRepository playerRepository) {
+    this.playerRepository = playerRepository;
   }
 
-  public List<Player> getUsers() {
-    return this.userRepository.findAll();
+  public List<Player> getPlayers() {
+    return this.playerRepository.findAll();
   }
 
-  public Player createUser(Player newPlayer) {
+  public Player createPlayer(Player newPlayer) {
     newPlayer.setToken(UUID.randomUUID().toString());
     newPlayer.setStatus(PlayerStatus.OFFLINE);
 
-    checkIfUserExists(newPlayer);
+    checkIfPlayerExists(newPlayer);
 
     // saves the given entity but data is only persisted in the database once
     // flush() is called
-    newPlayer = userRepository.save(newPlayer);
-    userRepository.flush();
+    newPlayer = playerRepository.save(newPlayer);
+    playerRepository.flush();
 
     log.debug("Created Information for Player: {}", newPlayer);
     return newPlayer;
@@ -64,9 +64,9 @@ public class UserService {
    * @throws org.springframework.web.server.ResponseStatusException
    * @see Player
    */
-  private void checkIfUserExists(Player playerToBeCreated) {
-    Player playerByUsername = userRepository.findByUsername(playerToBeCreated.getUsername());
-    Player playerByName = userRepository.findByName(playerToBeCreated.getPassword());
+  private void checkIfPlayerExists(Player playerToBeCreated) {
+    Player playerByUsername = playerRepository.findByUsername(playerToBeCreated.getUsername());
+    Player playerByName = playerRepository.findByPassword(playerToBeCreated.getPassword());
 
     String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
     if (playerByUsername != null && playerByName != null) {

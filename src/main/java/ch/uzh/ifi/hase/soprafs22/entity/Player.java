@@ -50,8 +50,6 @@ public class Player implements Serializable {
   @Column
   private List<Card> CardsOnHand;
 
-
-
   public Long getId() {
     return id;
   }
@@ -63,7 +61,7 @@ public class Player implements Serializable {
 
   public String getPassword() {return password;}
 
-  public void setPassword(String name) {
+  public void setPassword(String password) {
     this.password = password;
   }
 
@@ -108,5 +106,9 @@ public class Player implements Serializable {
   public int getGameCount(){return gameCount;}
 
   public void setGameCount(int gameCount){this.gameCount = gameCount;}
+
+    public List getCardsOnHand(){return CardsOnHand;}
+
+    public void setCardsOnHand(List CardsOnHand){this.CardsOnHand = CardsOnHand;}
 
 }

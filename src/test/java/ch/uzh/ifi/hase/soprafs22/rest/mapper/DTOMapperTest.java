@@ -18,8 +18,8 @@ public class DTOMapperTest {
   public void testCreateUser_fromUserPostDTO_toUser_success() {
     // create PlayerPostDTO
     PlayerPostDTO playerPostDTO = new PlayerPostDTO();
-    playerPostDTO.setPassword("name");
     playerPostDTO.setUsername("username");
+    playerPostDTO.setPassword("password");
 
     // MAP -> Create player
     Player player = DTOMapper.INSTANCE.convertPlayerPostDTOtoEntity(playerPostDTO);

@@ -2,7 +2,7 @@ package ch.uzh.ifi.hase.soprafs22.service;
 
 import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.Player;
-import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs22.repository.PlayerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PlayerServiceTest {
 
   @Mock
-  private UserRepository userRepository;
+  private PlayerRepository playerRepository;
 
   @InjectMocks
-  private UserService userService;
+  private PlayerService playerService;
 
   private Player testPlayer;
 
@@ -33,19 +33,19 @@ public class PlayerServiceTest {
     testPlayer.setPassword("testName");
     testPlayer.setUsername("testUsername");
 
-    // when -> any object is being save in the userRepository -> return the dummy
+    // when -> any object is being save in the playerRepository -> return the dummy
     // testPlayer
-    Mockito.when(userRepository.save(Mockito.any())).thenReturn(testPlayer);
+    Mockito.when(playerRepository.save(Mockito.any())).thenReturn(testPlayer);
   }
 
   @Test
   public void createUser_validInputs_success() {
-    // when -> any object is being save in the userRepository -> return the dummy
+    // when -> any object is being save in the playerRepository -> return the dummy
     // testPlayer
-    Player createdPlayer = userService.createUser(testPlayer);
+    Player createdPlayer = playerService.createPlayer(testPlayer);
 
     // then
-    Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any());
+    Mockito.verify(playerRepository, Mockito.times(1)).save(Mockito.any());
 
     assertEquals(testPlayer.getId(), createdPlayer.getId());
     assertEquals(testPlayer.getPassword(), createdPlayer.getPassword());
@@ -57,29 +57,29 @@ public class PlayerServiceTest {
   @Test
   public void createUser_duplicateName_throwsException() {
     // given -> a first user has already been created
-    userService.createUser(testPlayer);
+    playerService.createPlayer(testPlayer);
 
-    // when -> setup additional mocks for UserRepository
-    Mockito.when(userRepository.findByName(Mockito.any())).thenReturn(testPlayer);
-    Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
+    // when -> setup additional mocks for PlayerRepository
+    Mockito.when(playerRepository.findByPassword(Mockito.any())).thenReturn(testPlayer);
+    Mockito.when(playerRepository.findByUsername(Mockito.any())).thenReturn(null);
 
     // then -> attempt to create second user with same user -> check that an error
     // is thrown
-    assertThrows(ResponseStatusException.class, () -> userService.createUser(testPlayer));
+    assertThrows(ResponseStatusException.class, () -> playerService.createPlayer(testPlayer));
   }
 
   @Test
   public void createUser_duplicateInputs_throwsException() {
     // given -> a first user has already been created
-    userService.createUser(testPlayer);
+    playerService.createPlayer(testPlayer);
 
-    // when -> setup additional mocks for UserRepository
-    Mockito.when(userRepository.findByName(Mockito.any())).thenReturn(testPlayer);
-    Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(testPlayer);
+    // when -> setup additional mocks for PlayerRepository
+    Mockito.when(playerRepository.findByPassword(Mockito.any())).thenReturn(testPlayer);
+    Mockito.when(playerRepository.findByUsername(Mockito.any())).thenReturn(testPlayer);
 
     // then -> attempt to create second user with same user -> check that an error
     // is thrown
-    assertThrows(ResponseStatusException.class, () -> userService.createUser(testPlayer));
+    assertThrows(ResponseStatusException.class, () -> playerService.createPlayer(testPlayer));
   }
 
 }

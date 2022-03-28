@@ -3,7 +3,7 @@ package ch.uzh.ifi.hase.soprafs22.controller;
 import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.Player;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.PlayerPostDTO;
-import ch.uzh.ifi.hase.soprafs22.service.UserService;
+import ch.uzh.ifi.hase.soprafs22.service.PlayerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -30,18 +30,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * PlayerControllerTest
- * This is a WebMvcTest which allows to test the UserController i.e. GET/POST
+ * This is a WebMvcTest which allows to test the PlayerController i.e. GET/POST
  * request without actually sending them over the network.
- * This tests if the UserController works.
+ * This tests if the PlayerController works.
  */
-@WebMvcTest(UserController.class)
+@WebMvcTest(PlayerController.class)
 public class PlayerControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
 
   @MockBean
-  private UserService userService;
+  private PlayerService playerService;
 
   @Test
   public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
@@ -53,9 +53,9 @@ public class PlayerControllerTest {
 
     List<Player> allPlayers = Collections.singletonList(player);
 
-    // this mocks the UserService -> we define above what the userService should
-    // return when getUsers() is called
-    given(userService.getUsers()).willReturn(allPlayers);
+    // this mocks the PlayerService -> we define above what the playerService should
+    // return when getPlayers() is called
+    given(playerService.getPlayers()).willReturn(allPlayers);
 
     // when
     MockHttpServletRequestBuilder getRequest = get("/users").contentType(MediaType.APPLICATION_JSON);
@@ -82,7 +82,7 @@ public class PlayerControllerTest {
     playerPostDTO.setPassword("Test Player");
     playerPostDTO.setUsername("testUsername");
 
-    given(userService.createUser(Mockito.any())).willReturn(player);
+    given(playerService.createPlayer(Mockito.any())).willReturn(player);
 
     // when/then -> do the request + validate the result
     MockHttpServletRequestBuilder postRequest = post("/users")

@@ -4,7 +4,7 @@ import ch.uzh.ifi.hase.soprafs22.entity.Player;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.PlayerGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.PlayerPostDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
-import ch.uzh.ifi.hase.soprafs22.service.UserService;
+import ch.uzh.ifi.hase.soprafs22.service.PlayerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,17 +16,17 @@ import java.util.List;
  * This class is responsible for handling all REST request that are related to
  * the user.
  * The controller will receive the request and delegate the execution to the
- * UserService and finally return the result.
+ * PlayerService and finally return the result.
  */
 
 
 @RestController
-public class UserController {
+public class PlayerController {
 
-    private final UserService userService;
+    private final PlayerService playerService;
 
-    UserController(UserService userService) {
-        this.userService = userService;
+    PlayerController(PlayerService playerService) {
+        this.playerService = playerService;
     }
 
     @PostMapping("/users")
@@ -37,7 +37,7 @@ public class UserController {
         Player playerInput = DTOMapper.INSTANCE.convertPlayerPostDTOtoEntity(playerPostDTO);
 
         // create user
-        Player createdPlayer = userService.createUser(playerInput);
+        Player createdPlayer = playerService.createPlayer(playerInput);
 
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToPlayerGetDTO(createdPlayer);
@@ -51,7 +51,7 @@ public class UserController {
     @ResponseBody
     public List<PlayerGetDTO> getAllUsers() {
         // fetch all players in the internal representation
-        List<Player> players = userService.getUsers();
+        List<Player> players = playerService.getPlayers();
         List<PlayerGetDTO> playerGetDTOS = new ArrayList<>();
 
         // convert each user to the API representation

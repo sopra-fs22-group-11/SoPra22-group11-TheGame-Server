@@ -17,10 +17,10 @@ public class PlayerRepositoryIntegrationTest {
   private TestEntityManager entityManager;
 
   @Autowired
-  private UserRepository userRepository;
+  private PlayerRepository playerRepository;
 
   @Test
-  public void findByName_success() {
+  public void findByPassword_success() {
     // given
     Player player = new Player();
     player.setUsername("Firstname Lastname");
@@ -32,7 +32,7 @@ public class PlayerRepositoryIntegrationTest {
     entityManager.flush();
 
     // when
-    Player found = userRepository.findByName(player.getPassword());
+    Player found = playerRepository.findByPassword(player.getPassword());
 
     // then
     assertNotNull(found.getId());

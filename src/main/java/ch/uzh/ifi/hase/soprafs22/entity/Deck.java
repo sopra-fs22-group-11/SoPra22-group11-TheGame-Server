@@ -7,7 +7,7 @@ import java.util.List;
 public class Deck {
     private final int DeckSize = 100;
     private List<Card> cards;
-    private int noOfCards;
+    public int noOfCards;
 
     public Deck(){ // Constructor of the Deck
         for(int i = 2; i<DeckSize; i++){
