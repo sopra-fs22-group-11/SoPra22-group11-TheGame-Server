@@ -1,7 +1,7 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
 import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
-import ch.uzh.ifi.hase.soprafs22.entity.User;
+import ch.uzh.ifi.hase.soprafs22.entity.Player;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserServiceTest {
+public class PlayerServiceTest {
 
   @Mock
   private UserRepository userRepository;
@@ -21,65 +21,65 @@ public class UserServiceTest {
   @InjectMocks
   private UserService userService;
 
-  private User testUser;
+  private Player testPlayer;
 
   @BeforeEach
   public void setup() {
     MockitoAnnotations.openMocks(this);
 
     // given
-    testUser = new User();
-    testUser.setId(1L);
-    testUser.setName("testName");
-    testUser.setUsername("testUsername");
+    testPlayer = new Player();
+    testPlayer.setId(1L);
+    testPlayer.setPassword("testName");
+    testPlayer.setUsername("testUsername");
 
     // when -> any object is being save in the userRepository -> return the dummy
-    // testUser
-    Mockito.when(userRepository.save(Mockito.any())).thenReturn(testUser);
+    // testPlayer
+    Mockito.when(userRepository.save(Mockito.any())).thenReturn(testPlayer);
   }
 
   @Test
   public void createUser_validInputs_success() {
     // when -> any object is being save in the userRepository -> return the dummy
-    // testUser
-    User createdUser = userService.createUser(testUser);
+    // testPlayer
+    Player createdPlayer = userService.createUser(testPlayer);
 
     // then
     Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any());
 
-    assertEquals(testUser.getId(), createdUser.getId());
-    assertEquals(testUser.getPassword(), createdUser.getPassword());
-    assertEquals(testUser.getUsername(), createdUser.getUsername());
-    assertNotNull(createdUser.getToken());
-    assertEquals(PlayerStatus.OFFLINE, createdUser.getStatus());
+    assertEquals(testPlayer.getId(), createdPlayer.getId());
+    assertEquals(testPlayer.getPassword(), createdPlayer.getPassword());
+    assertEquals(testPlayer.getUsername(), createdPlayer.getUsername());
+    assertNotNull(createdPlayer.getToken());
+    assertEquals(PlayerStatus.OFFLINE, createdPlayer.getStatus());
   }
 
   @Test
   public void createUser_duplicateName_throwsException() {
     // given -> a first user has already been created
-    userService.createUser(testUser);
+    userService.createUser(testPlayer);
 
     // when -> setup additional mocks for UserRepository
-    Mockito.when(userRepository.findByName(Mockito.any())).thenReturn(testUser);
+    Mockito.when(userRepository.findByName(Mockito.any())).thenReturn(testPlayer);
     Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
 
     // then -> attempt to create second user with same user -> check that an error
     // is thrown
-    assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
+    assertThrows(ResponseStatusException.class, () -> userService.createUser(testPlayer));
   }
 
   @Test
   public void createUser_duplicateInputs_throwsException() {
     // given -> a first user has already been created
-    userService.createUser(testUser);
+    userService.createUser(testPlayer);
 
     // when -> setup additional mocks for UserRepository
-    Mockito.when(userRepository.findByName(Mockito.any())).thenReturn(testUser);
-    Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
+    Mockito.when(userRepository.findByName(Mockito.any())).thenReturn(testPlayer);
+    Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(testPlayer);
 
     // then -> attempt to create second user with same user -> check that an error
     // is thrown
-    assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
+    assertThrows(ResponseStatusException.class, () -> userService.createUser(testPlayer));
   }
 
 }

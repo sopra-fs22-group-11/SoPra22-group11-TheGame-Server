@@ -1,7 +1,7 @@
 package ch.uzh.ifi.hase.soprafs22.repository;
 
 import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
-import ch.uzh.ifi.hase.soprafs22.entity.User;
+import ch.uzh.ifi.hase.soprafs22.entity.Player;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
-public class UserRepositoryIntegrationTest {
+public class PlayerRepositoryIntegrationTest {
 
   @Autowired
   private TestEntityManager entityManager;
@@ -22,23 +22,23 @@ public class UserRepositoryIntegrationTest {
   @Test
   public void findByName_success() {
     // given
-    User user = new User();
-    user.setName("Firstname Lastname");
-    user.setUsername("firstname@lastname");
-    user.setStatus(PlayerStatus.OFFLINE);
-    user.setToken("1");
+    Player player = new Player();
+    player.setUsername("Firstname Lastname");
+    player.setPassword("firstname@lastname");
+    player.setStatus(PlayerStatus.OFFLINE);
+    player.setToken("1");
 
-    entityManager.persist(user);
+    entityManager.persist(player);
     entityManager.flush();
 
     // when
-    User found = userRepository.findByName(user.getPassword());
+    Player found = userRepository.findByName(player.getPassword());
 
     // then
     assertNotNull(found.getId());
-    assertEquals(found.getPassword(), user.getPassword());
-    assertEquals(found.getUsername(), user.getUsername());
-    assertEquals(found.getToken(), user.getToken());
-    assertEquals(found.getStatus(), user.getStatus());
+    assertEquals(found.getPassword(), player.getPassword());
+    assertEquals(found.getUsername(), player.getUsername());
+    assertEquals(found.getToken(), player.getToken());
+    assertEquals(found.getStatus(), player.getStatus());
   }
 }

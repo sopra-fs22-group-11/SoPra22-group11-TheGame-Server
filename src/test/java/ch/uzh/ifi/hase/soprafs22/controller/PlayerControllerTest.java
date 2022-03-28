@@ -1,8 +1,8 @@
 package ch.uzh.ifi.hase.soprafs22.controller;
 
 import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
-import ch.uzh.ifi.hase.soprafs22.entity.User;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs22.entity.Player;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.PlayerPostDTO;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,13 +29,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * UserControllerTest
+ * PlayerControllerTest
  * This is a WebMvcTest which allows to test the UserController i.e. GET/POST
  * request without actually sending them over the network.
  * This tests if the UserController works.
  */
 @WebMvcTest(UserController.class)
-public class UserControllerTest {
+public class PlayerControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
@@ -46,16 +46,16 @@ public class UserControllerTest {
   @Test
   public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
     // given
-    User user = new User();
-    user.setName("Firstname Lastname");
-    user.setUsername("firstname@lastname");
-    user.setStatus(PlayerStatus.OFFLINE);
+    Player player = new Player();
+    player.setUsername("Firstname Lastname");
+    player.setPassword("firstname@lastname");
+    player.setStatus(PlayerStatus.OFFLINE);
 
-    List<User> allUsers = Collections.singletonList(user);
+    List<Player> allPlayers = Collections.singletonList(player);
 
     // this mocks the UserService -> we define above what the userService should
     // return when getUsers() is called
-    given(userService.getUsers()).willReturn(allUsers);
+    given(userService.getUsers()).willReturn(allPlayers);
 
     // when
     MockHttpServletRequestBuilder getRequest = get("/users").contentType(MediaType.APPLICATION_JSON);
@@ -63,45 +63,45 @@ public class UserControllerTest {
     // then
     mockMvc.perform(getRequest).andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(1)))
-        .andExpect(jsonPath("$[0].name", is(user.getPassword())))
-        .andExpect(jsonPath("$[0].username", is(user.getUsername())))
-        .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())));
+        .andExpect(jsonPath("$[0].name", is(player.getPassword())))
+        .andExpect(jsonPath("$[0].username", is(player.getUsername())))
+        .andExpect(jsonPath("$[0].status", is(player.getStatus().toString())));
   }
 
   @Test
   public void createUser_validInput_userCreated() throws Exception {
     // given
-    User user = new User();
-    user.setId(1L);
-    user.setName("Test User");
-    user.setUsername("testUsername");
-    user.setToken("1");
-    user.setStatus(PlayerStatus.READY);
+    Player player = new Player();
+    player.setId(1L);
+    player.setUsername("Test Player");
+    player.setPassword("testUsername");
+    player.setToken("1");
+    player.setStatus(PlayerStatus.READY);
 
-    UserPostDTO userPostDTO = new UserPostDTO();
-    userPostDTO.setName("Test User");
-    userPostDTO.setUsername("testUsername");
+    PlayerPostDTO playerPostDTO = new PlayerPostDTO();
+    playerPostDTO.setPassword("Test Player");
+    playerPostDTO.setUsername("testUsername");
 
-    given(userService.createUser(Mockito.any())).willReturn(user);
+    given(userService.createUser(Mockito.any())).willReturn(player);
 
     // when/then -> do the request + validate the result
     MockHttpServletRequestBuilder postRequest = post("/users")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(asJsonString(userPostDTO));
+        .content(asJsonString(playerPostDTO));
 
     // then
     mockMvc.perform(postRequest)
         .andExpect(status().isCreated())
-        .andExpect(jsonPath("$.id", is(user.getId().intValue())))
-        .andExpect(jsonPath("$.name", is(user.getPassword())))
-        .andExpect(jsonPath("$.username", is(user.getUsername())))
-        .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+        .andExpect(jsonPath("$.id", is(player.getId().intValue())))
+        .andExpect(jsonPath("$.name", is(player.getPassword())))
+        .andExpect(jsonPath("$.username", is(player.getUsername())))
+        .andExpect(jsonPath("$.status", is(player.getStatus().toString())));
   }
 
   /**
    * Helper Method to convert userPostDTO into a JSON string such that the input
    * can be processed
-   * Input will look like this: {"name": "Test User", "username": "testUsername"}
+   * Input will look like this: {"name": "Test Player", "username": "testUsername"}
    * 
    * @param object
    * @return string

@@ -1,7 +1,7 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
 import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
-import ch.uzh.ifi.hase.soprafs22.entity.User;
+import ch.uzh.ifi.hase.soprafs22.entity.Player;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * User Service
+ * Player Service
  * This class is the "worker" and responsible for all functionality related to
  * the user
  * (e.g., it creates, modifies, deletes, finds). The result will be passed back
@@ -35,46 +35,46 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public List<User> getUsers() {
+  public List<Player> getUsers() {
     return this.userRepository.findAll();
   }
 
-  public User createUser(User newUser) {
-    newUser.setToken(UUID.randomUUID().toString());
-    newUser.setStatus(PlayerStatus.OFFLINE);
+  public Player createUser(Player newPlayer) {
+    newPlayer.setToken(UUID.randomUUID().toString());
+    newPlayer.setStatus(PlayerStatus.OFFLINE);
 
-    checkIfUserExists(newUser);
+    checkIfUserExists(newPlayer);
 
     // saves the given entity but data is only persisted in the database once
     // flush() is called
-    newUser = userRepository.save(newUser);
+    newPlayer = userRepository.save(newPlayer);
     userRepository.flush();
 
-    log.debug("Created Information for User: {}", newUser);
-    return newUser;
+    log.debug("Created Information for Player: {}", newPlayer);
+    return newPlayer;
   }
 
   /**
    * This is a helper method that will check the uniqueness criteria of the
    * username and the name
-   * defined in the User entity. The method will do nothing if the input is unique
+   * defined in the Player entity. The method will do nothing if the input is unique
    * and throw an error otherwise.
    *
-   * @param userToBeCreated
+   * @param playerToBeCreated
    * @throws org.springframework.web.server.ResponseStatusException
-   * @see User
+   * @see Player
    */
-  private void checkIfUserExists(User userToBeCreated) {
-    User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
-    User userByName = userRepository.findByName(userToBeCreated.getPassword());
+  private void checkIfUserExists(Player playerToBeCreated) {
+    Player playerByUsername = userRepository.findByUsername(playerToBeCreated.getUsername());
+    Player playerByName = userRepository.findByName(playerToBeCreated.getPassword());
 
     String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
-    if (userByUsername != null && userByName != null) {
+    if (playerByUsername != null && playerByName != null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
           String.format(baseErrorMessage, "username and the name", "are"));
-    } else if (userByUsername != null) {
+    } else if (playerByUsername != null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "username", "is"));
-    } else if (userByName != null) {
+    } else if (playerByName != null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
     }
   }

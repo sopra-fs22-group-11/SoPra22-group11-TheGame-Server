@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Internal User Representation
+ * Internal Player Representation
  * This class composes the internal representation of the user and defines how
  * the user is stored in the database.
  * Every variable will be mapped into a database field with the @Column
@@ -17,8 +17,8 @@ import java.util.List;
  * the primary key
  */
 @Entity
-@Table(name = "USER")
-public class User implements Serializable {
+@Table(name = "PLAYER")
+public class Player implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class User implements Serializable {
   private String token;
 
   @Column(nullable = false)
-  private PlayerStatus status;
+  private PlayerStatus status; // TODO: can this be PlayerStatus? do you want ENUM?
 
   @Column(nullable = true) // It is either your turn: true, not your turn: false, or if you are not in a game then: null
   private Boolean yourTurn;

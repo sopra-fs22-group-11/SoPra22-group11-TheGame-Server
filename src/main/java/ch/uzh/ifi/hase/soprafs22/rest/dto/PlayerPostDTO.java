@@ -1,6 +1,6 @@
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
-public class UserPostDTO {
+public class PlayerPostDTO {
 
   private String password;
 
@@ -10,7 +10,7 @@ public class UserPostDTO {
     return password;
   }
 
-  public void setName(String password) {
+  public void setPassword(String password) {
     this.password = password;
   }
 
