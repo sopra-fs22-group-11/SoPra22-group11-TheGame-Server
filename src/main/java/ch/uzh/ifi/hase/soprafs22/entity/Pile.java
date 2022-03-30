@@ -6,6 +6,8 @@ public class Pile {
     private Card topCard;
     private Directions direction;
 
+    public Pile(Directions direction){ this.direction = direction;}
+
 
 
     public boolean checkIfCardCanBePlayed(Card card){
@@ -20,7 +22,7 @@ public class Pile {
             else {return false;}
 
         }
-        return false; // Maybe throw an exception
+        return false; //TODO  Maybe throw an exception
 
     }
 
@@ -28,7 +30,7 @@ public class Pile {
         this.topCard = card;
     }
 
-    public Card peekTopCard(){
+    public Card getTopCard(){
         return this.topCard;
     }
 

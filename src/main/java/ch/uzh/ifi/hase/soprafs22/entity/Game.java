@@ -1,17 +1,43 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
+import ch.uzh.ifi.hase.soprafs22.constant.Directions;
+import org.springframework.data.domain.Sort;
+
 import java.util.List;
 
 public class Game {
     private Deck deck = new Deck();
     private List<Pile> pileList;
     private List<Player> playerList;
+    private int fillUpToNoOfCards;
 
-    public Player updateCurrentPlayer(Player player){
-        Player currentPlayer = new Player();
-        // TODO: implement logic to decide whose player turn it is
 
-        return currentPlayer;
+    public void Game(List<Player> playerList){
+        this.playerList = playerList;
+
+        pileList.add(new Pile(Directions.TOPDOWN));
+        pileList.add(new Pile(Directions.TOPDOWN));
+        pileList.add(new Pile(Directions.DOWNUP));
+        pileList.add(new Pile(Directions.DOWNUP));
+
+        // TODO Add Exact rules for amount of Cards
+        fillUpToNoOfCards = 7;
+    }
+
+    public Player updateCurrentPlayer(Player oldPlayer){
+       int oldindex = findPlayerInPlayerList(oldPlayer);
+       int newIndex = (oldindex+1) % playerList.size();
+       return playerList.get(newIndex);
+    }
+
+    private int findPlayerInPlayerList(Player oldPlayer){
+        int len = playerList.size();
+        for (int i = 0; i < len; i++){
+            if (oldPlayer.getId().equals(playerList.get(i).getId())){
+                return i;
+            }
+        }
+        return -1; //TODO throw explicit Exception
     }
     
     public boolean checkWin() {
