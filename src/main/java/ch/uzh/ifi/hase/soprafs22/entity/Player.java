@@ -47,10 +47,11 @@ public class Player implements Serializable {
   @Column(nullable = false)
   private int gameCount;
 
-  @Column
-  private List<Card> CardsOnHand;
+    @Column
+    private HandCards handCards;
 
-  public Long getId() {
+
+    public Long getId() {
     return id;
   }
 
@@ -107,8 +108,6 @@ public class Player implements Serializable {
 
   public void setGameCount(int gameCount){this.gameCount = gameCount;}
 
-    public List getCardsOnHand(){return CardsOnHand;}
-
-    public void setCardsOnHand(List CardsOnHand){this.CardsOnHand = CardsOnHand;}
+  public HandCards getHandCards(){return handCards;}
 
 }

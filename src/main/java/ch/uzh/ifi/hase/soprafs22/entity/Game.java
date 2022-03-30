@@ -19,7 +19,7 @@ public class Game {
         // we may change it in Deck to cards.size(), then change it here too
         if (deck.noOfCards == 0) {
             for (Player player : playerList) {
-                if (player.getCardsOnHand().size() != 0) {
+                if (player.getHandCards().getNoOfCards() != 0) {
                     return false;
                 }
             }
@@ -28,7 +28,7 @@ public class Game {
         return false;
     }
 
-    // TODO: more a question than to do, but we agreed on not checking lost game, correct?
+    // TODO: more a question than to do, but we agreed on not checking lost game, correct? - D: Correct :)
 
     public void updateWinningCount() { // not updateScore as in diagram
         for (Player player : playerList) {
