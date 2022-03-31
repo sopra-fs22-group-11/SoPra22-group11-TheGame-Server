@@ -29,7 +29,7 @@ public class PlayerController {
         this.playerService = playerService;
     }
 
-    @PostMapping("/users")
+    @PostMapping("/players")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public PlayerGetDTO createUser(@RequestBody PlayerPostDTO playerPostDTO) {
@@ -46,10 +46,10 @@ public class PlayerController {
     //this is a test text, can be deleted later
 
 
-    @GetMapping("/users")
+    @GetMapping("/players")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<PlayerGetDTO> getAllUsers() {
+    public List<PlayerGetDTO> getPlayers() {
         // fetch all players in the internal representation
         List<Player> players = playerService.getPlayers();
         List<PlayerGetDTO> playerGetDTOS = new ArrayList<>();
