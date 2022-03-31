@@ -25,6 +25,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,7 +45,7 @@ public class PlayerControllerTest {
   private PlayerService playerService;
 
   @Test
-  public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
+  public void givenPlayers_whenGetPlayers_thenReturnJsonArray() throws Exception {
     // given
     Player player = new Player();
     player.setUsername("Firstname Lastname");
@@ -58,7 +59,7 @@ public class PlayerControllerTest {
     given(playerService.getPlayers()).willReturn(allPlayers);
 
     // when
-    MockHttpServletRequestBuilder getRequest = get("/users").contentType(MediaType.APPLICATION_JSON);
+    MockHttpServletRequestBuilder getRequest = get("/players").contentType(MediaType.APPLICATION_JSON);
 
     // then
     mockMvc.perform(getRequest).andExpect(status().isOk())
@@ -69,7 +70,7 @@ public class PlayerControllerTest {
   }
 
   @Test
-  public void createUser_validInput_userCreated() throws Exception {
+  public void createPlayer_validInput_playerCreated() throws Exception {
     // given
     Player player = new Player();
     player.setId(1L);
@@ -85,7 +86,7 @@ public class PlayerControllerTest {
     given(playerService.createPlayer(Mockito.any())).willReturn(player);
 
     // when/then -> do the request + validate the result
-    MockHttpServletRequestBuilder postRequest = post("/users")
+    MockHttpServletRequestBuilder postRequest = post("/players")
         .contentType(MediaType.APPLICATION_JSON)
         .content(asJsonString(playerPostDTO));
 
@@ -97,6 +98,56 @@ public class PlayerControllerTest {
         .andExpect(jsonPath("$.username", is(player.getUsername())))
         .andExpect(jsonPath("$.status", is(player.getStatus().toString())));
   }
+
+    @Test
+    public void createPlayer_invalidInput_playerNotCreated() throws Exception {
+
+        given(playerService.createPlayer(Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.CONFLICT,
+                String.format("The username provided is not unique. Therefore, the user could not be created!")));
+
+        PlayerPostDTO playerPostDTO = new PlayerPostDTO();
+        playerPostDTO.setPassword("Test Player");
+        playerPostDTO.setUsername("testUsername");
+
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder postRequest = post("/players")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(playerPostDTO));
+
+        // then
+        mockMvc.perform(postRequest)
+                .andExpect(status().isConflict());
+    }
+
+    /*
+    @Test
+    public void updatePlayer_success() throws Exception {
+        Player player = new Player();
+        player.setId(1L);
+        player.setUsername("Test Player");
+        player.setPassword("testUsername");
+        player.setToken("1");
+        player.setStatus(PlayerStatus.READY);
+
+        PlayerPostDTO playerPostDTO = new PlayerPostDTO();
+        playerPostDTO.setPassword("Test Player");
+        playerPostDTO.setUsername("testUsername");
+
+        given(playerService.createPlayer(Mockito.any())).willReturn(player);
+
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder putRequest = put("/players/{userId}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(playerPostDTO));
+
+        // then
+        mockMvc.perform(putRequest)
+                .andExpect(status().isNoContent());
+    }
+
+     */
 
   /**
    * Helper Method to convert userPostDTO into a JSON string such that the input

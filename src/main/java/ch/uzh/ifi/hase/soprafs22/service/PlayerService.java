@@ -78,4 +78,24 @@ public class PlayerService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
     }
   }
+
+    public Player getPlayerById(long userId) {
+        Player player = playerRepository.findById(userId);
+        if (player != null) {
+            return player;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This user ID cannot be found.");
+    }
+
+    public Player saveUpdate(Player player) {
+
+        player = playerRepository.save(player);
+        playerRepository.flush();
+
+        player = getPlayerById(player.getId());
+
+        return player;
+    }
+
+
 }
