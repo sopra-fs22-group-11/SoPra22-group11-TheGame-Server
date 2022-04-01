@@ -5,28 +5,41 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
-public class Game {
+public class Game{
     private Deck deck = new Deck();
     private List<Pile> pileList;
     private List<Player> playerList;
     private int fillUpToNoOfCards;
 
 
-    public void Game(List<Player> playerList){
+    public void Game(List<Player> playerList) throws Exception {
+        // Store all players
         this.playerList = playerList;
 
+        // Add all piles
         pileList.add(new Pile(Directions.TOPDOWN));
         pileList.add(new Pile(Directions.TOPDOWN));
         pileList.add(new Pile(Directions.DOWNUP));
         pileList.add(new Pile(Directions.DOWNUP));
 
-        // TODO Add Exact rules for amount of Cards
-        fillUpToNoOfCards = 7;
+        // Check what's the amount of cards on a hand
+        if(playerList.size()==2) { fillUpToNoOfCards = 7; }
+        else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
+        else{throw new Exception();}// TODO The REST request which handles the game start will catch this exception and throw a ResponseStatusException
+
+        // Fill all users handcards
+        //TODO actually do that then
+
+        // Every player now has a game more they played
+        for(Player player:playerList){
+            player.setGameCount(player.getGameCount() + 1);
+        }
+
     }
 
     public Player updateCurrentPlayer(Player oldPlayer){
-       int oldindex = findPlayerInPlayerList(oldPlayer);
-       int newIndex = (oldindex+1) % playerList.size();
+       int oldIndex = findPlayerInPlayerList(oldPlayer);
+       int newIndex = (oldIndex+1) % playerList.size();
        return playerList.get(newIndex);
     }
 
@@ -41,9 +54,7 @@ public class Game {
     }
     
     public boolean checkWin() {
-        // for the moment I made noOfCards public (not so nice)
-        // we may change it in Deck to cards.size(), then change it here too
-        if (deck.noOfCards == 0) {
+        if (deck.getNoOfCards() == 0) {
             for (Player player : playerList) {
                 if (player.getHandCards().getNoOfCards() != 0) {
                     return false;
@@ -54,9 +65,8 @@ public class Game {
         return false;
     }
 
-    // TODO: more a question than to do, but we agreed on not checking lost game, correct? - D: Correct :)
 
-    public void updateWinningCount() { // not updateScore as in diagram
+    public void updateWinningCount() {
         for (Player player : playerList) {
             player.setWinningCount(player.getWinningCount()+1);
         }

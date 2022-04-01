@@ -10,7 +10,7 @@ public class Pile {
 
 
 
-    public boolean checkIfCardCanBePlayed(Card card){
+    public boolean checkIfCardCanBePlayed(Card card) throws Exception {
         if (direction == Directions.TOPDOWN){
             if(card.getValue() < topCard.getValue() || card.getValue() + 10  == topCard.getValue())
             {return true;}
@@ -22,7 +22,7 @@ public class Pile {
             else {return false;}
 
         }
-        return false; //TODO  Maybe throw an exception
+        throw new Exception(); // TODO the Rest Request which handles playing a card will catch this exception and throw a BadRequestException
 
     }
 

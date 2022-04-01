@@ -17,7 +17,7 @@ public class HandCards implements Serializable {
         noOfCards += 1;
     }
 
-    public void deleteCard(Card cardToBeDeleted) throws Exception {
+    public void deleteCard(Card cardToBeDeleted) throws Exception { // TODO the Rest request which handles playing a card must also catch this Exception and throw a BadRequestException
         int index = findCardByValue(cardToBeDeleted.getValue());
         handCards.remove(index);
         noOfCards -= 1;
@@ -29,7 +29,7 @@ public class HandCards implements Serializable {
     }
 
 
-    //TODO: Feel free to implement more elegant way of deleting a card
+    //TODO: Feel free to implement more elegant way of deleting a card if you'd like
 
     private  int findCardByValue(int val) throws Exception {
         for (int i = 0; i< noOfCards; i++ ) {
@@ -37,7 +37,7 @@ public class HandCards implements Serializable {
                 return i;
             }
         }
-        throw new Exception(); // TODO make more descriptive Exception
+        throw new Exception();
 
     }
 }

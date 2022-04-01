@@ -42,6 +42,8 @@ public class PlayerService {
   public Player createPlayer(Player newPlayer) {
     newPlayer.setToken(UUID.randomUUID().toString());
     newPlayer.setStatus(PlayerStatus.OFFLINE);
+    newPlayer.setGameCount(0);
+    newPlayer.setWinningCount(0);
 
     checkIfPlayerExists(newPlayer);
 
