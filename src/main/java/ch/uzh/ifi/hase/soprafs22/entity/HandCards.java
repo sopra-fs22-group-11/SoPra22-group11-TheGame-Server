@@ -1,16 +1,20 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HandCards implements Serializable {
-    private List<Card> handCards;
-    private int noOfCards;
+    private List<Card> handCards = new ArrayList<>();
+    private int noOfCards = 0;
 
     public int getNoOfCards(){
         return noOfCards;
     }
 
+    public void fillCards(int fillTo){
+        //TODO Implement this function in C.1.2
+    }
 
     public void addCard(Card card) {
         handCards.add(card);

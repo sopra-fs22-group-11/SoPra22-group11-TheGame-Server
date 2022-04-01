@@ -1,12 +1,13 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Deck {
     private final int DeckSize = 100;
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
     private int noOfCards;
 
     public int getNoOfCards(){return noOfCards;}
