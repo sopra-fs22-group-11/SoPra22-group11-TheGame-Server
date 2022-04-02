@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class DTOMapperTest {
   @Test
-  public void testCreateUser_fromUserPostDTO_toUser_success() {
+  public void testCreatePlayer_fromPlayerPostDTO_toPlayer_success() {
     // create PlayerPostDTO
     PlayerPostDTO playerPostDTO = new PlayerPostDTO();
-    playerPostDTO.setUsername("username");
+    playerPostDTO.setPlayername("playername");
     playerPostDTO.setPassword("password");
 
     // MAP -> Create player
@@ -26,14 +26,14 @@ public class DTOMapperTest {
 
     // check content
     assertEquals(playerPostDTO.getPassword(), player.getPassword());
-    assertEquals(playerPostDTO.getUsername(), player.getUsername());
+    assertEquals(playerPostDTO.getPlayername(), player.getPlayername());
   }
 
   @Test
-  public void testGetUser_fromUser_toUserGetDTO_success() {
+  public void testGetPlayer_fromPlayer_toPlayerGetDTO_success() {
     // create Player
     Player player = new Player();
-    player.setUsername("Firstname Lastname");
+    player.setPlayername("Firstname Lastname");
     player.setPassword("firstname@lastname");
     player.setStatus(PlayerStatus.OFFLINE);
     player.setToken("1");
@@ -44,7 +44,7 @@ public class DTOMapperTest {
     // check content
     assertEquals(player.getId(), playerGetDTO.getId());
     assertEquals(player.getPassword(), playerGetDTO.getPassword());
-    assertEquals(player.getUsername(), playerGetDTO.getUsername());
+    assertEquals(player.getPlayername(), playerGetDTO.getPlayername());
     assertEquals(player.getStatus(), playerGetDTO.getStatus());
   }
 }

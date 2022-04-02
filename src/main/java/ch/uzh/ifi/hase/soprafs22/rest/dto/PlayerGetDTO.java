@@ -6,7 +6,7 @@ public class PlayerGetDTO {
 
   private Long id;
   private String password;
-  private String username;
+  private String playername;
   private PlayerStatus status;
   private Boolean yourTurn;
   private int winningCount;
@@ -28,12 +28,12 @@ public class PlayerGetDTO {
     this.password = password;
   }
 
-  public String getUsername() {
-    return username;
+  public String getPlayername() {
+    return playername;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  public void setPlayername(String playername) {
+    this.playername = playername;
   }
 
   public PlayerStatus getStatus() {

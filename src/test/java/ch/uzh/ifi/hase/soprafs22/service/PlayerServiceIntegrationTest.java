@@ -37,11 +37,11 @@ public class PlayerServiceIntegrationTest {
   @Test
   public void createPlayer_validInputs_success() {
     // given
-    assertNull(playerRepository.findByUsername("testUsername"));
+    assertNull(playerRepository.findByPlayername("testplayername"));
 
     Player testPlayer = new Player();
     testPlayer.setPassword("testName");
-    testPlayer.setUsername("testUsername");
+    testPlayer.setPlayername("testplayername");
 
     // when
     Player createdPlayer = playerService.createPlayer(testPlayer);
@@ -49,26 +49,26 @@ public class PlayerServiceIntegrationTest {
     // then
     assertEquals(testPlayer.getId(), createdPlayer.getId());
     assertEquals(testPlayer.getPassword(), createdPlayer.getPassword());
-    assertEquals(testPlayer.getUsername(), createdPlayer.getUsername());
+    assertEquals(testPlayer.getPlayername(), createdPlayer.getPlayername());
     assertNotNull(createdPlayer.getToken());
     assertEquals(PlayerStatus.OFFLINE, createdPlayer.getStatus());
   }
 
   @Test
   public void createPlayer_duplicateUsername_throwsException() {
-    assertNull(playerRepository.findByUsername("testUsername"));
+    assertNull(playerRepository.findByPlayername("testplayername"));
 
     Player testPlayer = new Player();
     testPlayer.setPassword("testName");
-    testPlayer.setUsername("testUsername");
+    testPlayer.setPlayername("testplayername");
     Player createdPlayer = playerService.createPlayer(testPlayer);
 
-    // attempt to create second user with same username
+    // attempt to create second user with same playername
     Player testPlayer2 = new Player();
 
-    // change the name but forget about the username
+    // change the name but forget about the playername
     testPlayer2.setPassword("testName2");
-    testPlayer2.setUsername("testUsername");
+    testPlayer2.setPlayername("testplayername");
 
     // check that an error is thrown
     assertThrows(ResponseStatusException.class, () -> playerService.createPlayer(testPlayer2));

@@ -56,7 +56,7 @@ public class PlayerService {
 
   /**
    * This is a helper method that will check the uniqueness criteria of the
-   * username and the name
+   * playername and the name
    * defined in the Player entity. The method will do nothing if the input is unique
    * and throw an error otherwise.
    *
@@ -65,26 +65,26 @@ public class PlayerService {
    * @see Player
    */
   private void checkIfPlayerExists(Player playerToBeCreated) {
-    Player playerByUsername = playerRepository.findByUsername(playerToBeCreated.getUsername());
+    Player playerByPlayername = playerRepository.findByPlayername(playerToBeCreated.getPlayername());
     Player playerByName = playerRepository.findByPassword(playerToBeCreated.getPassword());
 
-    String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
-    if (playerByUsername != null && playerByName != null) {
+    String baseErrorMessage = "The %s provided %s not unique. Therefore, the player could not be created!";
+    if (playerByPlayername != null && playerByName != null) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-          String.format(baseErrorMessage, "username and the name", "are"));
-    } else if (playerByUsername != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "username", "is"));
+          String.format(baseErrorMessage, "playername and the password", "are"));
+    } else if (playerByPlayername != null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "playername", "is"));
     } else if (playerByName != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "password", "is"));
     }
   }
 
-    public Player getPlayerById(long userId) {
-        Player player = playerRepository.findById(userId);
+    public Player getPlayerById(long playerId) {
+        Player player = playerRepository.findById(playerId);
         if (player != null) {
             return player;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This user ID cannot be found.");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This player ID cannot be found.");
     }
 
     public Player saveUpdate(Player player) {

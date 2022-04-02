@@ -4,7 +4,6 @@ import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Internal Player Representation
@@ -27,7 +26,7 @@ public class Player implements Serializable {
   private Long id;
 
   @Column(nullable = false, unique = true)
-  private String username;
+  private String playername;
 
   @Column(nullable = false)
   private String password;
@@ -67,12 +66,12 @@ public class Player implements Serializable {
   }
 
 
-  public String getUsername() {
-    return username;
+  public String getPlayername() {
+    return playername;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  public void setPlayername(String playername) {
+    this.playername = playername;
   }
 
 

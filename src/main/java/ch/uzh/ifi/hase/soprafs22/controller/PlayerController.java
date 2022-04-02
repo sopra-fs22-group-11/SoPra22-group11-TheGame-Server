@@ -55,7 +55,7 @@ public class PlayerController {
     }
 
 
-    @PutMapping("/players/{userId}")
+    @PutMapping("/players/{playerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void updatePlayer(@RequestBody PlayerPostDTO playerPostDTO, @PathVariable long playerId) {
@@ -67,12 +67,12 @@ public class PlayerController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("The player with playerId %s was not found.", playerId));
         }
 
-        if (playerInput.getUsername() != null) {
-            playerDB.setUsername(playerInput.getUsername());
+        if (playerInput.getPlayername() != null) {
+            playerDB.setPlayername(playerInput.getPlayername());
         }
 
-        if (playerInput.getUsername() != null) {
-            playerDB.setUsername(playerInput.getUsername());
+        if (playerInput.getPlayername() != null) {
+            playerDB.setPlayername(playerInput.getPlayername());
         }
 
         playerService.saveUpdate(playerDB);
@@ -87,10 +87,10 @@ public class PlayerController {
         List<Player> players = playerService.getPlayers();
 
         for (int i = 0; i<players.size(); i++) {
-            if (playerInput.getUsername().equals(players.get(i).getUsername())) {
+            if (playerInput.getPlayername().equals(players.get(i).getPlayername())) {
                 if (playerInput.getPassword().equals(players.get(i).getPassword())){
                     Player player = players.get(i);
-                    player.setStatus(PlayerStatus.READY); // change status to READY/ONLINE
+                    player.setStatus(PlayerStatus.READY);
                 } else {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is wrong!");
                 }

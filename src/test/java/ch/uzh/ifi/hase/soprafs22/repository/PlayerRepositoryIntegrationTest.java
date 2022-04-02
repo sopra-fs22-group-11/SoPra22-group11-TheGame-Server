@@ -23,7 +23,7 @@ public class PlayerRepositoryIntegrationTest {
   public void findByPassword_success() {
     // given
     Player player = new Player();
-    player.setUsername("Firstname Lastname");
+    player.setPlayername("Firstname Lastname");
     player.setPassword("firstname@lastname");
     player.setStatus(PlayerStatus.OFFLINE);
     player.setToken("1");
@@ -37,7 +37,7 @@ public class PlayerRepositoryIntegrationTest {
     // then
     assertNotNull(found.getId());
     assertEquals(found.getPassword(), player.getPassword());
-    assertEquals(found.getUsername(), player.getUsername());
+    assertEquals(found.getPlayername(), player.getPlayername());
     assertEquals(found.getToken(), player.getToken());
     assertEquals(found.getStatus(), player.getStatus());
   }

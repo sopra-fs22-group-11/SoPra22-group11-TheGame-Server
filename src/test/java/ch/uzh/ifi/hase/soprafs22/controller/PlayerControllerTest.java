@@ -48,7 +48,7 @@ public class PlayerControllerTest {
   public void givenPlayers_whenGetPlayers_thenReturnJsonArray() throws Exception {
     // given
     Player player = new Player();
-    player.setUsername("Firstname Lastname");
+    player.setPlayername("Firstname Lastname");
     player.setPassword("firstname@lastname");
     player.setStatus(PlayerStatus.OFFLINE);
 
@@ -65,7 +65,7 @@ public class PlayerControllerTest {
     mockMvc.perform(getRequest).andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0].password", is(player.getPassword())))
-        .andExpect(jsonPath("$[0].username", is(player.getUsername())))
+        .andExpect(jsonPath("$[0].playername", is(player.getPlayername())))
         .andExpect(jsonPath("$[0].status", is(player.getStatus().toString())));
   }
 
@@ -74,14 +74,14 @@ public class PlayerControllerTest {
     // given
     Player player = new Player();
     player.setId(1L);
-    player.setUsername("Test Player");
-    player.setPassword("testUsername");
+    player.setPlayername("Test Player");
+    player.setPassword("testplayername");
     player.setToken("1");
     player.setStatus(PlayerStatus.READY);
 
     PlayerPostDTO playerPostDTO = new PlayerPostDTO();
     playerPostDTO.setPassword("Test Player");
-    playerPostDTO.setUsername("testUsername");
+    playerPostDTO.setPlayername("testplayername");
 
     given(playerService.createPlayer(Mockito.any())).willReturn(player);
 
@@ -95,7 +95,7 @@ public class PlayerControllerTest {
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.id", is(player.getId().intValue())))
         .andExpect(jsonPath("$.password", is(player.getPassword())))
-        .andExpect(jsonPath("$.username", is(player.getUsername())))
+        .andExpect(jsonPath("$.playername", is(player.getPlayername())))
         .andExpect(jsonPath("$.status", is(player.getStatus().toString())));
   }
 
@@ -103,11 +103,11 @@ public class PlayerControllerTest {
     public void createPlayer_invalidInput_playerNotCreated() throws Exception {
 
         given(playerService.createPlayer(Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.CONFLICT,
-                String.format("The username provided is not unique. Therefore, the user could not be created!")));
+                String.format("The playername provided is not unique. Therefore, the player could not be created!")));
 
         PlayerPostDTO playerPostDTO = new PlayerPostDTO();
         playerPostDTO.setPassword("Test Player");
-        playerPostDTO.setUsername("testUsername");
+        playerPostDTO.setPlayername("testplayername");
 
 
         // when/then -> do the request + validate the result
@@ -125,20 +125,20 @@ public class PlayerControllerTest {
     public void updatePlayer_success() throws Exception {
         Player player = new Player();
         player.setId(1L);
-        player.setUsername("Test Player");
-        player.setPassword("testUsername");
+        player.setPlayername("Test Player");
+        player.setPassword("testplayername");
         player.setToken("1");
         player.setStatus(PlayerStatus.READY);
 
         PlayerPostDTO playerPostDTO = new PlayerPostDTO();
         playerPostDTO.setPassword("Test Player");
-        playerPostDTO.setUsername("testUsername");
+        playerPostDTO.setPlayername("testplayername");
 
         given(playerService.createPlayer(Mockito.any())).willReturn(player);
 
 
         // when/then -> do the request + validate the result
-        MockHttpServletRequestBuilder putRequest = put("/players/{userId}", 1L)
+        MockHttpServletRequestBuilder putRequest = put("/players/{playerId}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(playerPostDTO));
 

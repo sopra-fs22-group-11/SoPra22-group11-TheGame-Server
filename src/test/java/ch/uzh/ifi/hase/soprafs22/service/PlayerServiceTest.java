@@ -31,7 +31,7 @@ public class PlayerServiceTest {
     testPlayer = new Player();
     testPlayer.setId(1L);
     testPlayer.setPassword("testName");
-    testPlayer.setUsername("testUsername");
+    testPlayer.setPlayername("testplayername");
 
     // when -> any object is being save in the playerRepository -> return the dummy
     // testPlayer
@@ -39,7 +39,7 @@ public class PlayerServiceTest {
   }
 
   @Test
-  public void createUser_validInputs_success() {
+  public void createPlayer_validInputs_success() {
     // when -> any object is being save in the playerRepository -> return the dummy
     // testPlayer
     Player createdPlayer = playerService.createPlayer(testPlayer);
@@ -49,35 +49,35 @@ public class PlayerServiceTest {
 
     assertEquals(testPlayer.getId(), createdPlayer.getId());
     assertEquals(testPlayer.getPassword(), createdPlayer.getPassword());
-    assertEquals(testPlayer.getUsername(), createdPlayer.getUsername());
+    assertEquals(testPlayer.getPlayername(), createdPlayer.getPlayername());
     assertNotNull(createdPlayer.getToken());
     assertEquals(PlayerStatus.OFFLINE, createdPlayer.getStatus());
   }
 
   @Test
-  public void createUser_duplicateName_throwsException() {
-    // given -> a first user has already been created
+  public void createPlayer_duplicateName_throwsException() {
+    // given -> a first player has already been created
     playerService.createPlayer(testPlayer);
 
     // when -> setup additional mocks for PlayerRepository
     Mockito.when(playerRepository.findByPassword(Mockito.any())).thenReturn(testPlayer);
-    Mockito.when(playerRepository.findByUsername(Mockito.any())).thenReturn(null);
+    Mockito.when(playerRepository.findByPlayername(Mockito.any())).thenReturn(null);
 
-    // then -> attempt to create second user with same user -> check that an error
+    // then -> attempt to create second player with same player -> check that an error
     // is thrown
     assertThrows(ResponseStatusException.class, () -> playerService.createPlayer(testPlayer));
   }
 
   @Test
-  public void createUser_duplicateInputs_throwsException() {
-    // given -> a first user has already been created
+  public void createPlayer_duplicateInputs_throwsException() {
+    // given -> a first player has already been created
     playerService.createPlayer(testPlayer);
 
     // when -> setup additional mocks for PlayerRepository
     Mockito.when(playerRepository.findByPassword(Mockito.any())).thenReturn(testPlayer);
-    Mockito.when(playerRepository.findByUsername(Mockito.any())).thenReturn(testPlayer);
+    Mockito.when(playerRepository.findByPlayername(Mockito.any())).thenReturn(testPlayer);
 
-    // then -> attempt to create second user with same user -> check that an error
+    // then -> attempt to create second player with same player -> check that an error
     // is thrown
     assertThrows(ResponseStatusException.class, () -> playerService.createPlayer(testPlayer));
   }
