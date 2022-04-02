@@ -13,6 +13,7 @@ public class Game{
     private List<Player> playerList;
     private int fillUpToNoOfCards;
     private PlayerService playerService;
+    private Status status = new Status();
 
     public static Game initializeGame(List<Player> playerList, PlayerService pc){
         // TODO This is how we create a new player unless there is another option how to pass playerList
@@ -39,11 +40,10 @@ public class Game{
         else{throw new Exception();}// TODO The REST request which handles the game start will catch this exception and throw a ResponseStatusException
 
         for(Player player:playerList){
-            // Fill all users handcards
+            // Fill all users hand-cards
             player.getHandCards().fillCards(fillUpToNoOfCards);
 
             // Every player now has a game more they played
-
             playerService.increaseGameCount(player, 1);
         }
 
@@ -53,7 +53,7 @@ public class Game{
        // TODO Make sure this works in C.2.1 Whose turn
         int oldIndex = findPlayerInPlayerList(oldPlayer);
        int newIndex = (oldIndex+1) % playerList.size();
-       // TODO also change player.yourTurn
+       // TODO also change player.yourTurn and status.playerTurn
        return playerList.get(newIndex);
     }
     //TODO Feel free to implement a more elegant solution if you want
@@ -75,6 +75,7 @@ public class Game{
                     return false;
                 }
             }
+            status.setGameWon(true);
             return true;
         }
         return false;

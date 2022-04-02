@@ -47,11 +47,11 @@ public class Player implements Serializable {
   @Column(nullable = false)
   private int gameCount;
 
-    @Column
-    private HandCards handCards;
+  @Column
+  private HandCards handCards;
 
 
-    public Long getId() {
+  public Long getId() {
     return id;
   }
 
