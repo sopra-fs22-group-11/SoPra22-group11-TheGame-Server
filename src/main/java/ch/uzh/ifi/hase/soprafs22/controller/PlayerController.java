@@ -37,7 +37,6 @@ public class PlayerController {
         return DTOMapper.INSTANCE.convertEntityToPlayerGetDTO(createdPlayer);
     }
 
-    //this is a test text, can be deleted later
 
 
     @GetMapping("/players")
