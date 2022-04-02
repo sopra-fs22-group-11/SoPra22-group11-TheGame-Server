@@ -5,7 +5,7 @@ import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 public class PlayerGetDTO {
 
   private Long id;
-  private String password;
+  private String password; // Can maybe be removed if no one is using it
   private String username;
   private PlayerStatus status;
   private Boolean yourTurn;

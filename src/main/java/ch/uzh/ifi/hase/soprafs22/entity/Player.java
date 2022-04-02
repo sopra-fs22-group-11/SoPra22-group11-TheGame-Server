@@ -36,7 +36,7 @@ public class Player implements Serializable {
   private String token;
 
   @Column(nullable = false)
-  private PlayerStatus status; // TODO: can this be PlayerStatus? do you want ENUM?
+  private PlayerStatus status;
 
   @Column(nullable = true) // It is either your turn: true, not your turn: false, or if you are not in a game then: null
   private Boolean yourTurn;
@@ -47,11 +47,11 @@ public class Player implements Serializable {
   @Column(nullable = false)
   private int gameCount;
 
-    @Column
-    private HandCards handCards;
+  @Column
+  private HandCards handCards;
 
 
-    public Long getId() {
+  public Long getId() {
     return id;
   }
 

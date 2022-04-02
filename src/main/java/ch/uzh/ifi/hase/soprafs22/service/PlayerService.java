@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -42,6 +43,8 @@ public class PlayerService {
   public Player createPlayer(Player newPlayer) {
     newPlayer.setToken(UUID.randomUUID().toString());
     newPlayer.setStatus(PlayerStatus.OFFLINE);
+    newPlayer.setGameCount(0);
+    newPlayer.setWinningCount(0);
 
     checkIfPlayerExists(newPlayer);
 
@@ -78,4 +81,27 @@ public class PlayerService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
     }
   }
+
+  public void increaseGameCount(Player player, int i){
+      // Updates the user with the information given by another User-Object
+
+      Optional<Player> foundById = playerRepository.findById(player.getId());
+
+      foundById.get().setGameCount(player.getGameCount()+i);
+
+      playerRepository.save(foundById.get());
+      playerRepository.flush();
+  }
+
+    public void increaseWinningCount(Player player, int i){
+        // TODO Make sure this works and test it in C.3.3 Winning the Game
+        // Updates the user with the information given by another User-Object
+
+        Optional<Player> foundById = playerRepository.findById(player.getId());
+
+        foundById.get().setWinningCount(player.getWinningCount()+i);
+
+        playerRepository.save(foundById.get());
+        playerRepository.flush();
+    }
 }
