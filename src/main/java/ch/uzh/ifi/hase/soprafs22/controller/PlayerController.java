@@ -1,12 +1,15 @@
 package ch.uzh.ifi.hase.soprafs22.controller;
 
+import ch.uzh.ifi.hase.soprafs22.entity.Game;
 import ch.uzh.ifi.hase.soprafs22.entity.Player;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.GameGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.PlayerGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.PlayerPostDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs22.service.PlayerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,7 @@ import java.util.List;
 public class PlayerController {
 
     private final PlayerService playerService;
+    private Game game; //TODO check this
 
     PlayerController(PlayerService playerService) {
         this.playerService = playerService;
@@ -59,6 +63,41 @@ public class PlayerController {
             playerGetDTOS.add(DTOMapper.INSTANCE.convertEntityToPlayerGetDTO(player));
         }
         return playerGetDTOS;
+    }
+
+
+
+
+    @GetMapping("/games/{gameId}/deck")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public GameGetDTO DeckClicked(@PathVariable long gameId) {
+        //TODO once we have multiple gameId's search for the correct game
+        if (game.endOfTurnPossible()){
+            try {
+                game.updateCurrentPlayerAndFill();
+            }
+            catch(Exception e){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "A Player with this playerId was not found");
+            }
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "It is not possible to end your turn now");
+        }
+
+        return  DTOMapper.INSTANCE.convertEntityToGameGetDTO(game); //TODO encorporate this once rest has been reworked
+
+    }
+
+    //TODO Does technically not exist yet
+    @PostMapping("/games/startGame")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public void StartGame(List<Player> playerList) {
+        try {
+            game = Game.initializeGame(playerList, playerService);
+        }
+        catch(Exception e){;} //TODO handle exception
     }
 
 }

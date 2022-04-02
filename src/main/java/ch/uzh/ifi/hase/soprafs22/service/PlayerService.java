@@ -93,6 +93,19 @@ public class PlayerService {
       playerRepository.flush();
   }
 
+    public void savePlayer(Player updatedPlayer){
+
+        Optional<Player> foundById = playerRepository.findById(updatedPlayer.getId());
+
+        foundById.get().setYourTurn(updatedPlayer.getYourTurn());
+        foundById.get().setWinningCount(updatedPlayer.getWinningCount());
+        foundById.get().setGameCount(updatedPlayer.getGameCount());
+        foundById.get().setHandCards(updatedPlayer.getHandCards());
+
+        playerRepository.save(foundById.get());
+        playerRepository.flush();
+    }
+
     public void increaseWinningCount(Player player, int i){
         // TODO Make sure this works and test it in C.3.3 Winning the Game
         // Updates the user with the information given by another User-Object

@@ -21,7 +21,22 @@ public class HandCardsTest {
 
     @Test
     public void fillCardsTest(){
-        //TODO Implement this test in C.1.2
+       HandCards hc = new HandCards();
+       Deck deck = new Deck();
+       assertEquals(98, deck.getNoOfCards());
+
+       hc.fillCards(2, deck); // Two cards on hand
+       assertEquals(2, hc.getNoOfCards());
+       assertEquals(96, deck.getNoOfCards());
+
+       hc.fillCards(94, deck); // mostly empty the pile
+       assertEquals(94, hc.getNoOfCards());
+       assertEquals(4, deck.getNoOfCards());
+
+       HandCards hc2 = new HandCards();
+       hc2.fillCards(12, deck); // The pile is now mostly empty
+       assertEquals(4, hc2.getNoOfCards());
+       assertEquals(0, deck.getNoOfCards());
     }
 
     @Test

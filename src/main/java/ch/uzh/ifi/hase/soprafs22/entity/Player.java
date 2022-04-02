@@ -48,7 +48,7 @@ public class Player implements Serializable {
   private int gameCount;
 
   @Column
-  private HandCards handCards;
+  private HandCards handCards = new HandCards();
 
 
   public Long getId() {
@@ -108,6 +108,9 @@ public class Player implements Serializable {
 
   public void setGameCount(int gameCount){this.gameCount = gameCount;}
 
+
   public HandCards getHandCards(){return handCards;}
+
+  public void setHandCards(HandCards handCards){this.handCards = handCards;}
 
 }

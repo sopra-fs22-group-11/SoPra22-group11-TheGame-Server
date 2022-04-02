@@ -12,8 +12,10 @@ public class HandCards implements Serializable {
         return noOfCards;
     }
 
-    public void fillCards(int fillTo){
-        //TODO Implement this function in C.1.2
+    public void fillCards(int fillTo, Deck deck){
+        while(noOfCards < fillTo && deck.getNoOfCards() > 0){
+            addCard(deck.pop());
+        }
     }
 
     public void addCard(Card card) {
