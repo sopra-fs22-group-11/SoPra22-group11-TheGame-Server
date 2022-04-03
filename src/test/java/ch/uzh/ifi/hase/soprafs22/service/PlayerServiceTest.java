@@ -51,7 +51,7 @@ public class PlayerServiceTest {
     assertEquals(testPlayer.getPassword(), createdPlayer.getPassword());
     assertEquals(testPlayer.getPlayername(), createdPlayer.getPlayername());
     assertNotNull(createdPlayer.getToken());
-    assertEquals(PlayerStatus.OFFLINE, createdPlayer.getStatus());
+    assertEquals(PlayerStatus.READY, createdPlayer.getStatus());
   }
 
   @Test
@@ -81,5 +81,56 @@ public class PlayerServiceTest {
     // is thrown
     assertThrows(ResponseStatusException.class, () -> playerService.createPlayer(testPlayer));
   }
+
+
+  @Test
+  public void loginPlayer_changeStatusInRepo() {
+      // given -> a first player has already been created
+      Player createdPlayer = playerService.createPlayer(testPlayer);
+      playerService.setStatusInRepo(createdPlayer.getId(), PlayerStatus.READY);
+      assertEquals(createdPlayer.getStatus(), PlayerStatus.READY);
+  }
+
+
+/*
+  @Test
+  public void getPlayerById() {
+      // given -> a first player has already been created
+      playerService.createPlayer(testPlayer);
+
+      // when -> setup additional mocks for PlayerRepository
+      Mockito.when(playerRepository.findById(testPlayer.getId()).thenReturn(testPlayer);
+
+      assertEquals(testPlayer.getId(), playerService.getPlayerById(testPlayer.getId()));
+  }
+
+ */
+
+
+  @Test
+  public void getPlayerById_notFound() {
+      // given -> a first player has already been created
+      playerService.createPlayer(testPlayer);
+
+      // when -> setup additional mocks for PlayerRepository
+      Mockito.when(playerRepository.findById(Mockito.any())).thenReturn(null);
+
+      assertThrows(ResponseStatusException.class, () -> playerService.getPlayerById(testPlayer.getId()));
+  }
+
+
+
+  @Test
+  public void saveUpdatePlayer() {
+      // given -> a first player has already been created
+      Player test = playerService.createPlayer(testPlayer);
+
+      // when -> setup additional mocks for PlayerRepository
+      playerRepository.save(test);
+
+  }
+
+
+
 
 }

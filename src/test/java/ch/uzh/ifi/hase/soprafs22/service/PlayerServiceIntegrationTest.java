@@ -51,7 +51,7 @@ public class PlayerServiceIntegrationTest {
     assertEquals(testPlayer.getPassword(), createdPlayer.getPassword());
     assertEquals(testPlayer.getPlayername(), createdPlayer.getPlayername());
     assertNotNull(createdPlayer.getToken());
-    assertEquals(PlayerStatus.OFFLINE, createdPlayer.getStatus());
+    assertEquals(PlayerStatus.READY, createdPlayer.getStatus());
   }
 
   @Test

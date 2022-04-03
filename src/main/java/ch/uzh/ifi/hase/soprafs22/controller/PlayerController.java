@@ -78,10 +78,10 @@ public class PlayerController {
         playerService.saveUpdate(playerDB);
     }
 
-    @PutMapping("/session")
-    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/session")
+    @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public void loginPlayer(@RequestBody PlayerPostDTO playerPostDTO) {
+    public PlayerGetDTO loginPlayer(@RequestBody PlayerPostDTO playerPostDTO) {
         Player playerInput = DTOMapper.INSTANCE.convertPlayerPostDTOtoEntity(playerPostDTO);
 
         List<Player> players = playerService.getPlayers();
@@ -90,17 +90,22 @@ public class PlayerController {
             if (playerInput.getPlayername().equals(players.get(i).getPlayername())) {
                 if (playerInput.getPassword().equals(players.get(i).getPassword())){
                     Player player = players.get(i);
-                    player.setStatus(PlayerStatus.READY);
+                    playerService.setStatusInRepo(player.getId(), PlayerStatus.READY);
+                    return DTOMapper.INSTANCE.convertEntityToPlayerGetDTO(player);
                 } else {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is wrong!");
                 }
             }
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please register first.");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Please register first.");
     }
 
-
-
+    @GetMapping("/session/{playerId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void logout_updateStatus(@PathVariable long playerId) {
+        playerService.setStatusInRepo(playerId, PlayerStatus.OFFLINE);
+    }
 }
 
 

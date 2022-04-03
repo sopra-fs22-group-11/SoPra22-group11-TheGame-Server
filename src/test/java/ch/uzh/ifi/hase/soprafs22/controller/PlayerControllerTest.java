@@ -120,13 +120,100 @@ public class PlayerControllerTest {
                 .andExpect(status().isConflict());
     }
 
-    /*
     @Test
-    public void updatePlayer_success() throws Exception {
+    public void loginPlayer_validInput_playerLogggedIn() throws Exception {
+        Player player = new Player();
+        player.setId(1L);
+        player.setPassword("Test Player");
+        player.setPlayername("testplayername");
+        player.setToken("1");
+        player.setStatus(PlayerStatus.OFFLINE);
+
+        PlayerPostDTO playerPostDTO = new PlayerPostDTO();
+        playerPostDTO.setPassword("Test Player");
+        playerPostDTO.setPlayername("testplayername");
+
+        List<Player> allPlayers = Collections.singletonList(player);
+
+        given(playerService.getPlayers()).willReturn(allPlayers);
+        //given(playerService.setStatusInRepo(player.getId(player.getId())));
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder postRequest = post("/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(playerPostDTO));
+
+        // then
+        mockMvc.perform(postRequest)
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id", is(player.getId().intValue())))
+                .andExpect(jsonPath("$.password", is(player.getPassword())))
+                .andExpect(jsonPath("$.playername", is(player.getPlayername())))
+                .andExpect(jsonPath("$.status", is(player.getStatus().toString())));
+    }
+
+    @Test
+    public void loginPlayer_invalidPassword() throws Exception {
         Player player = new Player();
         player.setId(1L);
         player.setPlayername("Test Player");
         player.setPassword("testplayername");
+        player.setToken("1");
+        player.setStatus(PlayerStatus.OFFLINE);
+
+        PlayerPostDTO playerPostDTO = new PlayerPostDTO();
+        playerPostDTO.setPlayername("Test Player");
+        playerPostDTO.setPassword("wrongPassword");
+
+        List<Player> allPlayers = Collections.singletonList(player);
+
+        given(playerService.getPlayers()).willReturn(allPlayers);
+
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder postRequest = post("/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(playerPostDTO));
+
+        // then
+        mockMvc.perform(postRequest)
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void loginPlayer_notRegistered() throws Exception {
+        Player player = new Player();
+        player.setId(1L);
+        player.setPlayername("Test Player");
+        player.setPassword("testplayername");
+        player.setToken("1");
+        player.setStatus(PlayerStatus.OFFLINE);
+
+        PlayerPostDTO playerPostDTO = new PlayerPostDTO();
+        playerPostDTO.setPlayername("TestNotRegistered");
+        playerPostDTO.setPassword("testplayername");
+
+        List<Player> allPlayers = Collections.singletonList(player);
+
+        given(playerService.getPlayers()).willReturn(allPlayers);
+
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder postRequest = post("/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(playerPostDTO));
+
+        // then
+        mockMvc.perform(postRequest)
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void updatePlayer_success() throws Exception {
+        Player player = new Player();
+        player.setId(1L);
+        player.setPassword("Test Player");
+        player.setPlayername("testplayername");
         player.setToken("1");
         player.setStatus(PlayerStatus.READY);
 
@@ -134,7 +221,7 @@ public class PlayerControllerTest {
         playerPostDTO.setPassword("Test Player");
         playerPostDTO.setPlayername("testplayername");
 
-        given(playerService.createPlayer(Mockito.any())).willReturn(player);
+        given(playerService.getPlayerById(player.getId())).willReturn(player);
 
 
         // when/then -> do the request + validate the result
@@ -147,7 +234,33 @@ public class PlayerControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-     */
+    @Test
+    public void updatePlayer_IdNotFound_fail() throws Exception {
+        Player player = new Player();
+        player.setId(1L);
+        player.setPassword("Test Player");
+        player.setPlayername("testplayername");
+        player.setToken("1");
+        player.setStatus(PlayerStatus.READY);
+
+        PlayerPostDTO playerPostDTO = new PlayerPostDTO();
+        playerPostDTO.setPassword("Test Player");
+        playerPostDTO.setPlayername("testplayername");
+
+        given(playerService.getPlayerById(player.getId())).willReturn(null);
+
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder putRequest = put("/players/{playerId}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(playerPostDTO));
+
+        // then
+        mockMvc.perform(putRequest)
+                .andExpect(status().isNotFound());
+    }
+
+
 
   /**
    * Helper Method to convert userPostDTO into a JSON string such that the input

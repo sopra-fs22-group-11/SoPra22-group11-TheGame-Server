@@ -41,7 +41,7 @@ public class PlayerService {
 
   public Player createPlayer(Player newPlayer) {
     newPlayer.setToken(UUID.randomUUID().toString());
-    newPlayer.setStatus(PlayerStatus.OFFLINE);
+    newPlayer.setStatus(PlayerStatus.READY);
 
     checkIfPlayerExists(newPlayer);
 
@@ -88,14 +88,20 @@ public class PlayerService {
     }
 
     public Player saveUpdate(Player player) {
-
         player = playerRepository.save(player);
         playerRepository.flush();
-
         player = getPlayerById(player.getId());
-
         return player;
     }
 
-
+    public void setStatusInRepo(long playerId, PlayerStatus playerStatus) {
+        List<Player> players = getPlayers();
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getId() == playerId) {
+                players.get(i).setStatus(playerStatus);
+                playerRepository.save(players.get(i));
+                break;
+            }
+        }
+    }
 }
