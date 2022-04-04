@@ -1,13 +1,13 @@
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
-import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
+import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 
-public class PlayerGetDTO {
+public class UserGetDTO {
 
   private Long id;
   private String password;
-  private String playername;
-  private PlayerStatus status;
+  private String username;
+  private UserStatus status;
   private Boolean yourTurn;
   private int winningCount;
   private int gameCount;
@@ -28,19 +28,19 @@ public class PlayerGetDTO {
     this.password = password;
   }
 
-  public String getPlayername() {
-    return playername;
+  public String getUsername() {
+    return username;
   }
 
-  public void setPlayername(String playername) {
-    this.playername = playername;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
-  public PlayerStatus getStatus() {
+  public UserStatus getStatus() {
     return status;
   }
 
-  public void setStatus(PlayerStatus status) {
+  public void setStatus(UserStatus status) {
     this.status = status;
   }
 

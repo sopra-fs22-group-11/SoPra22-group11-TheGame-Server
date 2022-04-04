@@ -1,19 +1,18 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
 import ch.uzh.ifi.hase.soprafs22.constant.Directions;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
 public class Game {
     private Deck deck = new Deck();
     private List<Pile> pileList;
-    private List<Player> playerList;
+    private List<User> userList;
     private int fillUpToNoOfCards;
 
 
-    public void Game(List<Player> playerList){
-        this.playerList = playerList;
+    public void Game(List<User> userList){
+        this.userList = userList;
 
         pileList.add(new Pile(Directions.TOPDOWN));
         pileList.add(new Pile(Directions.TOPDOWN));
@@ -24,16 +23,16 @@ public class Game {
         fillUpToNoOfCards = 7;
     }
 
-    public Player updateCurrentPlayer(Player oldPlayer){
-       int oldindex = findPlayerInPlayerList(oldPlayer);
-       int newIndex = (oldindex+1) % playerList.size();
-       return playerList.get(newIndex);
+    public User updateCurrentPlayer(User oldUser){
+       int oldindex = findPlayerInPlayerList(oldUser);
+       int newIndex = (oldindex+1) % userList.size();
+       return userList.get(newIndex);
     }
 
-    private int findPlayerInPlayerList(Player oldPlayer){
-        int len = playerList.size();
+    private int findPlayerInPlayerList(User oldUser){
+        int len = userList.size();
         for (int i = 0; i < len; i++){
-            if (oldPlayer.getId().equals(playerList.get(i).getId())){
+            if (oldUser.getId().equals(userList.get(i).getId())){
                 return i;
             }
         }
@@ -44,8 +43,8 @@ public class Game {
         // for the moment I made noOfCards public (not so nice)
         // we may change it in Deck to cards.size(), then change it here too
         if (deck.noOfCards == 0) {
-            for (Player player : playerList) {
-                if (player.getHandCards().getNoOfCards() != 0) {
+            for (User user : userList) {
+                if (user.getHandCards().getNoOfCards() != 0) {
                     return false;
                 }
             }
@@ -57,8 +56,8 @@ public class Game {
     // TODO: more a question than to do, but we agreed on not checking lost game, correct? - D: Correct :)
 
     public void updateWinningCount() { // not updateScore as in diagram
-        for (Player player : playerList) {
-            player.setWinningCount(player.getWinningCount()+1);
+        for (User user : userList) {
+            user.setWinningCount(user.getWinningCount()+1);
         }
     }
 

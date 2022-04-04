@@ -1,10 +1,10 @@
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
-public class PlayerPostDTO {
+public class UserPostDTO {
 
   private String password;
 
-  private String playername;
+  private String username;
 
   public String getPassword() {
     return password;
@@ -14,11 +14,11 @@ public class PlayerPostDTO {
     this.password = password;
   }
 
-  public String getPlayername() {
-    return playername;
+  public String getUsername() {
+    return username;
   }
 
-  public void setPlayername(String playername) {
-    this.playername = playername;
+  public void setUsername(String username) {
+    this.username = username;
   }
 }
