@@ -1,9 +1,6 @@
 package ch.uzh.ifi.hase.soprafs22.rest.mapper;
 
-import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.Card;
-import ch.uzh.ifi.hase.soprafs22.entity.Game;
-import ch.uzh.ifi.hase.soprafs22.entity.Player;
 import ch.uzh.ifi.hase.soprafs22.entity.Status;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
@@ -40,7 +37,7 @@ public class DTOMapperTest {
     // create User
     User user = new User();
     user.setUsername("Firstname Lastname");
-    user.setPassword("pw);
+    user.setPassword("pw");
     user.setStatus(UserStatus.OFFLINE);
     user.setToken("1");
     user.setWinningCount(0);
@@ -58,27 +55,28 @@ public class DTOMapperTest {
     assertEquals(user.getWinningCount(), userGetDTO.getWinningCount());
     assertEquals(user.getGameCount(), userGetDTO.getGameCount());
     assertEquals(user.getYourTurn(), userGetDTO.getYourTurn());
+  }
 
 
     @Test
-    public void testCreatePlayer_fromPlayerPutDTO_toPlayer_success() {
-        // create PlayerPostDTO
-        PlayerPutDTO playerPutDTO = new PlayerPutDTO();
-        playerPutDTO.setUsername("Firstname Lastname");
-        playerPutDTO.setPassword("pw");
-        playerPutDTO.setStatus(PlayerStatus.OFFLINE);
-        playerPutDTO.setWinningCount(0);
-        playerPutDTO.setGameCount(0);
+    public void testCreateUser_fromUserPutDTO_toUser_success() {
+        // create UserPostDTO
+        UserPutDTO userPutDTO = new UserPutDTO();
+          userPutDTO.setUsername("Firstname Lastname");
+          userPutDTO.setPassword("pw");
+          userPutDTO.setStatus(UserStatus.OFFLINE);
+          userPutDTO.setWinningCount(0);
+          userPutDTO.setGameCount(0);
 
-        Player player = DTOMapper.INSTANCE.convertPlayerPutDTOtoEntity(playerPutDTO);
+        User user = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
 
         // check content
-        assertEquals(playerPutDTO.getPassword(), player.getPassword());
-        assertEquals(playerPutDTO.getUsername(), player.getUsername());
-        assertEquals(playerPutDTO.getStatus(), player.getStatus());
-        assertEquals(playerPutDTO.getWinningCount(), player.getWinningCount());
-        assertEquals(playerPutDTO.getGameCount(), player.getGameCount());
-        assertEquals(player.getId(), playerPutDTO.getId());
+        assertEquals(userPutDTO.getPassword(), user.getPassword());
+        assertEquals(userPutDTO.getUsername(), user.getUsername());
+        assertEquals(userPutDTO.getStatus(), user.getStatus());
+        assertEquals(userPutDTO.getWinningCount(), user.getWinningCount());
+        assertEquals(userPutDTO.getGameCount(), user.getGameCount());
+        assertEquals(user.getId(), userPutDTO.getId());
     }
 
     @Test
@@ -90,8 +88,8 @@ public class DTOMapperTest {
     public void testGetStatus_fromStatus_toStatusGetDTO_success() {
         // create Status
         Status status = new Status();
-        Player p = new Player();
-        status.setPlayerTurn(p);
+        User user = new User();
+        status.setUserTurn(user);
 
         // MAP -> Create StatusGetDTO
         StatusGetDTO statusGetDTO = DTOMapper.INSTANCE.convertEntityToStatusGetDTO(status);
@@ -100,8 +98,8 @@ public class DTOMapperTest {
         assertEquals(status.getGameRunning(), statusGetDTO.getGameRunning());
         assertEquals(status.getGameWon(), statusGetDTO.getGameWon());
         assertEquals(status.getGameLost(), statusGetDTO.getGameLost());
-        assertEquals(status.getPlayerLeft(), statusGetDTO.getPlayerLeft());
-        assertEquals(status.getPlayerTurn(), statusGetDTO.getPlayerTurn());
+        assertEquals(status.getUserLeft(), statusGetDTO.getUserLeft());
+        assertEquals(status.getUserTurn(), statusGetDTO.getUserTurn());
 
     }
 

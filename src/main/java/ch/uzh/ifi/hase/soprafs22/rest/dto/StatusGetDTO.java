@@ -1,13 +1,13 @@
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
-import ch.uzh.ifi.hase.soprafs22.entity.Player;
+import ch.uzh.ifi.hase.soprafs22.entity.User;
 
 public class StatusGetDTO {
     private boolean gameRunning;
     private boolean gameWon;
     private boolean gameLost;
-    private boolean playerLeft;
-    private Player playerTurn;
+    private boolean userLeft;
+    private User userTurn;
 
     public boolean getGameRunning() {return gameRunning;}
 
@@ -30,17 +30,17 @@ public class StatusGetDTO {
     }
 
 
-    public boolean getPlayerLeft() {return playerLeft;}
+    public boolean getUserLeft() {return userLeft;}
 
-    public void setPlayerLeft(boolean playerLeft) {
-        this.playerLeft = playerLeft;
+    public void setUserLeft(boolean userLeft) {
+        this.userLeft = userLeft;
     }
 
 
-    public Player getPlayerTurn() {return playerTurn;}
+    public User getUserTurn() {return userTurn;}
 
-    public void setPlayerTurn(Player playerTurn) {
-        this.playerTurn = playerTurn;
+    public void setUserTurn(User userTurn) {
+        this.userTurn = userTurn;
     }
 }
 

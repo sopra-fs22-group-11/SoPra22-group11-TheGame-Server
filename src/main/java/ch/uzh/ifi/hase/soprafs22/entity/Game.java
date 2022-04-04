@@ -10,21 +10,20 @@ import java.util.List;
 public class Game{
     private Deck deck = new Deck();
     private List<Pile> pileList = new ArrayList<>();
-    private List<Pile> pileList;
     private List<User> userList;
     private int fillUpToNoOfCards;
     private UserService userService;
     private Status status = new Status();
 
-    public static Game initializeGame(List<Player> playerList, PlayerService pc){
+    public static Game initializeGame(List<User> userList, UserService pc){
         // TODO This is how we create a new player unless there is another option how to pass playerList
 
         // Store all players
         Game game = new Game();
-        game.playerList = playerList;
+        game.userList = userList;
 
         // TODO give the singular PlayerService Element to the Game such that it can make changes to the database
-        game.playerService = pc;
+        game.userService = pc;
         return game;
     }
 
@@ -36,34 +35,31 @@ public class Game{
         pileList.add(new Pile(Directions.DOWNUP));
 
         // Check what's the amount of cards on a hand
-        if(playerList.size()==2) { fillUpToNoOfCards = 7; }
-        else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
+        if(userList.size()==2) { fillUpToNoOfCards = 7; }
+        else if (userList.size() <= 5 && userList.size() >= 3){ fillUpToNoOfCards = 6;}
         else{throw new Exception();}// TODO The REST request which handles the game start will catch this exception and throw a ResponseStatusException
 
-        for(Player player:playerList){
+        for(User user:userList){
             // Fill all users hand-cards
-            player.getHandCards().fillCards(fillUpToNoOfCards);
+            user.getHandCards().fillCards(fillUpToNoOfCards);
 
             // Every player now has a game more they played
-            playerService.increaseGameCount(player, 1);
+            userService.increaseGameCount(user, 1);
         }
 
     }
 
-    public User updateCurrentPlayer(User oldUser){
-       int oldindex = findPlayerInPlayerList(oldUser);
-       int newIndex = (oldindex+1) % userList.size();
-       return userList.get(newIndex);
-    public Player updateCurrentPlayer(Player oldPlayer) throws Exception { // TODO the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
+    public User updateCurrentPlayer(User oldUser) throws Exception { // TODO the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
        // TODO Make sure this works in C.2.1 Whose turn
-        int oldIndex = findPlayerInPlayerList(oldPlayer);
-       int newIndex = (oldIndex+1) % playerList.size();
+        int oldIndex = findUserInUserList(oldUser);
+       int newIndex = (oldIndex+1) % userList.size();
        // TODO also change player.yourTurn and status.playerTurn
-       return playerList.get(newIndex);
+       return userList.get(newIndex);
     }
+
     //TODO Feel free to implement a more elegant solution if you want
-    private int findPlayerInPlayerList(User oldUser) throws Exception {
-        int len = playerList.size();
+    private int findUserInUserList(User oldUser) throws Exception {
+        int len = userList.size();
         for (int i = 0; i < len; i++){
             if (oldUser.getId().equals(userList.get(i).getId())){
                 return i;
@@ -75,7 +71,7 @@ public class Game{
     public boolean checkWin() {
         // TODO Make sure this works and test it in C.3.3 Winning the Game
         if (deck.getNoOfCards() == 0) {
-            for (User user : playerList) {
+            for (User user : userList) {
                 if (user.getHandCards().getNoOfCards() != 0) {
                     return false;
                 }
@@ -89,8 +85,8 @@ public class Game{
 
     public void updateWinningCount() {
         // TODO Make sure this works and test it in C.3.3 Winning the Game
-        for (Player player : playerList) {
-            playerService.increaseWinningCount(player, 1);
+        for (User user : userList) {
+            userService.increaseWinningCount(user, 1);
         }
     }
 

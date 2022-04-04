@@ -8,9 +8,6 @@ import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * DTOMapper
  * This class is responsible for generating classes that will automatically
@@ -47,10 +44,10 @@ public interface DTOMapper {
   @Mapping(source = "status", target = "status")
   @Mapping(source = "winningCount", target = "winningCount")
   @Mapping(source = "gameCount", target = "gameCount")
-  Player convertPlayerPutDTOtoEntity(PlayerPutDTO playerPutDTO);
+  User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
 
-  /*@Mapping(source = "playerList", target = "playerList")
+  /*@Mapping(source = "userList", target = "userList")
   @Mapping(source = "deck", target = "deck")
   @Mapping(source = "pilesList", target = "pilesList")
   GameGetDTO convertEntityToGameGetDTO(Game game);
@@ -59,8 +56,8 @@ public interface DTOMapper {
   @Mapping(source = "gameRunning", target = "gameRunning")
   @Mapping(source = "gameWon", target = "gameWon")
   @Mapping(source = "gameLost", target = "gameLost")
-  @Mapping(source = "playerLeft", target = "playerLeft")
-  @Mapping(source = "playerTurn", target = "playerTurn")
+  @Mapping(source = "userLeft", target = "userLeft")
+  @Mapping(source = "userTurn", target = "userTurn")
   StatusGetDTO convertEntityToStatusGetDTO(Status status);
 
 

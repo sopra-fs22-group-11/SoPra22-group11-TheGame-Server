@@ -4,9 +4,9 @@ public class Status {
     private boolean gameRunning = true; //At creation of the Object the game just started running
     private boolean gameWon = false;
     private boolean gameLost = false;
-    private boolean playerLeft = false; //I assume this is set to true once a single player leaves
-    private Player playerTurn; // If no one is using it here we can remove it
-    // Todo playerTurn redundant in Game, Status and Player - choose one !
+    private boolean userLeft = false; //I assume this is set to true once a single user leaves
+    private User userTurn; // If no one is using it here we can remove it
+    // Todo userTurn redundant in Game, Status and User - choose one !
 
     public boolean getGameRunning() {return gameRunning;}
 
@@ -29,16 +29,16 @@ public class Status {
     }
 
 
-    public boolean getPlayerLeft() {return playerLeft;}
+    public boolean getUserLeft() {return userLeft;}
 
-    public void setPlayerLeft(boolean playerLeft) {
-        this.playerLeft = playerLeft;
+    public void setUserLeft(boolean userLeft) {
+        this.userLeft = userLeft;
     }
 
 
-    public Player getPlayerTurn() {return playerTurn;}
+    public User getUserTurn() {return userTurn;}
 
-    public void setPlayerTurn(Player playerTurn) {
-        this.playerTurn = playerTurn;
+    public void setUserTurn(User userTurn) {
+        this.userTurn = userTurn;
     }
 }
