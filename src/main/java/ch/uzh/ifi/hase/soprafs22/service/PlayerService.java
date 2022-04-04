@@ -65,18 +65,11 @@ public class PlayerService {
    * @see Player
    */
   private void checkIfPlayerExists(Player playerToBeCreated) {
-    Player playerByPlayername = playerRepository.findByPlayername(playerToBeCreated.getPlayername());
-    Player playerByName = playerRepository.findByPassword(playerToBeCreated.getPassword());
-
-    String baseErrorMessage = "The %s provided %s not unique. Therefore, the player could not be created!";
-    if (playerByPlayername != null && playerByName != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-          String.format(baseErrorMessage, "playername and the password", "are"));
-    } else if (playerByPlayername != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "playername", "is"));
-    } else if (playerByName != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "password", "is"));
-    }
+      Player playerByPlayername = playerRepository.findByPlayername(playerToBeCreated.getPlayername());
+      String baseErrorMessage = "The %s provided is not unique. Therefore, the player could not be created!";
+      if (playerByPlayername != null) {
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "playername", "is"));
+      }
   }
 
     public Player getPlayerById(long playerId) {

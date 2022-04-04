@@ -58,12 +58,7 @@ public class PlayerServiceTest {
   public void createPlayer_duplicateName_throwsException() {
     // given -> a first player has already been created
     playerService.createPlayer(testPlayer);
-
-    // when -> setup additional mocks for PlayerRepository
-    Mockito.when(playerRepository.findByPassword(Mockito.any())).thenReturn(testPlayer);
-    Mockito.when(playerRepository.findByPlayername(Mockito.any())).thenReturn(null);
-
-    // then -> attempt to create second player with same player -> check that an error
+    Mockito.when(playerRepository.findByPlayername(Mockito.any())).thenReturn(testPlayer);
     // is thrown
     assertThrows(ResponseStatusException.class, () -> playerService.createPlayer(testPlayer));
   }
