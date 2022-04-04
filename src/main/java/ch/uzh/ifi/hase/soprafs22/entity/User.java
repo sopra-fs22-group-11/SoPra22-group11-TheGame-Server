@@ -1,13 +1,13 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
-import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
+import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * Internal Player Representation
+ * Internal User Representation
  * This class composes the internal representation of the user and defines how
  * the user is stored in the database.
  * Every variable will be mapped into a database field with the @Column
@@ -17,8 +17,8 @@ import java.util.List;
  * the primary key
  */
 @Entity
-@Table(name = "PLAYER")
-public class Player implements Serializable {
+@Table(name = "USER")
+public class User implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class Player implements Serializable {
   private String token;
 
   @Column(nullable = false)
-  private PlayerStatus status;
+  private UserStatus status;
 
   @Column(nullable = true) // It is either your turn: true, not your turn: false, or if you are not in a game then: null
   private Boolean yourTurn;
@@ -85,11 +85,11 @@ public class Player implements Serializable {
   }
 
 
-  public PlayerStatus getStatus() {
+  public UserStatus getStatus() {
     return status;
   }
 
-  public void setStatus(PlayerStatus status) {
+  public void setStatus(UserStatus status) {
     this.status = status;
   }
 

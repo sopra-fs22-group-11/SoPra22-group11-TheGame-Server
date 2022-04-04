@@ -2,6 +2,9 @@ package ch.uzh.ifi.hase.soprafs22.rest.mapper;
 
 import ch.uzh.ifi.hase.soprafs22.entity.*;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.*;
+import ch.uzh.ifi.hase.soprafs22.entity.User;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -12,8 +15,8 @@ import java.util.List;
  * DTOMapper
  * This class is responsible for generating classes that will automatically
  * transform/map the internal representation
- * of an entity (e.g., the Player) to the external/API representation (e.g.,
- * PlayerGetDTO for getting, PlayerPostDTO for creating)
+ * of an entity (e.g., the User) to the external/API representation (e.g.,
+ * UserGetDTO for getting, UserPostDTO for creating)
  * and vice versa.
  * Additional mappers can be defined for new entities.
  * Always created one mapper for getting information (GET) and one mapper for
@@ -26,7 +29,7 @@ public interface DTOMapper {
 
   @Mapping(source = "password", target = "password")
   @Mapping(source = "username", target = "username")
-  Player convertPlayerPostDTOtoEntity(PlayerPostDTO playerPostDTO);
+  User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
   @Mapping(source = "id", target = "id")
   @Mapping(source = "password", target = "password")
@@ -35,7 +38,7 @@ public interface DTOMapper {
   @Mapping(source = "yourTurn", target = "yourTurn")
   @Mapping(source = "winningCount", target = "winningCount")
   @Mapping(source = "gameCount", target = "gameCount")
-  PlayerGetDTO convertEntityToPlayerGetDTO(Player player);
+  UserGetDTO convertEntityToUserGetDTO(User user);
 
 
   @Mapping(source = "id", target = "id")
