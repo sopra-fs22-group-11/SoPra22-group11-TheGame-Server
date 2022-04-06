@@ -1,7 +1,7 @@
 package ch.uzh.ifi.hase.soprafs22.rest.mapper;
 
 import ch.uzh.ifi.hase.soprafs22.entity.Card;
-import ch.uzh.ifi.hase.soprafs22.entity.Status;
+import ch.uzh.ifi.hase.soprafs22.entity.GameStatus;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
@@ -86,20 +86,20 @@ public class DTOMapperTest {
 
     @Test
     public void testGetStatus_fromStatus_toStatusGetDTO_success() {
-        // create Status
-        Status status = new Status();
+        // create GameStatus
+        GameStatus gameStatus = new GameStatus();
         User user = new User();
-        status.setUserTurn(user);
+        gameStatus.setUserTurn(user);
 
-        // MAP -> Create StatusGetDTO
-        StatusGetDTO statusGetDTO = DTOMapper.INSTANCE.convertEntityToStatusGetDTO(status);
+        // MAP -> Create GameStatusGetDTO
+        GameStatusGetDTO gameStatusGetDTO = DTOMapper.INSTANCE.convertEntityToStatusGetDTO(gameStatus);
 
         // check content
-        assertEquals(status.getGameRunning(), statusGetDTO.getGameRunning());
-        assertEquals(status.getGameWon(), statusGetDTO.getGameWon());
-        assertEquals(status.getGameLost(), statusGetDTO.getGameLost());
-        assertEquals(status.getUserLeft(), statusGetDTO.getUserLeft());
-        assertEquals(status.getUserTurn(), statusGetDTO.getUserTurn());
+        assertEquals(gameStatus.getGameRunning(), gameStatusGetDTO.getGameRunning());
+        assertEquals(gameStatus.getGameWon(), gameStatusGetDTO.getGameWon());
+        assertEquals(gameStatus.getGameLost(), gameStatusGetDTO.getGameLost());
+        assertEquals(gameStatus.getUserLeft(), gameStatusGetDTO.getUserLeft());
+        assertEquals(gameStatus.getUserTurn(), gameStatusGetDTO.getUserTurn());
 
     }
 

@@ -2,7 +2,7 @@ package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 
-public class StatusGetDTO {
+public class GameStatusGetDTO {
     private boolean gameRunning;
     private boolean gameWon;
     private boolean gameLost;

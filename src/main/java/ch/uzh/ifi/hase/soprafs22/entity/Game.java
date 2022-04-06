@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs22.entity;
 
 import ch.uzh.ifi.hase.soprafs22.constant.Directions;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
-import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ public class Game{
     private List<User> userList;
     private int fillUpToNoOfCards;
     private UserService userService;
-    private Status status = new Status();
+    private GameStatus gameStatus = new GameStatus();
 
     public static Game initializeGame(List<User> userList, UserService pc){
         // TODO This is how we create a new player unless there is another option how to pass playerList
@@ -53,7 +52,7 @@ public class Game{
        // TODO Make sure this works in C.2.1 Whose turn
         int oldIndex = findUserInUserList(oldUser);
        int newIndex = (oldIndex+1) % userList.size();
-       // TODO also change player.yourTurn and status.playerTurn
+       // TODO also change player.yourTurn and gameStatus.playerTurn
        return userList.get(newIndex);
     }
 
@@ -76,7 +75,7 @@ public class Game{
                     return false;
                 }
             }
-            status.setGameWon(true);
+            gameStatus.setGameWon(true);
             return true;
         }
         return false;

@@ -1,12 +1,12 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
-public class Status {
+public class GameStatus {
     private boolean gameRunning = true; //At creation of the Object the game just started running
     private boolean gameWon = false;
     private boolean gameLost = false;
     private boolean userLeft = false; //I assume this is set to true once a single user leaves
     private User userTurn; // If no one is using it here we can remove it
-    // Todo userTurn redundant in Game, Status and User - choose one !
+    // Todo userTurn redundant in Game, GameStatus and User - choose one !
 
     public boolean getGameRunning() {return gameRunning;}
 
