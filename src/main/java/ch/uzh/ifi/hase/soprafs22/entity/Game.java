@@ -22,6 +22,11 @@ public class Game{
         Game game = new Game();
         game.userList = userList;
 
+        for (User user:userList) {
+            // Every player is now in game, change its status
+            user.setStatus(UserStatus.INGAME);
+        }
+
         // TODO give the singular UserService Element to the Game such that it can make changes to the database
         game.userService = us;
         return game;
@@ -42,9 +47,6 @@ public class Game{
         for(User user:userList){
             // Fill all users hand-cards
             user.getHandCards().fillCards(fillUpToNoOfCards);
-
-            // Every player is now in game, change its status
-            user.setStatus(UserStatus.INGAME);
 
             // Every player now has a game more they played
             userService.increaseGameCount(user, 1);
