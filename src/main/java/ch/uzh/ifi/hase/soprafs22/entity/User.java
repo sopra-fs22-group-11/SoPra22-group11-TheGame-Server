@@ -38,17 +38,11 @@ public class User implements Serializable {
   @Column(nullable = false)
   private UserStatus status;
 
-  @Column(nullable = true) // It is either your turn: true, not your turn: false, or if you are not in a game then: null
-  private Boolean yourTurn;
-
   @Column(nullable = false)
   private int winningCount;
 
   @Column(nullable = false)
   private int gameCount;
-
-  @Column
-  private HandCards handCards;
 
 
   public Long getId() {
@@ -93,21 +87,13 @@ public class User implements Serializable {
     this.status = status;
   }
 
-
-  public Boolean getYourTurn(){return yourTurn;}
-
-  public void setYourTurn(Boolean yourTurn){this.yourTurn = yourTurn;}
-
-
   public int getWinningCount(){return winningCount;}
 
   public void setWinningCount(int winningCount){this.winningCount = winningCount;}
-
 
   public int getGameCount(){return gameCount;}
 
   public void setGameCount(int gameCount){this.gameCount = gameCount;}
 
-  public HandCards getHandCards(){return handCards;}
 
 }
