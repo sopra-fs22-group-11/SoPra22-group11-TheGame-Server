@@ -1,5 +1,7 @@
 package ch.uzh.ifi.hase.soprafs22.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs22.entity.*;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
@@ -22,13 +24,43 @@ public interface DTOMapper {
 
   DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
 
-  @Mapping(source = "name", target = "name")
+  @Mapping(source = "password", target = "password")
   @Mapping(source = "username", target = "username")
   User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
   @Mapping(source = "id", target = "id")
-  @Mapping(source = "name", target = "name")
+  @Mapping(source = "password", target = "password")
   @Mapping(source = "username", target = "username")
   @Mapping(source = "status", target = "status")
+  @Mapping(source = "yourTurn", target = "yourTurn")
+  @Mapping(source = "winningCount", target = "winningCount")
+  @Mapping(source = "gameCount", target = "gameCount")
   UserGetDTO convertEntityToUserGetDTO(User user);
+
+
+  @Mapping(source = "id", target = "id")
+  @Mapping(source = "password", target = "password")
+  @Mapping(source = "username", target = "username")
+  @Mapping(source = "status", target = "status")
+  @Mapping(source = "winningCount", target = "winningCount")
+  @Mapping(source = "gameCount", target = "gameCount")
+  User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
+
+
+  /*@Mapping(source = "userList", target = "userList")
+  @Mapping(source = "deck", target = "deck")
+  @Mapping(source = "pilesList", target = "pilesList")
+  GameGetDTO convertEntityToGameGetDTO(Game game);
+*/
+
+  @Mapping(source = "gameRunning", target = "gameRunning")
+  @Mapping(source = "gameWon", target = "gameWon")
+  @Mapping(source = "gameLost", target = "gameLost")
+  @Mapping(source = "userLeft", target = "userLeft")
+  @Mapping(source = "userTurn", target = "userTurn")
+  GameStatusGetDTO convertEntityToStatusGetDTO(GameStatus gameStatus);
+
+
+  @Mapping(source = "value", target = "value")
+  CardGetDTO convertEntityToCardGetDTO(Card card);
 }

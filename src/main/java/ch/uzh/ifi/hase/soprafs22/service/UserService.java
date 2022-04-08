@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -41,9 +42,11 @@ public class UserService {
 
   public User createUser(User newUser) {
     newUser.setToken(UUID.randomUUID().toString());
-    newUser.setStatus(UserStatus.OFFLINE);
+    newUser.setStatus(UserStatus.READY);
+    newUser.setGameCount(0);
+    newUser.setWinningCount(0);
 
-    checkIfUserExists(newUser);
+    checkIfPlayerExists(newUser);
 
     // saves the given entity but data is only persisted in the database once
     // flush() is called
@@ -56,7 +59,7 @@ public class UserService {
 
   /**
    * This is a helper method that will check the uniqueness criteria of the
-   * username and the name
+   * playername and the name
    * defined in the User entity. The method will do nothing if the input is unique
    * and throw an error otherwise.
    *
@@ -64,18 +67,60 @@ public class UserService {
    * @throws org.springframework.web.server.ResponseStatusException
    * @see User
    */
-  private void checkIfUserExists(User userToBeCreated) {
-    User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
-    User userByName = userRepository.findByName(userToBeCreated.getName());
-
-    String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
-    if (userByUsername != null && userByName != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-          String.format(baseErrorMessage, "username and the name", "are"));
-    } else if (userByUsername != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "username", "is"));
-    } else if (userByName != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
-    }
+  private void checkIfPlayerExists(User userToBeCreated) {
+      User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
+      String baseErrorMessage = "The %s provided is not unique. Therefore, the player could not be created!";
+      if (userByUsername != null) {
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "username", "is"));
+      }
   }
+
+    public void increaseGameCount(User user, int i){
+        // Updates the user with the information given by another User-Object
+
+        Optional<User> foundById = userRepository.findById(user.getId());
+
+        foundById.get().setGameCount(user.getGameCount()+i);
+
+        userRepository.save(foundById.get());
+        userRepository.flush();
+    }
+
+    public void increaseWinningCount(User player, int i){
+        // TODO Make sure this works and test it in C.3.3 Winning the Game
+        // Updates the user with the information given by another User-Object
+
+        Optional<User> foundById = userRepository.findById(player.getId());
+
+        foundById.get().setWinningCount(player.getWinningCount()+i);
+
+        userRepository.save(foundById.get());
+        userRepository.flush();
+    }
+
+    public User getUserById(long userId) {
+        User user = userRepository.findById(userId);
+        if (user != null) {
+            return user;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This user ID cannot be found.");
+    }
+
+    public User saveUpdate(User user) {
+        user = userRepository.save(user);
+        userRepository.flush();
+        user = getUserById(user.getId());
+        return user;
+    }
+
+    public void setStatusInRepo(long playerId, UserStatus userStatus) {
+        List<User> users = getUsers();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId() == playerId) {
+                users.get(i).setStatus(userStatus);
+                userRepository.save(users.get(i));
+                break;
+            }
+        }
+    }
 }

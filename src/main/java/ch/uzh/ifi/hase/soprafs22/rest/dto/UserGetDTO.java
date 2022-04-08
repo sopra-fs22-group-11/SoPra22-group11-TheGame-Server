@@ -5,9 +5,12 @@ import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 public class UserGetDTO {
 
   private Long id;
-  private String name;
+  private String password; // Can maybe be removed if no one is using it
   private String username;
   private UserStatus status;
+  private Boolean yourTurn;
+  private int winningCount;
+  private int gameCount;
 
   public Long getId() {
     return id;
@@ -17,12 +20,12 @@ public class UserGetDTO {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public String getPassword() {
+    return password;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public String getUsername() {
@@ -40,4 +43,19 @@ public class UserGetDTO {
   public void setStatus(UserStatus status) {
     this.status = status;
   }
+
+  public Boolean getYourTurn(){return yourTurn;}
+
+    public void setYourTurn(Boolean yourTurn){this.yourTurn = yourTurn;}
+
+    public int getWinningCount(){return winningCount;}
+
+    public void setWinningCount(int winningCount){this.winningCount = winningCount;}
+
+
+    public int getGameCount(){return gameCount;}
+
+    public void setGameCount(int gameCount){this.gameCount = gameCount;}
+
+
 }
