@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs22.entity.Player;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
 import org.slf4j.Logger;
@@ -55,6 +56,19 @@ public class UserService {
 
     log.debug("Created Information for User: {}", newUser);
     return newUser;
+  }
+
+  public Player createPlayer(String username) {
+      Player newPlayer = new Player();
+      User userByUsername = userRepository.findByUsername(username);
+      newPlayer.setUsername(username);
+      newPlayer.setId(userByUsername.getId());
+      newPlayer.setYourTurn(false);
+
+      // TODO: set handCards when starting the game
+
+      log.debug("Created Information for Player: {}", newPlayer);
+      return newPlayer;
   }
 
   /**

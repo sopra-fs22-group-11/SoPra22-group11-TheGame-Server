@@ -22,16 +22,16 @@ public class GameTest {
     @Test
     public void updateCurrentPlayerTest(){
         // TODO Test this in C.2.1 Whose turn
-        User user1 = new User();
-        User user2 = new User();
+        Player player1 = new Player();
+        Player player2 = new Player();
 
         //Another functionality would take care of this - namely playerService
-        user1.setGameCount(0);
-        user2.setGameCount(0);
+        player1.setGameCount(0);
+        player2.setGameCount(0);
 
-        List<User> pl = new ArrayList<>();
-        pl.add(user1);
-        pl.add(user2);
+        List<Player> pl = new ArrayList<>();
+        pl.add(player1);
+        pl.add(player2);
 
        Game game = Game.initializeGame(pl, userService);
 
