@@ -7,12 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game{
+    // we need some sort of gameId for each game: private final int gameId;
     private Deck deck = new Deck();
     private List<Pile> pileList = new ArrayList<>();
     private List<Player> playerList;
     private int fillUpToNoOfCards;
     private UserService userService;
     private GameStatus gameStatus = new GameStatus();
+
+
+    public void startGame() {
+        initializeGame(playerList, userService);
+        // TODO: start turn of 1st player
+    }
 
     public static Game initializeGame(List<Player> playerList, UserService pc){
         // TODO This is how we create a new player unless there is another option how to pass playerList
@@ -47,6 +54,49 @@ public class Game{
         }
 
     }
+
+
+
+
+
+    private boolean gameWon() {
+        if (deck.getNoOfCards() == 0) {
+            int leftCardsOnHands = 0;
+            for (Player player:playerList) {
+                // leftCardsOnHands = leftCardsOnHands + player.getHandCards().length; --> problem bc. what is handCards? I thought it should be an array of cards
+            if (leftCardsOnHands == 0) {
+                return true;
+            }
+            return false;
+        }
+    }
+        return false;
+    }
+
+    public boolean gameOver() {
+        // checks on a button click when a player says he cannot play anymore
+        if (true) { return true;}
+        return false;
+    }
+
+    private void onGameWon() {
+        for (Player player:playerList) {
+            userService.increaseGameCount(player, 1);
+            userService.increaseWinningCount(player, 1);
+        }
+        // TODO: end game in gameService? could end the game with given gameId
+        // TODO: delete players also in GameService
+    }
+
+    private void onGameOver() {
+        for (Player player:playerList) {
+            userService.increaseGameCount(player, 1);
+        }
+        // TODO: end game in gameService? could end the game with given gameId
+        // TODO: delete players also in GameService
+    }
+
+
 
     public User updateCurrentPlayer(User oldUser) throws Exception { // TODO the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
        // TODO Make sure this works in C.2.1 Whose turn
@@ -87,6 +137,10 @@ public class Game{
         for (Player player : playerList) {
             userService.increaseWinningCount(player, 1);
         }
+    }
+
+    public List<Player> getListOfPlayers() {
+        return this.playerList;
     }
 
 }
