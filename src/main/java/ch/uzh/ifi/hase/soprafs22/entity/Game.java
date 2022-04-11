@@ -19,6 +19,14 @@ public class Game{
     public void startGame() {
         initializeGame(playerList, userService);
         // TODO: start turn of 1st player
+        while (gamePlayable()) {
+            // game can be played -- continue
+        }
+        // end the game
+        if (checkWin()) {
+            onGameOver();
+        }
+        onGameOver();
     }
 
     public static Game initializeGame(List<Player> playerList, UserService pc){
@@ -55,46 +63,17 @@ public class Game{
 
     }
 
-
-
-
-
-    private boolean gameWon() {
+    public boolean gamePlayable() {
         if (deck.getNoOfCards() == 0) {
-            int leftCardsOnHands = 0;
             for (Player player:playerList) {
-                // leftCardsOnHands = leftCardsOnHands + player.getHandCards().length; --> problem bc. what is handCards? I thought it should be an array of cards
-            if (leftCardsOnHands == 0) {
-                return true;
-            }
-            return false;
+                if (player.getHandCards().getNoOfCards() == 0) {
+                    return false;
+                } return true; }
         }
-    }
-        return false;
+        return true;
     }
 
-    public boolean gameOver() {
-        // checks on a button click when a player says he cannot play anymore
-        if (true) { return true;}
-        return false;
-    }
-
-    private void onGameWon() {
-        for (Player player:playerList) {
-            userService.increaseGameCount(player, 1);
-            userService.increaseWinningCount(player, 1);
-        }
-        // TODO: end game in gameService? could end the game with given gameId
-        // TODO: delete players also in GameService
-    }
-
-    private void onGameOver() {
-        for (Player player:playerList) {
-            userService.increaseGameCount(player, 1);
-        }
-        // TODO: end game in gameService? could end the game with given gameId
-        // TODO: delete players also in GameService
-    }
+    public void playCard() {}
 
 
 
@@ -131,13 +110,40 @@ public class Game{
         return false;
     }
 
+    public boolean gameOver() {
+        // checks on a button click when a player says he cannot play anymore
+        if (true) { return true;}
+        return false;
+    }
 
+    private void onGameWon() {
+        for (Player player:playerList) {
+            userService.increaseWinningCount(player, 1);
+        }
+        // TODO: end game in gameService? could end the game with given gameId
+        // TODO: delete players also in GameService
+    }
+
+    private void onGameOver() {
+        /*
+        for (Player player:playerList) {
+            userService.increaseGameCount(player, 1);
+        }
+         */
+        // TODO: end game in gameService? could end the game with given gameId
+        // TODO: delete players also in GameService
+    }
+
+
+    /*
     public void updateWinningCount() {
         // TODO Make sure this works and test it in C.3.3 Winning the Game
         for (Player player : playerList) {
             userService.increaseWinningCount(player, 1);
         }
     }
+
+     */
 
     public List<Player> getListOfPlayers() {
         return this.playerList;
