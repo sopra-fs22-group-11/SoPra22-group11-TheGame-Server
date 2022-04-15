@@ -41,27 +41,27 @@ public class Game{
         return game;
     }
 
-    private void Game() throws Exception { // This is private to remember to create a player as above
-        // Add all piles
-        pileList.add(new Pile(Directions.TOPDOWN));
-        pileList.add(new Pile(Directions.TOPDOWN));
-        pileList.add(new Pile(Directions.DOWNUP));
-        pileList.add(new Pile(Directions.DOWNUP));
-
-        // Check what's the amount of cards on a hand
-        if(playerList.size()==2) { fillUpToNoOfCards = 7; }
-        else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
-        else{throw new Exception();}// TODO The REST request which handles the game start will catch this exception and throw a ResponseStatusException
-
-        for(Player player:playerList){
-            // Fill all users hand-cards
-            player.getHandCards().fillCards(fillUpToNoOfCards);
-
-            // Every player now has a game more they played
-            userService.increaseGameCount(player, 1);
-        }
-
-    }
+    //private void Game() throws Exception { // This is private to remember to create a player as above
+    //    // Add all piles
+    //    pileList.add(new Pile(Directions.TOPDOWN));
+    //    pileList.add(new Pile(Directions.TOPDOWN));
+    //    pileList.add(new Pile(Directions.DOWNUP));
+    //    pileList.add(new Pile(Directions.DOWNUP));
+//
+    //    // Check what's the amount of cards on a hand
+    //    if(playerList.size()==2) { fillUpToNoOfCards = 7; }
+    //    else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
+    //    else{throw new Exception();}// TODO The REST request which handles the game start will catch this exception and throw a ResponseStatusException
+//
+    //    for(Player player:playerList){
+    //        // Fill all users hand-cards
+    //        player.getHandCards().fillCards(fillUpToNoOfCards);
+//
+    //        // Every player now has a game more they played
+    //        userService.increaseGameCount(player, 1);
+    //    }
+//
+    //}
 
     public boolean gamePlayable() {
         if (deck.getNoOfCards() == 0) {
@@ -77,7 +77,7 @@ public class Game{
 
 
 
-    public User updateCurrentPlayer(User oldUser) throws Exception { // TODO the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
+    public Player updateCurrentPlayer(User oldUser) throws Exception { // TODO the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
        // TODO Make sure this works in C.2.1 Whose turn
         int oldIndex = findUserInUserList(oldUser);
        int newIndex = (oldIndex+1) % playerList.size();
@@ -116,13 +116,13 @@ public class Game{
         return false;
     }
 
-    private void onGameWon() {
-        for (Player player:playerList) {
-            userService.increaseWinningCount(player, 1);
-        }
-        // TODO: end game in gameService? could end the game with given gameId
-        // TODO: delete players also in GameService
-    }
+    //private void onGameWon() {
+    //    for (Player player:playerList) {
+    //        userService.increaseWinningCount(player, 1);
+    //    }
+    //    // TODO: end game in gameService? could end the game with given gameId
+    //    // TODO: delete players also in GameService
+    //}
 
     private void onGameOver() {
         /*

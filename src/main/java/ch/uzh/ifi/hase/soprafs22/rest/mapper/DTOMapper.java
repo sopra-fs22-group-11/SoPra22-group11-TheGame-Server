@@ -63,10 +63,10 @@ public interface DTOMapper {
   @Mapping(source = "value", target = "value")
   CardGetDTO convertEntityToCardGetDTO(Card card);
 
-  @Mapping(source = "id", target = "id")
-  @Mapping(source = "username", target = "username")
-  @Mapping(source = "yourTurn", target = "yourTurn")
-  @Mapping(source = "handCards", target = "handCards")
-  PlayerGetDTO convertEntityToPlayerGetDTO(Player player);
+  //@Mapping(source = "id", target = "id")
+  //@Mapping(source = "playerName", target = "playerName")
+  //@Mapping(source = "yourTurn", target = "yourTurn")
+  //@Mapping(source = "handCards", target = "handCards")
+  //PlayerGetDTO convertEntityToPlayerGetDTO(Player player);
 
 }

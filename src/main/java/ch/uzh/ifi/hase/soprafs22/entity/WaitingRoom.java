@@ -10,12 +10,18 @@ public class WaitingRoom {
 
     public int getNoOfPlayers() {return noOfPlayers;}
 
-    public WaitingRoom() {
-        for(int i = 2; i<MaxPlayers; i++){
-            playerList.add(new Player());
-        }
-        noOfPlayers = playerList.size();
+
+    public void addPlayer(Player player){
+        playerList.add(player);
     }
+
+    public void removePlayer(Player player){
+        playerList.remove(player);
+    }
+    public List<Player> getPlayerList (){
+        return this.playerList;
+    }
+
 
 
     // only when we have more than two players in waiting room we could start game

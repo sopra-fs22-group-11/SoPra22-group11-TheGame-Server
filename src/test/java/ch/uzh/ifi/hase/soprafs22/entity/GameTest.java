@@ -22,18 +22,18 @@ public class GameTest {
     @Test
     public void updateCurrentPlayerTest(){
         // TODO Test this in C.2.1 Whose turn
-        Player player1 = new Player();
-        Player player2 = new Player();
-
-        //Another functionality would take care of this - namely playerService
-        player1.setGameCount(0);
-        player2.setGameCount(0);
-
-        List<Player> pl = new ArrayList<>();
-        pl.add(player1);
-        pl.add(player2);
-
-       Game game = Game.initializeGame(pl, userService);
+       // Player player1 = new Player();
+       // Player player2 = new Player();
+//
+       // //Another functionality would take care of this - namely playerService
+       // player1.setGameCount(0);
+       // player2.setGameCount(0);
+//
+       // List<Player> pl = new ArrayList<>();
+       // pl.add(player1);
+       // pl.add(player2);
+//
+       //Game game = Game.initializeGame(pl, userService);
 
     }
 }

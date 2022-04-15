@@ -126,14 +126,14 @@ public class UserServiceTest {
 
   }
 
-  @Test
-  public void testPlayerCreated() {
-      userService.createUser(testUser);
-      Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
-      Player test = userService.createPlayer(testUser.getUsername());
-      assertEquals(test.getUsername(), "testUsername");
-
-  }
+ // @Test
+ // public void testPlayerCreated() {
+ //     userService.createUser(testUser);
+ //     Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
+ //     Player test = userService.createPlayer(testUser.getUsername());
+ //     assertEquals(test.getUsername(), "testUsername");
+//
+ // }
 
 
 }
