@@ -59,6 +59,7 @@ public class WebSocketController {
         System.out.println("in addlpayersInWatitingRoom method");
         return new ResponseMessage(HtmlUtils.htmlEscape(json));
 
+
         //return waitingRoom.getPlayerList();
     }
 
