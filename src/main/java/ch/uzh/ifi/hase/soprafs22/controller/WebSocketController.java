@@ -50,18 +50,18 @@ public class WebSocketController {
 
     @MessageMapping("/game")
     @SendTo("/topic/players")
-    public ResponseMessage addPlayersInWaitingroom(UserPostDTO userData){
+    public String addPlayersInWaitingroom(UserPostDTO userData){
         User userObject = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userData);
         Player newPlayer = new Player(userObject.getUsername(), userObject.getId());
         waitingRoom.addPlayer(newPlayer);
         String json = new Gson().toJson(waitingRoom.getPlayerList());
         System.out.println(json);
         System.out.println("in addlpayersInWatitingRoom method");
-        return new ResponseMessage(HtmlUtils.htmlEscape(json));
-
+        return json;
 
         //return waitingRoom.getPlayerList();
     }
+
 
    //@MessageMapping("/game")
    //@SendTo("/topic/players")
