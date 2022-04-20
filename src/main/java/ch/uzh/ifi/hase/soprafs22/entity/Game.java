@@ -20,6 +20,12 @@ public class Game{
 
     public void startGame() {
         initializeGame(playerList, userService);
+
+        for (Player player:playerList) {
+            // Every player is now in game, change its status
+            userService.setStatusInRepo(player.getId(), UserStatus.INGAME);
+        }
+
         // TODO: start turn of 1st player
         while (gamePlayable()) {
             // game can be played -- continue
@@ -38,10 +44,6 @@ public class Game{
         Game game = new Game();
         game.playerList = playerList;
 
-        /*for (Player player:playerList) {
-            // Every player is now in game, change its status
-            player.setStatus(UserStatus.INGAME);
-        }*/
 
         // TODO give the singular UserService Element to the Game such that it can make changes to the database
         game.userService = pc;
@@ -113,9 +115,9 @@ public class Game{
                 }
             }
             gameStatus.setGameWon(true);
-            /*for (User user : userList) {
-                user.setStatus(UserStatus.READY);
-            }*/
+
+            for (Player player:playerList) {
+                userService.setStatusInRepo(player.getId(), UserStatus.READY);}
             return true;
         }
         return false;
