@@ -28,7 +28,7 @@ public class WebSocketController {
     private Game game = new Game();
 
 
-    WebSocketController(UserService userService, GameService gameService) {
+    WebSocketController(UserService userService, GameService gameService) { //TODO check only one userRepository
         this.userService = userService;
         this.gameService = gameService;
     }

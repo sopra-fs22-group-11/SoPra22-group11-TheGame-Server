@@ -12,8 +12,10 @@ public class HandCards implements Serializable {
         return noOfCards;
     }
 
-    public void fillCards(int fillTo){
-        //TODO Implement this function in C.1.2
+    public void fillCards(int fillTo, Deck deck){
+        while(noOfCards < fillTo && deck.getNoOfCards() > 0){
+            addCard(deck.pop());
+        }
     }
 
     public void addCard(Card card) {
@@ -21,7 +23,7 @@ public class HandCards implements Serializable {
         noOfCards += 1;
     }
 
-    public void deleteCard(Card cardToBeDeleted) throws Exception { // TODO the Rest request which handles playing a card must also catch this Exception and throw a BadRequestException
+    public void deleteCard(Card cardToBeDeleted) throws Exception { // TODO the Websocket request which handles playing a card must also catch this Exception and throw a BadRequestException
         int index = findCardByValue(cardToBeDeleted.getValue());
         handCards.remove(index);
         noOfCards -= 1;
