@@ -8,7 +8,7 @@ public class UserGetDTO {
   private String password; // Can maybe be removed if no one is using it
   private String username;
   private UserStatus status;
-  private Boolean yourTurn;
+  //private Boolean yourTurn;
   private int winningCount;
   private int gameCount;
 
@@ -44,9 +44,9 @@ public class UserGetDTO {
     this.status = status;
   }
 
-  public Boolean getYourTurn(){return yourTurn;}
+  //public Boolean getYourTurn(){return yourTurn;}
 
-    public void setYourTurn(Boolean yourTurn){this.yourTurn = yourTurn;}
+    //public void setYourTurn(Boolean yourTurn){this.yourTurn = yourTurn;}
 
     public int getWinningCount(){return winningCount;}
 

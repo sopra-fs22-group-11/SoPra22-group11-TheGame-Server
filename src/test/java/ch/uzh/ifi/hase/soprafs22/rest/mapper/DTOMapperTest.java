@@ -42,7 +42,7 @@ public class DTOMapperTest {
     user.setToken("1");
     user.setWinningCount(0);
     user.setGameCount(0);
-    user.setYourTurn(true);
+    //user.setYourTurn(true);
 
     // MAP -> Create UserGetDTO
     UserGetDTO userGetDTO = DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
@@ -54,7 +54,7 @@ public class DTOMapperTest {
     assertEquals(user.getStatus(), userGetDTO.getStatus());
     assertEquals(user.getWinningCount(), userGetDTO.getWinningCount());
     assertEquals(user.getGameCount(), userGetDTO.getGameCount());
-    assertEquals(user.getYourTurn(), userGetDTO.getYourTurn());
+    //assertEquals(user.getYourTurn(), userGetDTO.getYourTurn());
   }
 
 
