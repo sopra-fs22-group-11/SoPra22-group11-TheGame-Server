@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
 import ch.uzh.ifi.hase.soprafs22.constant.Directions;
+import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
 
 import java.util.ArrayList;
@@ -36,7 +37,12 @@ public class Game{
         Game game = new Game();
         game.playerList = playerList;
 
-        // TODO give the singular PlayerService Element to the Game such that it can make changes to the database
+        /*for (Player player:playerList) {
+            // Every player is now in game, change its status
+            player.setStatus(UserStatus.INGAME);
+        }*/
+
+        // TODO give the singular UserService Element to the Game such that it can make changes to the database
         game.userService = pc;
         return game;
     }
@@ -80,7 +86,8 @@ public class Game{
     public Player updateCurrentPlayer(User oldUser) throws Exception { // TODO the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
        // TODO Make sure this works in C.2.1 Whose turn
         int oldIndex = findUserInUserList(oldUser);
-       int newIndex = (oldIndex+1) % playerList.size();
+        int newIndex = (oldIndex+1) % playerList.size();
+
        // TODO also change player.yourTurn and gameStatus.playerTurn
        return playerList.get(newIndex);
     }
@@ -105,6 +112,9 @@ public class Game{
                 }
             }
             gameStatus.setGameWon(true);
+            /*for (User user : userList) {
+                user.setStatus(UserStatus.READY);
+            }*/
             return true;
         }
         return false;
