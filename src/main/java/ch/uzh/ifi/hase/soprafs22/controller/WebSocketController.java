@@ -50,8 +50,11 @@ public class WebSocketController {
 
     @MessageMapping("/game")
     @SendTo("/topic/players")
-    public String addPlayersInWaitingroom(UserPostDTO userData){
-        User userObject = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userData);
+    public String addPlayersInWaitingroom(String userData){
+        System.out.println(userData);
+        Gson gson = new Gson();
+        User userObject = gson.fromJson(userData, User.class);
+        System.out.println("the name is:"+userObject.getUsername());
         Player newPlayer = new Player(userObject.getUsername(), userObject.getId());
         waitingRoom.addPlayer(newPlayer);
         String json = new Gson().toJson(waitingRoom.getPlayerList());
@@ -79,6 +82,39 @@ public class WebSocketController {
         System.out.println("vor Return in sendGameUpdate");
         return json;
     }
+
+    @MessageMapping ("/start")
+    @SendTo("/topic/Start")
+    public String startGame(){
+        return null;
+    }
+
+    @MessageMapping ("/discard")
+    @SendTo("/topic/gameObject")
+    public String discard(String jsonOfListCardsAndListPiles){
+        return null;
+    }
+
+    @MessageMapping ("/draw")
+    @SendTo("/topic/gameObject")
+    public String draw(String jsonOfListCards){
+        return null;
+    }
+
+    @MessageMapping ("/gameLost")
+    @SendTo("/topic/gameObject")
+    public String lost(){
+        return null;
+    }
+
+    @MessageMapping ("/gameStatus")
+    @SendTo("/topic/Status")
+    public String gameStatus(){ // Should not return json, but a string lost/won/left
+        return null;
+    }
+
+
+
 
 
 
