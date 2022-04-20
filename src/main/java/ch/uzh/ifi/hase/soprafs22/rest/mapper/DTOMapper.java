@@ -52,12 +52,12 @@ public interface DTOMapper {
   GameGetDTO convertEntityToGameGetDTO(Game game);
 */
 
-  @Mapping(source = "gameRunning", target = "gameRunning")
-  @Mapping(source = "gameWon", target = "gameWon")
-  @Mapping(source = "gameLost", target = "gameLost")
-  @Mapping(source = "userLeft", target = "userLeft")
-  @Mapping(source = "userTurn", target = "userTurn")
-  GameStatusGetDTO convertEntityToStatusGetDTO(GameStatus gameStatus);
+  //@Mapping(source = "gameRunning", target = "gameRunning")
+  //@Mapping(source = "gameWon", target = "gameWon")
+  //@Mapping(source = "gameLost", target = "gameLost")
+  //@Mapping(source = "userLeft", target = "userLeft")
+  //@Mapping(source = "userTurn", target = "userTurn")
+  //GameStatusGetDTO convertEntityToStatusGetDTO(GameStatus gameStatus);
 
 
   @Mapping(source = "value", target = "value")

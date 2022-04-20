@@ -149,4 +149,10 @@ public class Game{
         return this.playerList;
     }
 
+    public List<Pile> getPileList(){return  this.pileList;
+    }
+    public GameStatus getGameStatus(){return this.gameStatus;}
+
+    public void addPlayer(Player player) {this.getListOfPlayers().add(player);}
+
 }

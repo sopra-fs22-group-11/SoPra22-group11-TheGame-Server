@@ -1,20 +1,16 @@
 package ch.uzh.ifi.hase.soprafs22.controller;
 
 
-import ch.uzh.ifi.hase.soprafs22.entity.Player;
-import ch.uzh.ifi.hase.soprafs22.entity.User;
-import ch.uzh.ifi.hase.soprafs22.entity.WaitingRoom;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.PlayerGetDTO;
+import ch.uzh.ifi.hase.soprafs22.entity.*;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
-import ch.uzh.ifi.hase.soprafs22.websocket.ResponseMessage;
+import ch.uzh.ifi.hase.soprafs22.service.GameService;
 import com.solidfire.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.util.HtmlUtils;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
 
 import java.util.ArrayList;
@@ -28,9 +24,13 @@ import java.util.List;
 public class WebSocketController {
     private final UserService userService;
     private final WaitingRoom waitingRoom = new WaitingRoom();
+    private final GameService gameService;
+    private Game game = new Game();
 
-    WebSocketController(UserService userService) {
+
+    WebSocketController(UserService userService, GameService gameService) {
         this.userService = userService;
+        this.gameService = gameService;
     }
 
 
@@ -57,10 +57,30 @@ public class WebSocketController {
         String json = new Gson().toJson(waitingRoom.getPlayerList());
         System.out.println(json);
         System.out.println("in addlpayersInWatitingRoom method");
+        System.out.println("vor add player");
+        //game.addPlayer(newPlayer);
+        System.out.println("vor send game update");
+        sendGameUpdate();
+        System.out.println("vor return in addPlayersWatiningRoom");
         return json;
 
         //return waitingRoom.getPlayerList();
     }
+
+    @MessageMapping("/game1")
+    @SendTo("/topic/gameObject")
+    public String sendGameUpdate(){
+        Game gameObject= game;
+        System.out.println("vor tgo");
+        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(gameObject);
+        System.out.println("vor Gson");
+        String json = new Gson().toJson(tgo);
+        System.out.println(json);
+        System.out.println("vor Return in sendGameUpdate");
+        return json;
+    }
+
+
 
 
    //@MessageMapping("/game")

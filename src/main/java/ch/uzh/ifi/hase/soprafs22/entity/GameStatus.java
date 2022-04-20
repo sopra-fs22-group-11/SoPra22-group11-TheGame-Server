@@ -5,7 +5,7 @@ public class GameStatus {
     private boolean gameWon = false;
     private boolean gameLost = false;
     private boolean userLeft = false; //I assume this is set to true once a single user leaves
-    private User userTurn; // If no one is using it here we can remove it
+    private String userTurn = "Anna";  // TODO Delete userTurn and check that in GameTransfer Correct
     // Todo userTurn redundant in Game, GameStatus and User - choose one !
 
     public boolean getGameRunning() {return gameRunning;}
@@ -36,9 +36,7 @@ public class GameStatus {
     }
 
 
-    public User getUserTurn() {return userTurn;}
+    public String getUserTurn() {return userTurn;}
 
-    public void setUserTurn(User userTurn) {
-        this.userTurn = userTurn;
-    }
+
 }
