@@ -80,7 +80,7 @@ public class UserServiceTest {
 
 
   @Test
-  public void loginUser_changeStatusInRepo() {
+  public void login_register_User_changeStatusInRepo() {
       // given -> a first User has already been created
       User createdUser = userService.createUser(testUser);
       userService.setStatusInRepo(createdUser.getId(), UserStatus.READY);

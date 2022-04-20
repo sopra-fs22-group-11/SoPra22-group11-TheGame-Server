@@ -77,7 +77,7 @@ public class UserControllerTest {
     user.setUsername("Test User");
     user.setPassword("testUsername");
     user.setToken("1");
-    user.setStatus(UserStatus.READY);
+    user.setStatus(UserStatus.OFFLINE);
 
     UserPostDTO userPostDTO = new UserPostDTO();
     userPostDTO.setPassword("Test User");
@@ -89,6 +89,7 @@ public class UserControllerTest {
     MockHttpServletRequestBuilder postRequest = post("/users")
         .contentType(MediaType.APPLICATION_JSON)
         .content(asJsonString(userPostDTO));
+
 
     // then
     mockMvc.perform(postRequest)
@@ -127,7 +128,7 @@ public class UserControllerTest {
         user.setPassword("Test User");
         user.setUsername("testusername");
         user.setToken("1");
-        user.setStatus(UserStatus.OFFLINE);
+        user.setStatus(UserStatus.READY);
 
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
@@ -136,7 +137,6 @@ public class UserControllerTest {
         List<User> allUsers = Collections.singletonList(user);
 
         given(userService.getUsers()).willReturn(allUsers);
-        //given(userService.setStatusInRepo(user.getId(user.getId())));
 
         // when/then -> do the request + validate the result
         MockHttpServletRequestBuilder postRequest = post("/session")
