@@ -46,6 +46,8 @@ public interface DTOMapper {
   User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
 
+
+  // TODO delete this soon
   /*@Mapping(source = "userList", target = "userList")
   @Mapping(source = "deck", target = "deck")
   @Mapping(source = "pilesList", target = "pilesList")
@@ -59,14 +61,13 @@ public interface DTOMapper {
   //@Mapping(source = "userTurn", target = "userTurn")
   //GameStatusGetDTO convertEntityToStatusGetDTO(GameStatus gameStatus);
 
-
+/*
   @Mapping(source = "value", target = "value")
   CardGetDTO convertEntityToCardGetDTO(Card card);
 
-  //@Mapping(source = "id", target = "id")
-  //@Mapping(source = "playerName", target = "playerName")
-  //@Mapping(source = "yourTurn", target = "yourTurn")
-  //@Mapping(source = "handCards", target = "handCards")
-  //PlayerGetDTO convertEntityToPlayerGetDTO(Player player);
-
+  @Mapping(source = "id", target = "id")
+  @Mapping(source = "playerName", target = "playerName")
+  @Mapping(source = "handCards", target = "handCards")
+  PlayerGetDTO convertEntityToPlayerGetDTO(Player player);
+*/
 }

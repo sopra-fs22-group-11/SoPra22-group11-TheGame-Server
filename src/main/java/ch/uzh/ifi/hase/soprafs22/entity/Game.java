@@ -11,6 +11,7 @@ public class Game{
     private Deck deck = new Deck();
     private List<Pile> pileList = new ArrayList<>();
     private List<Player> playerList;
+    private String currentPlayer; //playerName
     private int fillUpToNoOfCards;
     private UserService userService;
     private GameStatus gameStatus = new GameStatus();
@@ -154,5 +155,9 @@ public class Game{
     public GameStatus getGameStatus(){return this.gameStatus;}
 
     public void addPlayer(Player player) {this.getListOfPlayers().add(player);}
+
+    public String getCurrentPlayer(){
+        return this.currentPlayer;
+    }
 
 }
