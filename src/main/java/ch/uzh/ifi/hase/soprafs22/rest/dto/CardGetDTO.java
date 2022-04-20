@@ -1,3 +1,5 @@
+/*
+// TODO please delete this soon
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs22.entity.User;
@@ -14,3 +16,5 @@ public class CardGetDTO {
 
 
 }
+
+ */

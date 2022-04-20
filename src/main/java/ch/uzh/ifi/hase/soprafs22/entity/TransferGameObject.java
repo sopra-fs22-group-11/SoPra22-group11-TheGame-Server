@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class TransferGameObject {
     // TODO add deck, how many cards left on deck
-    public String whoseTurn;
+    public String whoseTurn; // TODO get from game
     public List<Pile> pilesList;
     public Map<String, List<Card>> playerCards;
     public boolean gameRunning;

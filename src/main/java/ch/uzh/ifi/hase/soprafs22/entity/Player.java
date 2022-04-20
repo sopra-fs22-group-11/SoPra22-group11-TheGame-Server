@@ -30,7 +30,6 @@ import java.util.List;
 public class Player {
     private String playerName;
     private Long id; // same as user id
-    private Boolean yourTurn;
     private HandCards handCards;
 
     public Player(String playerName, Long id){
@@ -39,11 +38,9 @@ public class Player {
         this.handCards = new HandCards();
     }
 
-    public Boolean getYourTurn(){return yourTurn;}
-    public void setYourTurn(Boolean yourTurn){this.yourTurn = yourTurn;}
 
     public HandCards getHandCards(){return handCards;}
-    //public void setHandCards(HandCards handCards){this.handCards = handCards;}
+    //TODO public void setHandCards(HandCards handCards){this.handCards = handCards;}
 
     public String getPlayerName(){return this.playerName;}
 

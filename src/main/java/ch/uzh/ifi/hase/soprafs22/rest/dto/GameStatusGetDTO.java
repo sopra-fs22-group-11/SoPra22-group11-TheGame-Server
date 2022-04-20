@@ -1,13 +1,13 @@
+/*
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs22.entity.User;
-
+// TODO please delete this soon
 public class GameStatusGetDTO {
     private boolean gameRunning;
     private boolean gameWon;
     private boolean gameLost;
     private boolean userLeft;
-    private User userTurn;
 
     public boolean getGameRunning() {return gameRunning;}
 
@@ -36,12 +36,6 @@ public class GameStatusGetDTO {
         this.userLeft = userLeft;
     }
 
-
-    public User getUserTurn() {return userTurn;}
-
-    public void setUserTurn(User userTurn) {
-        this.userTurn = userTurn;
-    }
 }
-
+*/
 

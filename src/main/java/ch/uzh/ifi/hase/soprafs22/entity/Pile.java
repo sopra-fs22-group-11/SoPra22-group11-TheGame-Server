@@ -17,7 +17,7 @@ public class Pile {
     }
 
 
-
+    // TODO this will be in the client
     public boolean checkIfCardCanBePlayed(Card card) throws Exception {
         if (direction == Directions.TOPDOWN){
             if(card.getValue() < topCard.getValue() || card.getValue() - 10  == topCard.getValue())
