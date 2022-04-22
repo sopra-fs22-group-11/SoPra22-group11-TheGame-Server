@@ -122,11 +122,7 @@ public class WebSocketController {
     @MessageMapping ("/gameLost")
     @SendTo("/topic/game")
     public String lost(){
-        // TODO we said this to be void, but we need to inform all players that someone
-        // could not play anymore and game is lost; need return?
-
-        GameStatus gameStatus = new GameStatus();
-        gameStatus.setGameLost(true);
+        game.getGameStatus().setGameLost(true);
 
         return null;
     }
