@@ -104,27 +104,40 @@ public class WebSocketController {
         TransferGameObject tgo = g.fromJson(jsonTGO, TransferGameObject.class);
         game.updateGamefromTGOInformation(tgo);
         game.checkWin();
-        String json = new Gson().toJson(tgo);
+        TransferGameObject tgo1 = gameService.ConvertGameIntoTransferObject(game);
+        String json = new Gson().toJson(tgo1);
         return json;
     }
 
     @MessageMapping ("/draw")
     @SendTo("/topic/game")
-    public String draw(){ // TODO we don't pass anything, server knows how to handle
-
-
-        return null;
+    public String draw(){ // TODO we don't pass anything, server knows how to handle (TK)
+        game = new Game();
+        game.updateCurrentPlayer();
+        // TODO update current cards of a player:
+        // call game.draw()
+        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
+        String json = new Gson().toJson(tgo);
+        return json;
     } //TODO String etc can be void
 
     @MessageMapping ("/gameLost")
     @SendTo("/topic/game")
     public String lost(){
+        // TODO we said this to be void, but we need to inform all players that someone
+        // could not play anymore and game is lost; need return?
+
+        GameStatus gameStatus = new GameStatus();
+        gameStatus.setGameLost(true);
+
         return null;
     }
 
     @MessageMapping ("/gameStatus")
     @SendTo("/topic/Status")
     public String gameStatus(){ // Should not return json, but a string lost/won/left
+
+
         return null;
     }
 
