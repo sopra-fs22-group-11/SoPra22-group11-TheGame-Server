@@ -55,7 +55,7 @@ public class GameTest {
         pl.add(user2);
 
         //Game game = Game.initializeGame(pl, userService);
-
+*/
     }
 
     @Test
@@ -73,18 +73,23 @@ public class GameTest {
         userList.add(testUser);
         userList.add(testUser);
 
-        // initially status of each player is ready
+        // initially status of each user is ready
         for (User user:userList) {
             assertEquals(user.getStatus(), UserStatus.READY);
         }
+/*
+        Player testPlayer = new Player(testUser.getUsername(), testUser.getId());
+        Game game = new Game();
+        game.addPlayer(testPlayer);
+        game.addPlayer(testPlayer);
+        game.startGame();
 
-        //Game game = Game.initializeGame(userList, userService);
-
-        //after game init status of each player changes to ingame
+        //after game started status of each user changes to ingame
         for (User user:userList) {
             assertEquals(user.getStatus(), UserStatus.INGAME);
         }
-*/
+
+ */
 
     }
 }
