@@ -54,7 +54,7 @@ public class Game{
             // Every player is now in game, change its status
             player.setStatus(UserStatus.INGAME);
             */
-            }
+        }
         currentPlayer = playerList.get(0).getPlayerName();
 
 
@@ -101,13 +101,13 @@ public class Game{
         }
     }
     public String onePlayerFurther(String oldPlayer){  // TODO throws Exception { : the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
-       // TODO Make sure this works in C.2.1 Whose turn
+        // TODO Make sure this works in C.2.1 Whose turn
         int oldIndex = findPlayerInPlayerList(oldPlayer);
         int newIndex = (oldIndex+1) % playerList.size();
 
-       // TODO also change player.yourTurn and gameStatus.playerTurn
+        // TODO also change player.yourTurn and gameStatus.playerTurn
 
-       return playerList.get(newIndex).toString();
+        return playerList.get(newIndex).toString();
     }
 
     //TODO Feel free to implement a more elegant solution if you want
@@ -121,7 +121,7 @@ public class Game{
         return -200;
         //TODO throw new Exception();
     }
-    
+
     public boolean checkWin() {
         // TODO Make sure this works and test it in C.3.3 Winning the Game
         if (deck.getNoOfCards() == 0) {
