@@ -91,6 +91,9 @@ public class Game{
         // The client is not allowed to change the whoseTurn
         // The client is not allowed to change the gameRunning
         this.pileList = tgo.pilesList;
+        for (Player player:playerList){
+            player.setHandCards(tgo.playerCards.get(player.getPlayerName()));
+        }
     }
 
     public void updateCurrentPlayer() {

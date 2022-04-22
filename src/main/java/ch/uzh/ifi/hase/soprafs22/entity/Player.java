@@ -7,7 +7,7 @@ import java.util.List;
 public class Player {
     private String playerName;
     private Long id; // same as user id
-    private ArrayList<Card> handCards = new ArrayList<Card>();
+    private List<Card> handCards = new ArrayList<Card>();
 
     public Player(String playerName, Long id){
         this.playerName = playerName;
@@ -15,8 +15,8 @@ public class Player {
     }
 
 
-    public ArrayList<Card> getHandCards(){return handCards;}
-    public void setHandCards(ArrayList<Card> handCards){this.handCards = handCards;}
+    public List<Card> getHandCards(){return handCards;}
+    public void setHandCards(List<Card> handCards){this.handCards = handCards;}
 
     public String getPlayerName(){return this.playerName;}
 
