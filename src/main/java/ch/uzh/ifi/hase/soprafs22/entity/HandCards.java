@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandCards implements Serializable {
-    private List<Card> handCards = new ArrayList<>();
-    private int noOfCards = 0;
+   /* //private List<Card> handCards = new ArrayList<>();
+    //private int noOfCards = 0;
 
     public int getNoOfCards(){
         return noOfCards;
@@ -45,6 +45,6 @@ public class HandCards implements Serializable {
         }
         throw new Exception();
 
-    }
+    }*/
 }
 

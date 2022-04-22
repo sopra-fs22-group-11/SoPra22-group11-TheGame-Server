@@ -21,7 +21,7 @@ public class GameService {
         System.out.println("in Game Service");
         TransferGameObject tgo = new TransferGameObject();
         System.out.println("1");
-        //tgo.whoseTurn = gameObject.getGameStatus().getUserTurn();
+        tgo.whoseTurn = gameObject.getWhoseTurn();
         System.out.println("2");
 
         tgo.pilesList = gameObject.getPileList();
@@ -52,7 +52,7 @@ public class GameService {
 
         for (int i=0; i< gameObject.getListOfPlayers().size(); i++){
             System.out.println("dict loop");
-            dictionary.put(pl.get(i).getPlayerName(), pl.get(i).getHandCards().getHandCards());
+            dictionary.put(pl.get(i).getPlayerName(), pl.get(i).getHandCards());
             System.out.println("nach dict put");
         }
 

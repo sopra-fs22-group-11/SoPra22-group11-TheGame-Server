@@ -14,7 +14,7 @@ public class Game{
     private GameStatus gameStatus = new GameStatus();
 
     private List<Player> playerList;
-    private String currentPlayer; //playerName
+    private String whoseTurn; //playerName
     private int fillUpToNoOfCards;
 
     private UserService userService;
@@ -55,7 +55,7 @@ public class Game{
             player.setStatus(UserStatus.INGAME);
             */
             }
-        currentPlayer = playerList.get(0).getPlayerName();
+        whoseTurn = playerList.get(0).getPlayerName();
 
 
 
@@ -90,24 +90,24 @@ public class Game{
 
     public void updateCurrentPlayer() {
         //TODO Call this in app/draw, make sure the app/draw can only be called after the app/discard
-        String newPlayer = onePlayerFurther(currentPlayer);
-        Player parentPlayer = playerList.get(findPlayerInPlayerList(newPlayer));
+        String newPlayer = onePlayerFurther(whoseTurn);
+        Player playerObject = playerList.get(findPlayerInPlayerList(newPlayer));
 
         //Failsafe counter
         int cnt = 0;
-        while (parentPlayer.getHandCards().getNoOfCards()<1 & cnt <= playerList.size()){
-            updateCurrentPlayer();
+        while (playerObject.getHandCards().getNoOfCards()<1 & cnt <= playerList.size()){
+            newPlayer = onePlayerFurther(newPlayer);
+            playerObject = playerList.get(findPlayerInPlayerList(newPlayer));
             cnt += 1;
         }
+
+        whoseTurn = newPlayer;
     }
     public String onePlayerFurther(String oldPlayer){  // TODO throws Exception { : the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
-       // TODO Make sure this works in C.2.1 Whose turn
         int oldIndex = findPlayerInPlayerList(oldPlayer);
         int newIndex = (oldIndex+1) % playerList.size();
 
-       // TODO also change player.yourTurn and gameStatus.playerTurn
-
-       return playerList.get(newIndex).toString();
+        return playerList.get(newIndex).getPlayerName();
     }
 
     //TODO Feel free to implement a more elegant solution if you want
@@ -184,8 +184,8 @@ public class Game{
 
     public void addPlayer(Player player) {this.getListOfPlayers().add(player);}
 
-    public String getCurrentPlayer(){
-        return this.currentPlayer;
+    public String getWhoseTurn(){
+        return this.whoseTurn;
     }
 
 }
