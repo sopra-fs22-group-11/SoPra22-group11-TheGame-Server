@@ -140,7 +140,7 @@ public class WebSocketController {
     }
 
     @MessageMapping ("/gameStatus")
-    @SendTo("/topic/Status")
+    @SendTo("/topic/status")
     public String gameStatus(){ // Should not return json, but a string lost/won/left
         game.onGameTerminated();
 
