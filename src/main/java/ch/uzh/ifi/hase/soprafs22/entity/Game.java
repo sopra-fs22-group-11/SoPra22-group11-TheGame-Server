@@ -87,6 +87,11 @@ public class Game{
 
     public void playCard() {}
 
+    public void updateGamefromTGOInformation(TransferGameObject tgo){
+        // The client is not allowed to change the whoseTurn
+        // The client is not allowed to change the gameRunning
+        this.pileList = tgo.pilesList;
+    }
 
     public void updateCurrentPlayer() {
         //TODO Call this in app/draw, make sure the app/draw can only be called after the app/discard
