@@ -9,15 +9,14 @@ public class GameStatus {
 
     public boolean getGameRunning() {return gameRunning;}
 
-    public void setGameRunning(boolean gameRunning) {
-        this.gameRunning = gameRunning;
-    }
+    //public void setGameRunning(boolean gameRunning) {this.gameRunning = gameRunning;}
 
 
     public boolean getGameWon() {return gameWon;}
 
     public void setGameWon(boolean gameWon) {
         this.gameWon = gameWon;
+        this.gameRunning = !this.gameWon & !this.gameLost & !this.userLeft;
     }
 
 
@@ -25,6 +24,7 @@ public class GameStatus {
 
     public void setGameLost(boolean gameLost) {
         this.gameLost = gameLost;
+        this.gameRunning = !this.gameWon & !this.gameLost & !this.userLeft;
     }
 
 
@@ -32,6 +32,7 @@ public class GameStatus {
 
     public void setUserLeft(boolean userLeft) {
         this.userLeft = userLeft;
+        this.gameRunning = !this.gameWon & !this.gameLost & !this.userLeft;
     }
 
 
