@@ -21,6 +21,7 @@ public class GameService {
         System.out.println("in Game Service");
         TransferGameObject tgo = new TransferGameObject();
         System.out.println("1");
+        tgo.noCardsOnDeck = gameObject.getNoOfCardsOnDeck();
         tgo.whoseTurn = gameObject.getWhoseTurn();
         System.out.println("2");
 

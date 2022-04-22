@@ -58,18 +58,6 @@ public class UserService {
     return newUser;
   }
 
-  //public Player createPlayer(String username) {
-  //    Player newPlayer = new Player();
-  //    User userByUsername = userRepository.findByUsername(username);
-  //    newPlayer.setUsername(username);
-  //    newPlayer.setId(userByUsername.getId());
-  //    newPlayer.setYourTurn(false);
-//
-  //    // TODO: set handCards when starting the game
-//
-  //    log.debug("Created Information for Player: {}", newPlayer);
-  //    return newPlayer;
-  //}
 
   /**
    * This is a helper method that will check the uniqueness criteria of the
@@ -89,28 +77,27 @@ public class UserService {
       }
   }
 
-    //public void increaseGameCount(Player user, int i){
-    //    // Updates the user with the information given by another User-Object
-//
-    //    Optional<User> foundById = userRepository.findById(user.getId());
-//
-    //    foundById.get().setGameCount(user.getGameCount()+i);
-//
-    //    userRepository.save(foundById.get());
-    //    userRepository.flush();
-    //}
-//
-    //public void increaseWinningCount(Player player, int i){
-    //    // TODO Make sure this works and test it in C.3.3 Winning the Game
-    //    // Updates the user with the information given by another User-Object
-//
-    //    Optional<User> foundById = userRepository.findById(player.getId());
-//
-    //    foundById.get().setWinningCount(player.getWinningCount()+i);
-//
-    //    userRepository.save(foundById.get());
-    //    userRepository.flush();
-    //}
+    public void increaseGameCount(Player player, int i){
+        // Updates the user with the information given by another User-Object
+        Optional<User> foundById = userRepository.findById(player.getId());
+
+        foundById.get().setGameCount(foundById.get().getGameCount()+i);
+
+        userRepository.save(foundById.get());
+        userRepository.flush();
+    }
+
+    public void increaseWinningCount(Player player, int i){
+        // TODO Make sure this works and test it in C.3.3 Winning the Game
+        // Updates the user with the information given by another User-Object
+
+        Optional<User> foundById = userRepository.findById(player.getId());
+
+        foundById.get().setWinningCount(foundById.get().getWinningCount()+i);
+
+        userRepository.save(foundById.get());
+        userRepository.flush();
+    }
 
     public User getUserById(long userId) {
         User user = userRepository.findById(userId);

@@ -59,31 +59,31 @@ public class WebSocketController {
         waitingRoom.addPlayer(newPlayer);
         String json = new Gson().toJson(waitingRoom.getPlayerList());
         System.out.println(json);
-        System.out.println("in addlpayersInWatitingRoom method");
-        System.out.println("vor add player");
-        //game.addPlayer(newPlayer);
-        System.out.println("vor send game update");
-        sendGameUpdate();
-        System.out.println("vor return in addPlayersWatiningRoom");
+        //System.out.println("in addlpayersInWatitingRoom method");
+        //System.out.println("vor add player");
+        ////game.addPlayer(newPlayer);
+        //System.out.println("vor send game update");
+        //sendGameUpdate();
+        //System.out.println("vor return in addPlayersWatiningRoom");
         return json;
 
         //return waitingRoom.getPlayerList();
     }
 
 
-    // TODO delete later when start ok
-    @MessageMapping("/game1")
-    @SendTo("/topic/gameObject")
-    public String sendGameUpdate(){
-        Game gameObject= game;
-        System.out.println("vor tgo");
-        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(gameObject);
-        System.out.println("vor Gson");
-        String json = new Gson().toJson(tgo);
-        System.out.println(json);
-        System.out.println("vor Return in sendGameUpdate");
-        return json;
-    }
+   // // TODO delete later when start ok
+   // @MessageMapping("/game1")
+   // @SendTo("/topic/gameObject")
+   // public String sendGameUpdate(){
+   //     Game gameObject= game;
+   //     System.out.println("vor tgo");
+   //     TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(gameObject);
+   //     System.out.println("vor Gson");
+   //     String json = new Gson().toJson(tgo);
+   //     System.out.println(json);
+   //     System.out.println("vor Return in sendGameUpdate");
+   //     return json;
+   // }
 
     @MessageMapping ("/start")
     @SendTo("/topic/start")
@@ -102,7 +102,7 @@ public class WebSocketController {
         Gson g = new Gson();
         System.out.println("vor json in tgo umwandeln, jsontgo:"+ jsonTGO);
         TransferGameObject tgo = g.fromJson(jsonTGO, TransferGameObject.class);
-        game.updateGamefromTGOInformation(tgo);
+        game.updateGameFromTGOInformation(tgo);
         game.checkWin();
         TransferGameObject tgo1 = gameService.ConvertGameIntoTransferObject(game);
         String json = new Gson().toJson(tgo1);
@@ -124,30 +124,43 @@ public class WebSocketController {
     public String lost(){
         game.getGameStatus().setGameLost(true);
 
-        return null;
+        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
+        String json = new Gson().toJson(tgo);
+        return json;
+    }
+
+    @MessageMapping ("/gameLeft")
+    @SendTo("/topic/game")
+    public String left(){
+        game.getGameStatus().setUserLeft(true);
+
+        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
+        String json = new Gson().toJson(tgo);
+        return json;
     }
 
     @MessageMapping ("/gameStatus")
-    @SendTo("/topic/Status")
+    @SendTo("/topic/status")
     public String gameStatus(){ // Should not return json, but a string lost/won/left
+        game.onGameTerminated();
 
+        if(game.getGameStatus().getGameWon()){
+            return "won";
+        }
+        else if(game.getGameStatus().getGameLost()){
+            return "lost";
+        }
+        else if(game.getGameStatus().getUserLeft()) {
+            return "left";
+        }
+        else if(game.getGameStatus().getGameRunning()){
+            return "running";
+        }
+        else{
+            return "oh on";
 
-        return null;
+        }
+
     }
-
-
-
-
-
-
-
-   //@MessageMapping("/game")
-   //@SendTo("/topic/players")
-   //public List<Player> getPlayersInWaitingroom(){
-   //    System.out.println("in getPlayersInWaitingroom method");
-   //    return waitingRoom.getPlayerList();
-
-   //}
-
 
 }

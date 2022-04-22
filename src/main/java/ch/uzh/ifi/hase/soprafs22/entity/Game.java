@@ -33,8 +33,6 @@ public class Game{
         this.playerList = playerList;
         this.userService = userService;
 
-
-
         // Check what's the amount of cards on a hand
         if(playerList.size()==2) { fillUpToNoOfCards = 7; }
         else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
@@ -45,15 +43,8 @@ public class Game{
             // Fill all users hand-cards
             player.fillCards(fillUpToNoOfCards, deck);
 
-            // Every player now has a game more they played
-            //TODO do this
-            //userService.increaseGameCount(player, 1);
-
-            //TODO change the status of each player
-             /*
-            // Every player is now in game, change its status
-            player.setStatus(UserStatus.INGAME);
-            */
+            //Change the status of each player
+            userService.setStatusInRepo(player.getId(), UserStatus.INGAME);
             }
         whoseTurn = playerList.get(0).getPlayerName();
 
@@ -61,7 +52,7 @@ public class Game{
 
 
 
-    public void updateGamefromTGOInformation(TransferGameObject tgo){
+    public void updateGameFromTGOInformation(TransferGameObject tgo){
         // The client is not allowed to change the whoseTurn
         // The client is not allowed to change the gameRunning
         this.pileList = tgo.pilesList;
@@ -71,7 +62,6 @@ public class Game{
     }
 
     public void updateCurrentPlayer() {
-        //TODO Call this in app/draw, make sure the app/draw can only be called after the app/discard
         String newPlayer = onePlayerFurther(whoseTurn);
         Player playerObject = playerList.get(findPlayerInPlayerList(newPlayer));
 
@@ -85,7 +75,6 @@ public class Game{
 
         whoseTurn = newPlayer;
     }
-
     public String onePlayerFurther(String oldPlayer){  // TODO throws Exception { : the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
         int oldIndex = findPlayerInPlayerList(oldPlayer);
         int newIndex = (oldIndex+1) % playerList.size();
@@ -122,41 +111,19 @@ public class Game{
         playerObject.fillCards(fillUpToNoOfCards, deck);
     }
 
+    public void onGameTerminated(){
+        for(Player player:playerList){
+            userService.setStatusInRepo(player.getId(), UserStatus.READY);
 
-    public boolean gameOver() {
-        // checks on a button click when a player says he cannot play anymore
-        if (true) { return true;}
-        return false;
-    }
-
-    //private void onGameWon() {
-    //    for (Player player:playerList) {
-    //        userService.increaseWinningCount(player, 1);
-    //    }
-    //    // TODO: end game in gameService? could end the game with given gameId
-    //    // TODO: delete players also in GameService
-    //}
-
-    private void onGameOver() {
-        /*
-        for (Player player:playerList) {
-            userService.increaseGameCount(player, 1);
-        }
-         */
-        // TODO: end game in gameService? could end the game with given gameId
-        // TODO: delete players also in GameService
-    }
-
-
-    /*
-    public void updateWinningCount() {
-        // TODO Make sure this works and test it in C.3.3 Winning the Game
-        for (Player player : playerList) {
-            userService.increaseWinningCount(player, 1);
+            if(!gameStatus.getUserLeft()){
+                userService.increaseGameCount(player, 1);
+            }
+            if(gameStatus.getGameWon()){
+                userService.increaseWinningCount(player, 1);
+            }
         }
     }
 
-     */
 
     public List<Player> getListOfPlayers() {return this.playerList;}
 
@@ -164,9 +131,9 @@ public class Game{
 
     public GameStatus getGameStatus(){return this.gameStatus;}
 
-    public void addPlayer(Player player) {this.getListOfPlayers().add(player);}
-
     public String getWhoseTurn(){return this.whoseTurn;}
+
+    public int getNoOfCardsOnDeck() {return this.deck.getNoOfCards();}
 
     public int getFillUpToNoOfCards(){return this.fillUpToNoOfCards;}
 

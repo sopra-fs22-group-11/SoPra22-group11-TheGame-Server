@@ -120,7 +120,7 @@ public class GameTest {
 
         game.startGame(pl, userService);
 
-        game.updateGamefromTGOInformation(tgo);
+        game.updateGameFromTGOInformation(tgo);
 
         assertEquals(true, game.getGameStatus().getGameRunning());
         assertEquals("player1", game.getWhoseTurn());
@@ -449,9 +449,9 @@ public class GameTest {
         pl.add(user2);
 
         //Game game = Game.initializeGame(pl, userService);
-
+*/
     }
-
+/*
     @Test
     public void Game_StatusCheck() {
         List<Pile> pileList = new ArrayList<>();
@@ -467,18 +467,23 @@ public class GameTest {
         userList.add(testUser);
         userList.add(testUser);
 
-        // initially status of each player is ready
+        // initially status of each user is ready
         for (User user:userList) {
             assertEquals(user.getStatus(), UserStatus.READY);
         }
 
-        //Game game = Game.initializeGame(userList, userService);
+        Player testPlayer = new Player(testUser.getUsername(), testUser.getId());
+        Game game = new Game();
+        game.addPlayer(testPlayer);
+        game.addPlayer(testPlayer);
+        game.startGame();
 
-        //after game init status of each player changes to ingame
+        //after game started status of each user changes to ingame
         for (User user:userList) {
             assertEquals(user.getStatus(), UserStatus.INGAME);
         }
-*/
+
+ */
 
 
-}
+
