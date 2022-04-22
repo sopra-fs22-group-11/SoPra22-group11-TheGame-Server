@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.messaging.simp.user.UserDestinationResolver;
 
 import java.util.*;
 
@@ -20,7 +21,7 @@ public class GameTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private UserService userService;
+    private UserService userService = new UserService(userRepository);
 
     private User testUser;
     //TODO tests not ok yet

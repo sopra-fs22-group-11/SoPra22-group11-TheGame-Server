@@ -107,6 +107,14 @@ public class UserService {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This user ID cannot be found.");
     }
 
+    public User getUserByUsername(String userName){
+        User user = userRepository.findByUsername(userName);
+        if (user != null) {
+            return user;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This user cannot be found.");
+    }
+
     public User saveUpdate(User user) {
         user = userRepository.save(user);
         userRepository.flush();

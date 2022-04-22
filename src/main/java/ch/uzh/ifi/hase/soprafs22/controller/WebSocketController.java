@@ -12,6 +12,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,14 +52,15 @@ public class WebSocketController {
     @MessageMapping("/game")
     @SendTo("/topic/players")
     public String addPlayersInWaitingroom(String userData){
-        System.out.println(userData);
+        //System.out.println(userData);
         Gson gson = new Gson();
-        User userObject = gson.fromJson(userData, User.class);
-        System.out.println("the name is:"+userObject.getUsername());
+        String userString = gson.fromJson(userData, String.class);
+        User userObject = userService.getUserByUsername(userString);
+        //System.out.println("the name is:"+userObject.getUsername());
         Player newPlayer = new Player(userObject.getUsername(), userObject.getId());
         waitingRoom.addPlayer(newPlayer);
         String json = new Gson().toJson(waitingRoom.getPlayerList());
-        System.out.println(json);
+        //System.out.println(json);
         //System.out.println("in addlpayersInWatitingRoom method");
         //System.out.println("vor add player");
         ////game.addPlayer(newPlayer);
