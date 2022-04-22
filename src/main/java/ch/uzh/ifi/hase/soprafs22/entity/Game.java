@@ -133,4 +133,6 @@ public class Game{
 
     public String getWhoseTurn(){return this.whoseTurn;}
 
+    public int getNoOfCardsOnDeck() {return this.deck.getNoOfCards();}
+
 }
