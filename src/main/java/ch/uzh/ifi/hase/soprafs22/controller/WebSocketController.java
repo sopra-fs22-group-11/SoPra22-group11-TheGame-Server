@@ -88,13 +88,10 @@ public class WebSocketController {
     @MessageMapping ("/start")
     @SendTo("/topic/start")
     public String startGame(){ // TODO Think whether waitingRoom list needs to get players again from user
-        Game gameObject= game;
         game.startGame(waitingRoom.getPlayerList(), userService);
-        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(gameObject);
+        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
         String json = new Gson().toJson(tgo);
-
-
-        return null;
+        return json;
     }
 
     @MessageMapping ("/discard")
@@ -104,18 +101,17 @@ public class WebSocketController {
         Gson g = new Gson();
         System.out.println("vor json in tgo umwandeln, jsontgo:"+ jsonTGO);
         TransferGameObject tgo = g.fromJson(jsonTGO, TransferGameObject.class);
-
-
         game.updateGamefromTGOInformation(tgo);
         // call game.discard()
-
-
-        return null;
+        String json = new Gson().toJson(tgo);
+        return json;
     }
 
     @MessageMapping ("/draw")
     @SendTo("/topic/game")
-    public String draw(String jsonOfListCards){
+    public String draw(){ // TODO we don't pass anything, server knows how to handle
+
+
         return null;
     } //TODO String etc can be void
 
