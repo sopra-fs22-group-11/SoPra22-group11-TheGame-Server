@@ -32,8 +32,6 @@ public class UserController {
 
         // create User
         User createdUser = userService.createUser(userInput);
-        // createdUser.setStatus(UserStatus.READY);
-        userService.setStatusInRepo(createdUser.getId(), UserStatus.READY);
 
         // convert internal representation of User back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
