@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 /**
  * WebSocket endpoints
  */
@@ -89,9 +90,18 @@ public class WebSocketController {
     @SendTo("/topic/start")
     public String startGame(){ // TODO Think whether waitingRoom list needs to get players again from user
         game = new Game();
-        game.startGame(waitingRoom.getPlayerList(), userService);
+        List<Player> exampleList= new ArrayList<>();
+        Player p1 = new Player("Anna",new Long(1));
+        Player p2 = new Player("Ben", new Long(2));
+
+        exampleList.add(p1);
+        exampleList.add(p2);
+
+        game.startGame(exampleList, userService);
+        //game.startGame(waitingRoom.getPlayerList(), userService);
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
         String json = new Gson().toJson(tgo);
+        System.out.println(json);
         return json;
     }
 
