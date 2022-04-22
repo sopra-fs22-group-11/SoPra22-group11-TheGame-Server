@@ -112,10 +112,8 @@ public class WebSocketController {
     @MessageMapping ("/draw")
     @SendTo("/topic/game")
     public String draw(){ // TODO we don't pass anything, server knows how to handle (TK)
-        game = new Game();
         game.updateCurrentPlayer();
-        // TODO update current cards of a player:
-        // call game.draw()
+        game.draw();
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
         String json = new Gson().toJson(tgo);
         return json;

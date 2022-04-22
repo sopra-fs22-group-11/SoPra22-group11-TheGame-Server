@@ -116,6 +116,11 @@ public class Game{
         }
     }
 
+    public void draw(){
+        Player playerObject = playerList.get(findPlayerInPlayerList(whoseTurn));
+        playerObject.fillCards(fillUpToNoOfCards, deck);
+    }
+
 
     public boolean gameOver() {
         // checks on a button click when a player says he cannot play anymore
