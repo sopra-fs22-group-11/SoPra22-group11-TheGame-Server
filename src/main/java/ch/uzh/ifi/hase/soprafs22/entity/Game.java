@@ -20,7 +20,7 @@ public class Game{
     private UserService userService;
 
 
-    public void Game(UserService userService){
+    public void Game(){
         // Generates the pile
         pileList.add(new Pile(Directions.TOPDOWN));
         pileList.add(new Pile(Directions.TOPDOWN));
@@ -85,6 +85,7 @@ public class Game{
 
         whoseTurn = newPlayer;
     }
+
     public String onePlayerFurther(String oldPlayer){  // TODO throws Exception { : the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
         int oldIndex = findPlayerInPlayerList(oldPlayer);
         int newIndex = (oldIndex+1) % playerList.size();
@@ -166,5 +167,9 @@ public class Game{
     public void addPlayer(Player player) {this.getListOfPlayers().add(player);}
 
     public String getWhoseTurn(){return this.whoseTurn;}
+
+    public int getFillUpToNoOfCards(){return this.fillUpToNoOfCards;}
+
+    public Deck getDeck(){return this.deck;}
 
 }
