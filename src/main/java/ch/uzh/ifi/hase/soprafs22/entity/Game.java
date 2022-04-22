@@ -11,17 +11,59 @@ public class Game{
     // we need some sort of gameId for each game: private final int gameId;
     private Deck deck = new Deck();
     private List<Pile> pileList = new ArrayList<>();
+    private GameStatus gameStatus = new GameStatus();
+
     private List<Player> playerList;
     private String currentPlayer; //playerName
     private int fillUpToNoOfCards;
+
     private UserService userService;
-    private GameStatus gameStatus = new GameStatus();
 
 
-    public void startGame() {
-        initializeGame(playerList, userService);
-        // TODO: start turn of 1st player
-        while (gamePlayable()) {
+    public void Game(){
+        // Generates the pile
+        pileList.add(new Pile(Directions.TOPDOWN));
+        pileList.add(new Pile(Directions.TOPDOWN));
+        pileList.add(new Pile(Directions.DOWNUP));
+        pileList.add(new Pile(Directions.DOWNUP));
+    }
+
+
+    public void startGame(List<Player> playerList, UserService userService) {
+        //TODO call this in the app/start endpoint of websocket
+        this.playerList = playerList;
+        this.userService = userService;
+
+
+        // Check what's the amount of cards on a hand
+        if(playerList.size()==2) { fillUpToNoOfCards = 7; }
+        else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
+        //else{throw new Exception();}// TODO The Websocket request which handles the game start will catch this exception and throw a ResponseStatusException
+
+
+        for(Player player:playerList){
+            // Fill all users hand-cards
+            player.getHandCards().fillCards(fillUpToNoOfCards, deck);
+
+            // Every player now has a game more they played
+            //TODO do this
+            //userService.increaseGameCount(player, 1);
+
+            //TODO change the status of each player
+             /*
+            // Every player is now in game, change its status
+            player.setStatus(UserStatus.INGAME);
+            */
+            }
+        currentPlayer = playerList.get(0).getPlayerName();
+
+
+
+
+
+        // TODO: delete this
+
+        /*while (gamePlayable()) {
             // game can be played -- continue
         }
         // end the game
@@ -29,47 +71,9 @@ public class Game{
             onGameOver();
         }
         onGameOver();
+    */
     }
-
-    public static Game initializeGame(List<Player> playerList, UserService pc){
-        // TODO This is how we create a new player unless there is another option how to pass playerList
-
-        // Store all players
-        Game game = new Game();
-        game.playerList = playerList;
-
-        /*for (Player player:playerList) {
-            // Every player is now in game, change its status
-            player.setStatus(UserStatus.INGAME);
-        }*/
-
-        // TODO give the singular UserService Element to the Game such that it can make changes to the database
-        game.userService = pc;
-        return game;
-    }
-
-    //private void Game() throws Exception { // This is private to remember to create a player as above
-    //    // Add all piles
-    //    pileList.add(new Pile(Directions.TOPDOWN));
-    //    pileList.add(new Pile(Directions.TOPDOWN));
-    //    pileList.add(new Pile(Directions.DOWNUP));
-    //    pileList.add(new Pile(Directions.DOWNUP));
-//
-    //    // Check what's the amount of cards on a hand
-    //    if(playerList.size()==2) { fillUpToNoOfCards = 7; }
-    //    else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
-    //    else{throw new Exception();}// TODO The REST request which handles the game start will catch this exception and throw a ResponseStatusException
-//
-    //    for(Player player:playerList){
-    //        // Fill all users hand-cards
-    //        player.getHandCards().fillCards(fillUpToNoOfCards);
-//
-    //        // Every player now has a game more they played
-    //        userService.increaseGameCount(player, 1);
-    //    }
-//
-    //}
-
+    /*
     public boolean gamePlayable() {
         if (deck.getNoOfCards() == 0) {
             for (Player player:playerList) {
@@ -79,29 +83,43 @@ public class Game{
         }
         return true;
     }
+    */
 
     public void playCard() {}
 
 
+    public void updateCurrentPlayer() {
+        //TODO Call this in app/draw, make sure the app/draw can only be called after the app/discard
+        String newPlayer = onePlayerFurther(currentPlayer);
+        Player parentPlayer = playerList.get(findPlayerInPlayerList(newPlayer));
 
-    public Player updateCurrentPlayer(User oldUser) throws Exception { // TODO the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
+        //Failsafe counter
+        int cnt = 0;
+        while (parentPlayer.getHandCards().getNoOfCards()<1 & cnt <= playerList.size()){
+            updateCurrentPlayer();
+            cnt += 1;
+        }
+    }
+    public String onePlayerFurther(String oldPlayer){  // TODO throws Exception { : the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
        // TODO Make sure this works in C.2.1 Whose turn
-        int oldIndex = findUserInUserList(oldUser);
+        int oldIndex = findPlayerInPlayerList(oldPlayer);
         int newIndex = (oldIndex+1) % playerList.size();
 
        // TODO also change player.yourTurn and gameStatus.playerTurn
-       return playerList.get(newIndex);
+
+       return playerList.get(newIndex).toString();
     }
 
     //TODO Feel free to implement a more elegant solution if you want
-    private int findUserInUserList(User oldUser) throws Exception {
+    private int findPlayerInPlayerList(String oldPlayer) {// TODO throws Exception {
         int len = playerList.size();
         for (int i = 0; i < len; i++){
-            if (oldUser.getId().equals(playerList.get(i).getId())){
+            if (oldPlayer.equals(playerList.get(i).getPlayerName())){
                 return i;
             }
         }
-        throw new Exception();
+        return -200;
+        //TODO throw new Exception();
     }
     
     public boolean checkWin() {
