@@ -85,13 +85,26 @@ public class WebSocketController {
 
     @MessageMapping ("/start")
     @SendTo("/topic/Start")
-    public String startGame(){
+    public String startGame(){ // TODO Think whether waitingRoom list needs to get players again from user
+        game.startGame(waitingRoom.getPlayerList(), userService);
+
+
+
         return null;
     }
 
     @MessageMapping ("/discard")
     @SendTo("/topic/gameObject")
-    public String discard(String jsonOfListCardsAndListPiles){
+    public String discard(String jsonTGO){
+        Gson g = new Gson();
+        System.out.println("vor json in tgo umwandeln, jsontgo:"+ jsonTGO);
+        TransferGameObject tgo = g.fromJson(jsonTGO, TransferGameObject.class);
+
+        //Transform to TGO
+        //game.updateGamefromTGOInformation(tgo tgo)
+        // call game.discard()
+
+
         return null;
     }
 
@@ -99,7 +112,7 @@ public class WebSocketController {
     @SendTo("/topic/gameObject")
     public String draw(String jsonOfListCards){
         return null;
-    }
+    } //TODO String etc can be void
 
     @MessageMapping ("/gameLost")
     @SendTo("/topic/gameObject")

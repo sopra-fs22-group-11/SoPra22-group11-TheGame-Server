@@ -7,13 +7,11 @@ import java.util.List;
 public class Player {
     private String playerName;
     private Long id; // same as user id
-    private ArrayList<Card> handCards;
+    private ArrayList<Card> handCards = new ArrayList<Card>();
 
     public Player(String playerName, Long id){
         this.playerName = playerName;
         this.id = id;
-        this.handCards = new ArrayList<Card>();
-
     }
 
 
@@ -25,7 +23,13 @@ public class Player {
     public Long getId(){return this.id;}
 
     public int getNoOfCards(){
-        return noOfCards;
+        return handCards.size();
+    }
+
+    public void fillCards(int fillTo, Deck deck){
+        while(getNoOfCards() < fillTo && deck.getNoOfCards() > 0){
+            handCards.add(deck.pop());
+        }
     }
 
 }

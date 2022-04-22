@@ -15,7 +15,7 @@ import java.util.Map;
 public class GameService {
 
 
-    // TODO: think about if it's better to put public Player createPlayer(String username) --> everything just related to game be solved here
+
     public TransferGameObject ConvertGameIntoTransferObject(Game gameObject){
         //
         System.out.println("in Game Service");
@@ -28,12 +28,13 @@ public class GameService {
         System.out.println("3");
 
         // TODO Delete as soon as getPlayerCardsDictionary
-        Map<String, List<Card>> dictionary = new HashMap<>();
-        Card c = new Card(12);
-        List<Card> lc = new ArrayList<>();
-        lc.add(c);
-        dictionary.put("Anna",  lc);
-        tgo.playerCards = dictionary;
+        //Map<String, List<Card>> dictionary = new HashMap<>();
+        //Card c = new Card(12);
+        //List<Card> lc = new ArrayList<>();
+        //lc.add(c);
+        //dictionary.put("Anna",  lc);
+        //tgo.playerCards = dictionary;
+        tgo.playerCards = getPlayerCardsDictionary(gameObject);
         System.out.println("4");
 
         tgo.gameRunning = gameObject.getGameStatus().getGameRunning();

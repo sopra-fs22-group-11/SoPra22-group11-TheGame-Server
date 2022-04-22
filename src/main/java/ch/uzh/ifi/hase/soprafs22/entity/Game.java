@@ -20,7 +20,7 @@ public class Game{
     private UserService userService;
 
 
-    public void Game(){
+    public void Game(UserService userService){
         // Generates the pile
         pileList.add(new Pile(Directions.TOPDOWN));
         pileList.add(new Pile(Directions.TOPDOWN));
@@ -43,7 +43,7 @@ public class Game{
 
         for(Player player:playerList){
             // Fill all users hand-cards
-            player.getHandCards().fillCards(fillUpToNoOfCards, deck);
+            player.fillCards(fillUpToNoOfCards, deck);
 
             // Every player now has a game more they played
             //TODO do this
@@ -95,7 +95,7 @@ public class Game{
 
         //Failsafe counter
         int cnt = 0;
-        while (playerObject.getHandCards().getNoOfCards()<1 & cnt <= playerList.size()){
+        while (playerObject.getNoOfCards()<1 & cnt <= playerList.size()){
             newPlayer = onePlayerFurther(newPlayer);
             playerObject = playerList.get(findPlayerInPlayerList(newPlayer));
             cnt += 1;
@@ -126,7 +126,7 @@ public class Game{
         // TODO Make sure this works and test it in C.3.3 Winning the Game
         if (deck.getNoOfCards() == 0) {
             for (Player player : playerList) {
-                if (player.getHandCards().getNoOfCards() != 0) {
+                if (player.getNoOfCards() != 0) {
                     return false;
                 }
             }
