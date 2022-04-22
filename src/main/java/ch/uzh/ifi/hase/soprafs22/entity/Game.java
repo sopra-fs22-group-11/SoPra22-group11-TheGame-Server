@@ -30,9 +30,9 @@ public class Game{
 
 
     public void startGame(List<Player> playerList, UserService userService) {
-        //TODO call this in the app/start endpoint of websocket
         this.playerList = playerList;
         this.userService = userService;
+
 
 
         // Check what's the amount of cards on a hand
@@ -57,35 +57,9 @@ public class Game{
             }
         whoseTurn = playerList.get(0).getPlayerName();
 
-
-
-
-
-        // TODO: delete this
-
-        /*while (gamePlayable()) {
-            // game can be played -- continue
-        }
-        // end the game
-        if (checkWin()) {
-            onGameOver();
-        }
-        onGameOver();
-    */
     }
-    /*
-    public boolean gamePlayable() {
-        if (deck.getNoOfCards() == 0) {
-            for (Player player:playerList) {
-                if (player.getHandCards().getNoOfCards() == 0) {
-                    return false;
-                } return true; }
-        }
-        return true;
-    }
-    */
 
-    public void playCard() {}
+
 
     public void updateGamefromTGOInformation(TransferGameObject tgo){
         // The client is not allowed to change the whoseTurn
@@ -130,22 +104,18 @@ public class Game{
         //TODO throw new Exception();
     }
     
-    public boolean checkWin() {
+    public void checkWin() {
         // TODO Make sure this works and test it in C.3.3 Winning the Game
         if (deck.getNoOfCards() == 0) {
             for (Player player : playerList) {
                 if (player.getNoOfCards() != 0) {
-                    return false;
+                    return;
                 }
             }
             gameStatus.setGameWon(true);
-            /*for (User user : userList) {
-                user.setStatus(UserStatus.READY);
-            }*/
-            return true;
         }
-        return false;
     }
+
 
     public boolean gameOver() {
         // checks on a button click when a player says he cannot play anymore
@@ -182,18 +152,14 @@ public class Game{
 
      */
 
-    public List<Player> getListOfPlayers() {
-        return this.playerList;
-    }
+    public List<Player> getListOfPlayers() {return this.playerList;}
 
-    public List<Pile> getPileList(){return  this.pileList;
-    }
+    public List<Pile> getPileList(){return this.pileList;}
+
     public GameStatus getGameStatus(){return this.gameStatus;}
 
     public void addPlayer(Player player) {this.getListOfPlayers().add(player);}
 
-    public String getWhoseTurn(){
-        return this.whoseTurn;
-    }
+    public String getWhoseTurn(){return this.whoseTurn;}
 
 }

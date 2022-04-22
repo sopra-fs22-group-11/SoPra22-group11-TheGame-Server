@@ -25,7 +25,7 @@ public class WebSocketController {
     private final UserService userService;
     private final WaitingRoom waitingRoom = new WaitingRoom();
     private final GameService gameService;
-    private Game game = new Game();
+    private Game game;
 
 
     WebSocketController(UserService userService, GameService gameService) { //TODO check only one userRepository
@@ -88,6 +88,7 @@ public class WebSocketController {
     @MessageMapping ("/start")
     @SendTo("/topic/start")
     public String startGame(){ // TODO Think whether waitingRoom list needs to get players again from user
+        game = new Game();
         game.startGame(waitingRoom.getPlayerList(), userService);
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
         String json = new Gson().toJson(tgo);
@@ -102,7 +103,7 @@ public class WebSocketController {
         System.out.println("vor json in tgo umwandeln, jsontgo:"+ jsonTGO);
         TransferGameObject tgo = g.fromJson(jsonTGO, TransferGameObject.class);
         game.updateGamefromTGOInformation(tgo);
-        // call game.discard()
+        game.checkWin();
         String json = new Gson().toJson(tgo);
         return json;
     }
