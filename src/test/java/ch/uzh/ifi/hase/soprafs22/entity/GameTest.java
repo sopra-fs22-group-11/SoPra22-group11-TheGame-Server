@@ -15,24 +15,23 @@ import org.springframework.messaging.simp.user.UserDestinationResolver;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 public class GameTest {
     @Mock
-    private UserRepository userRepository;
+    private UserRepository userRepository = mock(UserRepository.class);
 
     @InjectMocks
     private UserService userService = new UserService(userRepository);
 
-    private User testUser;
-    //TODO tests not ok yet
 
     //test startGame with 2 players
     @Test
     public void startGameTestWithTwo() {
         Game game = new Game();
 
-        Player player1 = new Player("player1",  new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -42,12 +41,12 @@ public class GameTest {
         //whoseTurn
         assertEquals(player1.getPlayerName(), game.getWhoseTurn());
         //fillUpToNoOfCards
-        assertEquals(7,game.getFillUpToNoOfCards());
+        assertEquals(7, game.getFillUpToNoOfCards());
         //playerList
-        assertEquals(2,game.getListOfPlayers().size());
+        assertEquals(2, game.getListOfPlayers().size());
         //handcards
-        for (Player player: pl){
-            assertEquals(7,player.getNoOfCards());
+        for (Player player : pl) {
+            assertEquals(7, player.getNoOfCards());
         }
 
     }
@@ -57,11 +56,11 @@ public class GameTest {
     public void startGameTestMoreThanTwo() {
         Game game = new Game();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
-        Player player4 = new Player("player4",new Long("4"));
-        Player player5 = new Player("player5",new Long("5"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
+        Player player4 = new Player("player4", new Long("4"));
+        Player player5 = new Player("player5", new Long("5"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -74,23 +73,23 @@ public class GameTest {
         //whoseTurn
         assertEquals(player1.getPlayerName(), game.getWhoseTurn());
         //fillUpToNoOfCards
-        assertEquals(6,game.getFillUpToNoOfCards());
+        assertEquals(6, game.getFillUpToNoOfCards());
         //playerList
-        assertEquals(5,game.getListOfPlayers().size());
+        assertEquals(5, game.getListOfPlayers().size());
         //handcards
-        for (Player player: pl){
-            assertEquals(6,player.getNoOfCards());
+        for (Player player : pl) {
+            assertEquals(6, player.getNoOfCards());
         }
     }
 
     //TODO test updateGamefromTGOInformation
     //
     @Test
-    public void updateGameFromTGOInformationTest(){
+    public void updateGameFromTGOInformationTest() {
         Game game = new Game();
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
 
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
@@ -109,12 +108,18 @@ public class GameTest {
         tgo.gameRunning = true;
         tgo.pilesList = pileList;
         List<Card> cards1 = new ArrayList<>();
-        cards1.add(new Card(3)); cards1.add(new Card(4));cards1.add(new Card(5));
+        cards1.add(new Card(3));
+        cards1.add(new Card(4));
+        cards1.add(new Card(5));
         List<Card> cards2 = new ArrayList<>();
-        cards2.add(new Card(6)); cards2.add(new Card(7));cards2.add(new Card(8));
+        cards2.add(new Card(6));
+        cards2.add(new Card(7));
+        cards2.add(new Card(8));
         List<Card> cards3 = new ArrayList<>();
-        cards3.add(new Card(9)); cards3.add(new Card(10));cards3.add(new Card(11));
-        tgo.playerCards  = new HashMap<>();
+        cards3.add(new Card(9));
+        cards3.add(new Card(10));
+        cards3.add(new Card(11));
+        tgo.playerCards = new HashMap<>();
         tgo.playerCards.put("player1", cards1);
         tgo.playerCards.put("player2", cards2);
         tgo.playerCards.put("player3", cards3);
@@ -127,9 +132,9 @@ public class GameTest {
         assertEquals("player1", game.getWhoseTurn());
         assertEquals(pileList, game.getPileList());
 
-        assertEquals(cards1,game.getListOfPlayers().get(0).getHandCards());
-        assertEquals(cards2,game.getListOfPlayers().get(1).getHandCards());
-        assertEquals(cards3,game.getListOfPlayers().get(2).getHandCards());
+        assertEquals(cards1, game.getListOfPlayers().get(0).getHandCards());
+        assertEquals(cards2, game.getListOfPlayers().get(1).getHandCards());
+        assertEquals(cards3, game.getListOfPlayers().get(2).getHandCards());
 
     }
 
@@ -139,11 +144,11 @@ public class GameTest {
     public void updateCurrentPlayerTest() {
         Game game = new Game();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
-        Player player4 = new Player("player4",new Long("4"));
-        Player player5 = new Player("player5",new Long("5"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
+        Player player4 = new Player("player4", new Long("4"));
+        Player player5 = new Player("player5", new Long("5"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -176,13 +181,13 @@ public class GameTest {
     public void updateCurrentPlayerNoCardsTest1() {
         Game game = new Game();
 
-        List<Card>  emptyCardList = new ArrayList<>();
+        List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
-        Player player4 = new Player("player4",new Long("4"));
-        Player player5 = new Player("player5",new Long("5"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
+        Player player4 = new Player("player4", new Long("4"));
+        Player player5 = new Player("player5", new Long("5"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -205,13 +210,13 @@ public class GameTest {
     public void updateCurrentPlayerNoCardsTest2() {
         Game game = new Game();
 
-        List<Card>  emptyCardList = new ArrayList<>();
+        List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
-        Player player4 = new Player("player4",new Long("4"));
-        Player player5 = new Player("player5",new Long("5"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
+        Player player4 = new Player("player4", new Long("4"));
+        Player player5 = new Player("player5", new Long("5"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -236,11 +241,11 @@ public class GameTest {
     public void onePlayerFurtherTest() {
         Game game = new Game();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
-        Player player4 = new Player("player4",new Long("4"));
-        Player player5 = new Player("player5",new Long("5"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
+        Player player4 = new Player("player4", new Long("4"));
+        Player player5 = new Player("player5", new Long("5"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -266,14 +271,14 @@ public class GameTest {
     //test checkWin
     //no player has any cards left and deck is empty --> gamestatus gameWon true
     @Test
-    public void checkWinNoCardsNoDeckTest(){
+    public void checkWinNoCardsNoDeckTest() {
         Game game = new Game();
 
-        List<Card>  emptyCardList = new ArrayList<>();
+        List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -285,8 +290,7 @@ public class GameTest {
         player3.setHandCards(emptyCardList);
 
 
-
-        for(int i = 0;i<80; i++){
+        for (int i = 0; i < 80; i++) {
             game.getDeck().pop();
         }
 
@@ -298,14 +302,14 @@ public class GameTest {
     // test checkWin
     //some players have cards left and deck is empty --> gamestatus gameWon false
     @Test
-    public void checkWinOnlyNoDeckTest(){
+    public void checkWinOnlyNoDeckTest() {
         Game game = new Game();
 
-        List<Card>  emptyCardList = new ArrayList<>();
+        List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -316,8 +320,7 @@ public class GameTest {
         player2.setHandCards(emptyCardList);
 
 
-
-        for(int i = 0;i<80; i++){
+        for (int i = 0; i < 80; i++) {
             game.getDeck().pop();
         }
 
@@ -329,21 +332,20 @@ public class GameTest {
     // test checkWin
     //deck is not empty --> gamestatus gameWon false
     @Test
-    public void checkWinDeckNonEmptyTest(){
+    public void checkWinDeckNonEmptyTest() {
         Game game = new Game();
 
-        List<Card>  emptyCardList = new ArrayList<>();
+        List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
         pl.add(player3);
 
         game.startGame(pl, userService);
-
 
 
         game.checkWin();
@@ -355,13 +357,13 @@ public class GameTest {
     //test draw
     //current player has no cards, should get 7 cards
     @Test
-    public void drawNoCardsTwoPlayerTest(){
+    public void drawNoCardsTwoPlayerTest() {
         Game game = new Game();
 
-        List<Card>  emptyCardList = new ArrayList<>();
+        List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -378,14 +380,14 @@ public class GameTest {
     //test draw
     //current player has no cards,should get 6 cards
     @Test
-    public void drawNoCardsMorePlayerTest(){
+    public void drawNoCardsMorePlayerTest() {
         Game game = new Game();
 
-        List<Card>  emptyCardList = new ArrayList<>();
+        List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -402,18 +404,18 @@ public class GameTest {
     //test draw
     // should fill up to 7 cards, but already has some cards
     @Test
-    public void drawSomeCardsTest(){
+    public void drawSomeCardsTest() {
         Game game = new Game();
 
-        List<Card>  cardList = new ArrayList<>();
+        List<Card> cardList = new ArrayList<>();
         Card c1 = game.getDeck().pop();
         Card c2 = game.getDeck().pop();
         cardList.add(c1);
         cardList.add(c2);
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
+        Player player1 = new Player("player1", new Long("1"));
+        Player player2 = new Player("player2", new Long("2"));
+        Player player3 = new Player("player3", new Long("3"));
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -426,65 +428,35 @@ public class GameTest {
         assertEquals(6, player1.getNoOfCards());
 
     }
+}
 
 /*
-
-//
-       // //Another functionality would take care of this - namely playerService
-       // player1.setGameCount(0);
-       // player2.setGameCount(0);
-//
-
-//
-       //Game game = Game.initializeGame(pl, userService);
-
-        User user1 = new User();
-        User user2 = new User();
-
-        //Another functionality would take care of this - namely playerService
-        user1.setGameCount(0);
-        user2.setGameCount(0);
-
-        List<User> pl = new ArrayList<>();
-        pl.add(user1);
-        pl.add(user2);
-
-        //Game game = Game.initializeGame(pl, userService);
-*/
-    }
-/*
+    //test onGameTerminated
+    //
     @Test
-    public void Game_StatusCheck() {
-        List<Pile> pileList = new ArrayList<>();
-        int fillUpToNoOfCards;
-
-        testUser = new User();
-        testUser.setId(1L);
-        testUser.setPassword("testName");
-        testUser.setUsername("testUsername");
-        testUser.setStatus(UserStatus.READY);
-
-        List<User> userList = new ArrayList<>();
-        userList.add(testUser);
-        userList.add(testUser);
-
-        // initially status of each user is ready
-        for (User user:userList) {
-            assertEquals(user.getStatus(), UserStatus.READY);
-        }
-
-        Player testPlayer = new Player(testUser.getUsername(), testUser.getId());
+    public void onGameTerminatedTest(){
         Game game = new Game();
-        game.addPlayer(testPlayer);
-        game.addPlayer(testPlayer);
-        game.startGame();
 
-        //after game started status of each user changes to ingame
-        for (User user:userList) {
-            assertEquals(user.getStatus(), UserStatus.INGAME);
+        Player player1 = new Player("player1",new Long("1"));
+        Player player2 = new Player("player2",new Long("2"));
+        Player player3 = new Player("player3",new Long("3"));
+        List<Player> pl = new ArrayList<>();
+        pl.add(player1);
+        pl.add(player2);
+        pl.add(player3);
+
+        game.startGame(pl, userService);
+        game.onGameTerminated();
+
+        for(Player player : pl){
+            assertEquals(UserStatus.READY, userService.getUserById(player.getId()).getStatus());
         }
 
- */
+    }
+    */
+
+
+
 
 
 
