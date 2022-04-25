@@ -101,6 +101,7 @@ public class WebSocketController {
 
         //game.startGame(exampleList, userService);
         game.startGame(waitingRoom.getPlayerList(), userService);
+        System.out.println(game.getNoOfCardsOnDeck());
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
         String json = new Gson().toJson(tgo);
         System.out.println(json);

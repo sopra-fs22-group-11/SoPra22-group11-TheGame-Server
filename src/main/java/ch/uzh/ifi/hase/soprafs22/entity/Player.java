@@ -26,10 +26,11 @@ public class Player {
         return handCards.size();
     }
 
-    public void fillCards(int fillTo, Deck deck){
+    public Deck fillCards(int fillTo, Deck deck){
         while(getNoOfCards() < fillTo && deck.getNoOfCards() > 0){
             handCards.add(deck.pop());
         }
+        return deck;
     }
 
 }

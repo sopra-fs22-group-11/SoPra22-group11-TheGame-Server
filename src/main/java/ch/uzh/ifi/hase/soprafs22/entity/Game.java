@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Game{
     // we need some sort of gameId for each game: private final int gameId;
-    private Deck deck = new Deck();
+    private Deck deck;
     private List<Pile> pileList = new ArrayList<>();
     private GameStatus gameStatus = new GameStatus();
 
@@ -22,17 +22,20 @@ public class Game{
 
     public void Game(){
         // Generates the pile
-        pileList.add(new Pile(Directions.TOPDOWN));
-        pileList.add(new Pile(Directions.TOPDOWN));
-        pileList.add(new Pile(Directions.DOWNUP));
-        pileList.add(new Pile(Directions.DOWNUP));
+
     }
 
 
     public void startGame(List<Player> playerList, UserService userService) {
+        this.deck = new Deck();
         this.playerList = playerList;
         this.userService = userService;
 
+        //generate piles
+        pileList.add(new Pile(Directions.TOPDOWN));
+        pileList.add(new Pile(Directions.TOPDOWN));
+        pileList.add(new Pile(Directions.DOWNUP));
+        pileList.add(new Pile(Directions.DOWNUP));
         // Check what's the amount of cards on a hand
         if(playerList.size()==2) { fillUpToNoOfCards = 7; }
         else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
@@ -41,7 +44,7 @@ public class Game{
 
         for(Player player:playerList){
             // Fill all users hand-cards
-            player.fillCards(fillUpToNoOfCards, deck);
+            this.deck = player.fillCards(fillUpToNoOfCards, deck);
 
             //Change the status of each player
             userService.setStatusInRepo(player.getId(), UserStatus.INGAME);
