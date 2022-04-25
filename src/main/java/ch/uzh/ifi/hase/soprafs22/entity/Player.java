@@ -29,6 +29,7 @@ public class Player {
     public Deck fillCards(int fillTo, Deck deck){
         while(getNoOfCards() < fillTo && deck.getNoOfCards() > 0){
             handCards.add(deck.pop());
+            deck.removeCardOnDeck();
         }
         return deck;
     }
