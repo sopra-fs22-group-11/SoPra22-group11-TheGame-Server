@@ -82,7 +82,7 @@ public class GameTest {
         }
     }
 
-    //TODO test updateGamefromTGOInformation
+    //test updateGamefromTGOInformation
     //
     @Test
     public void updateGameFromTGOInformationTest() {
@@ -290,7 +290,7 @@ public class GameTest {
         player3.setHandCards(emptyCardList);
 
 
-        for (int i = 0; i < 80; i++) {
+        while(game.getDeck().getNoOfCards()>0) {
             game.getDeck().pop();
         }
 
@@ -319,8 +319,7 @@ public class GameTest {
         player1.setHandCards(emptyCardList);
         player2.setHandCards(emptyCardList);
 
-
-        for (int i = 0; i < 80; i++) {
+        while(game.getDeck().getNoOfCards()>0) {
             game.getDeck().pop();
         }
 
@@ -407,11 +406,6 @@ public class GameTest {
     public void drawSomeCardsTest() {
         Game game = new Game();
 
-        List<Card> cardList = new ArrayList<>();
-        Card c1 = game.getDeck().pop();
-        Card c2 = game.getDeck().pop();
-        cardList.add(c1);
-        cardList.add(c2);
 
         Player player1 = new Player("player1", new Long("1"));
         Player player2 = new Player("player2", new Long("2"));
@@ -422,6 +416,12 @@ public class GameTest {
         pl.add(player3);
 
         game.startGame(pl, userService);
+        List<Card> cardList = new ArrayList<>();
+        Card c1 = game.getDeck().pop();
+        Card c2 = game.getDeck().pop();
+        cardList.add(c1);
+        cardList.add(c2);
+
         player1.setHandCards(cardList);
         assertEquals(2, player1.getNoOfCards());
         game.draw();
