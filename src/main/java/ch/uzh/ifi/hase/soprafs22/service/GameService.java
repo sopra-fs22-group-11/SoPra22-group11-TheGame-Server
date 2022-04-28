@@ -20,26 +20,11 @@ public class GameService {
         //
         System.out.println("in Game Service");
         TransferGameObject tgo = new TransferGameObject();
-        System.out.println("1");
         tgo.noCardsOnDeck = gameObject.getNoOfCardsOnDeck();
         tgo.whoseTurn = gameObject.getWhoseTurn();
-        System.out.println("2");
-
         tgo.pilesList = gameObject.getPileList();
-        System.out.println("3");
-
-        // TODO Delete as soon as getPlayerCardsDictionary
-        //Map<String, List<Card>> dictionary = new HashMap<>();
-        //Card c = new Card(12);
-        //List<Card> lc = new ArrayList<>();
-        //lc.add(c);
-        //dictionary.put("Anna",  lc);
-        //tgo.playerCards = dictionary;
         tgo.playerCards = getPlayerCardsDictionary(gameObject);
-        System.out.println("4");
-
         tgo.gameRunning = gameObject.getGameStatus().getGameRunning();
-        System.out.println("vor return im Game Service");
 
         return tgo;
 

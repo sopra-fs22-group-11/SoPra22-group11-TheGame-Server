@@ -91,17 +91,19 @@ public class WebSocketController {
     @MessageMapping ("/start")
     @SendTo("/topic/start")
     public String startGame(){ // TODO Think whether waitingRoom list needs to get players again from user
-        game = new Game();
-        //List<Player> exampleList= new ArrayList<>();
-       //Player p1 = new Player("Anna",new Long(1));
-       //Player p2 = new Player("Ben", new Long(2));
+        //if (waitingRoom.getPlayerList().size() >= 2 && waitingRoom.getPlayerList().size() <= 5) {
+            game = new Game();
+            //List<Player> exampleList= new ArrayList<>();
+            //Player p1 = new Player("Anna",new Long(1));
+            //Player p2 = new Player("Ben", new Long(2));
 
-       //exampleList.add(p1);
-       //exampleList.add(p2);
+            //exampleList.add(p1);
+            //exampleList.add(p2);
 
-        //game.startGame(exampleList, userService);
-        game.startGame(waitingRoom.getPlayerList(), userService);
-        System.out.println(game.getNoOfCardsOnDeck());
+            //game.startGame(exampleList, userService);
+            game.startGame(waitingRoom.getPlayerList(), userService);
+            System.out.println("at websocketController"+game.getNoOfCardsOnDeck());
+        //}
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
         String json = new Gson().toJson(tgo);
         System.out.println(json);

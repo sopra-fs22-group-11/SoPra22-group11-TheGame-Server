@@ -29,8 +29,9 @@ public class Player {
     public Deck fillCards(int fillTo, Deck deck){
         while(getNoOfCards() < fillTo && deck.getNoOfCards() > 0){
             handCards.add(deck.pop());
-            deck.removeCardOnDeck();
+            //deck.removeCardOnDeck();
         }
+        System.out.println("deck size in fillCards"+deck.getNoOfCards());
         return deck;
     }
 

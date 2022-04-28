@@ -18,6 +18,13 @@ public class WaitingRoom {
     public void removePlayer(Player player){
         playerList.remove(player);
     }
+
+    public void removeAllPlayers(){
+        playerList.clear();
+        System.out.println("playerlist size after remove them all: " + playerList.size());
+    }
+
+
     public List<Player> getPlayerList (){
         return this.playerList;
     }

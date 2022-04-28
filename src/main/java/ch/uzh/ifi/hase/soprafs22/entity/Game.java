@@ -26,31 +26,38 @@ public class Game{
     }
 
 
-    public void startGame(List<Player> playerList, UserService userService) {
-        this.deck = new Deck();
-        this.playerList = playerList;
-        this.userService = userService;
+    public void startGame(List<Player> playerList, UserService userService) { //WaitingRoom waitingRoom
+        //if  (playerList.size() >= 2 && playerList.size() <= 5) {
+            this.deck = new Deck();
+            System.out.println("deck size at startGame in Game"+deck.getNoOfCards());
 
-        //generate piles
-        pileList.add(new Pile(Directions.TOPDOWN));
-        pileList.add(new Pile(Directions.TOPDOWN));
-        pileList.add(new Pile(Directions.DOWNUP));
-        pileList.add(new Pile(Directions.DOWNUP));
-        // Check what's the amount of cards on a hand
-        if(playerList.size()==2) { fillUpToNoOfCards = 7; }
-        else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
-        //else{throw new Exception();}// TODO The Websocket request which handles the game start will catch this exception and throw a ResponseStatusException
+            this.playerList = playerList;
+            this.userService = userService;
+
+            //generate piles
+            pileList.add(new Pile(Directions.TOPDOWN));
+            pileList.add(new Pile(Directions.TOPDOWN));
+            pileList.add(new Pile(Directions.DOWNUP));
+            pileList.add(new Pile(Directions.DOWNUP));
+            // Check what's the amount of cards on a hand
+            if(playerList.size()==2) { fillUpToNoOfCards = 7; }
+            else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
+            //else{throw new Exception();}// TODO The Websocket request which handles the game start will catch this exception and throw a ResponseStatusException
 
 
-        for(Player player:playerList){
-            // Fill all users hand-cards
-            this.deck = player.fillCards(fillUpToNoOfCards, deck);
+            for(Player player:playerList){
+                // Fill all users hand-cards
+                this.deck = player.fillCards(fillUpToNoOfCards, deck);
 
-            //Change the status of each player
-            userService.setStatusInRepo(player.getId(), UserStatus.INGAME);
+                //Change the status of each player
+                userService.setStatusInRepo(player.getId(), UserStatus.INGAME);
             }
-        whoseTurn = playerList.get(0).getPlayerName();
+            System.out.println("deck size after filling playerCards"+deck.getNoOfCards());
 
+            whoseTurn = playerList.get(0).getPlayerName();
+            // remove all players from waitingRoom when game started
+            //waitingRoom.removeAllPlayers();
+        //}
     }
 
 

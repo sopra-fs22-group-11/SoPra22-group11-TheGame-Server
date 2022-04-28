@@ -8,9 +8,9 @@ import java.util.List;
 public class Deck {
     private final int DeckSize = 100;
     private List<Card> cards = new ArrayList<>();
-    //private int noOfCards;
+    private int noOfCards;
 
-    public int getNoOfCards(){return cards.size();} //cards.size()
+    public int getNoOfCards(){return noOfCards;} //cards.size()
 
     public List<Card> removeCardOnDeck(){
         cards.remove(0);
@@ -22,7 +22,7 @@ public class Deck {
             cards.add(new Card(i));
         }
         shuffle();
-        //noOfCards = cards.size();
+        noOfCards = cards.size();
     }
 
     private void shuffle(){Collections.shuffle(cards);}
@@ -30,7 +30,7 @@ public class Deck {
     public Card pop(){ // Make sure to only allow pop for noOfCards > 0
         Card cardToReturn  = cards.get(0);
         cards.remove(0);
-        //noOfCards -= 1;
+        noOfCards -= 1;
         return cardToReturn;
         }
 
