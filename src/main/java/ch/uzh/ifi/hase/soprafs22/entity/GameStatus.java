@@ -9,7 +9,7 @@ public class GameStatus {
 
     public boolean getGameRunning() {return gameRunning;}
 
-    //public void setGameRunning(boolean gameRunning) {this.gameRunning = gameRunning;}
+    public void setGameRunning(boolean gameRunning) {this.gameRunning = gameRunning;}
 
 
     public boolean getGameWon() {return gameWon;}

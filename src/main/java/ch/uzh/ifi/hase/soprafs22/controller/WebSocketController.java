@@ -153,11 +153,15 @@ public class WebSocketController {
     }
 
     @MessageMapping ("/gameTerminated") //TODO this endpoint will not stay in Sprint2
-    @SendTo("/topic/game")
-    public void terminated(){
-        waitingRoom = new WaitingRoom();
+    @SendTo("/topic/terminated")
+    public String terminated(){
+        waitingRoom.removeAllPlayers();
         game = null;
+        //game.getGameStatus().setGameRunning(false);
+        //TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
+        String json = new Gson().toJson(game);
         System.out.println("\n\nWe reset everything\n\n");
+        return json;
     }
 
     @MessageMapping ("/gameStatus")
