@@ -25,7 +25,7 @@ import java.util.List;
 @Controller
 public class WebSocketController {
     private final UserService userService;
-    private final WaitingRoom waitingRoom = new WaitingRoom();
+    private WaitingRoom waitingRoom = new WaitingRoom();
     private final GameService gameService;
     private Game game;
 
@@ -125,8 +125,8 @@ public class WebSocketController {
     @MessageMapping ("/draw")
     @SendTo("/topic/game")
     public String draw(){ // TODO we don't pass anything, server knows how to handle (TK)
-        game.updateCurrentPlayer();
         game.draw();
+        game.updateCurrentPlayer();
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
         String json = new Gson().toJson(tgo);
         return json;
@@ -150,6 +150,14 @@ public class WebSocketController {
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
         String json = new Gson().toJson(tgo);
         return json;
+    }
+
+    @MessageMapping ("/gameTerminated") //TODO this endpoint will not stay in Sprint2
+    @SendTo("/topic/game")
+    public void terminated(){
+        waitingRoom = new WaitingRoom();
+        game = null;
+        System.out.println("\n\nWe reset everything\n\n");
     }
 
     @MessageMapping ("/gameStatus")

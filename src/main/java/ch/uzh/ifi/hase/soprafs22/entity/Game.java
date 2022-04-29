@@ -21,8 +21,6 @@ public class Game{
 
 
     public void Game(){
-        // Generates the pile
-
     }
 
 
@@ -44,7 +42,7 @@ public class Game{
 
         for(Player player:playerList){
             // Fill all users hand-cards
-            this.deck = player.fillCards(fillUpToNoOfCards, deck);
+            this.deck = player.fillCards(fillUpToNoOfCards, this.deck);
 
             //Change the status of each player
             userService.setStatusInRepo(player.getId(), UserStatus.INGAME);
