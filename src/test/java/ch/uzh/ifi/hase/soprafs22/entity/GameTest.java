@@ -49,6 +49,9 @@ public class GameTest {
             assertEquals(7, player.getNoOfCards());
         }
 
+        assertEquals(98-14,game.getDeck().getNoOfCards());
+
+
     }
 
     //test startGame with 2 < number of players < 6
@@ -80,6 +83,7 @@ public class GameTest {
         for (Player player : pl) {
             assertEquals(6, player.getNoOfCards());
         }
+        assertEquals(98-5*6,game.getDeck().getNoOfCards());
     }
 
     //test updateGamefromTGOInformation
@@ -369,10 +373,20 @@ public class GameTest {
 
 
         game.startGame(pl, userService);
+        System.out.println("first test before draw: " );
+        for (Card c: player1.getHandCards()) {
+            System.out.println( c.getValue());
+        }
         player1.setHandCards(emptyCardList);
         assertEquals(0, player1.getNoOfCards());
         game.draw();
+        System.out.println("first test after draw: " );
+        for (Card c: player1.getHandCards()) {
+            System.out.println( c.getValue());
+        }
         assertEquals(7, player1.getNoOfCards());
+
+        assertEquals(98-21,game.getDeck().getNoOfCards());
 
     }
 
@@ -397,6 +411,8 @@ public class GameTest {
         assertEquals(0, player1.getNoOfCards());
         game.draw();
         assertEquals(6, player1.getNoOfCards());
+
+        assertEquals(98-24,game.getDeck().getNoOfCards());
 
     }
 
