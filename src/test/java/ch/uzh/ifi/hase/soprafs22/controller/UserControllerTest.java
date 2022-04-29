@@ -69,6 +69,32 @@ public class UserControllerTest {
         .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())));
   }
 
+    @Test
+    public void givenUser_whenGetUserById_thenReturnJsonArray() throws Exception {
+        // given
+        User user = new User();
+        user.setId(1L);
+        user.setUsername("Firstname Lastname");
+        user.setPassword("firstname@lastname");
+        user.setStatus(UserStatus.OFFLINE);
+
+
+
+        // this mocks the UserService -> we define above what the userService should
+        // return when getUsers() is called
+        given(userService.getUserById(1L)).willReturn(user);
+
+        // when
+        MockHttpServletRequestBuilder getRequest = get("/users/{userId}",1L).contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(getRequest).andExpect(status().isOk())
+            //    .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+    }
+
   @Test
   public void createUser_validInput_UserCreated() throws Exception {
     // given
@@ -122,7 +148,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void loginUser_validInput_UserLogggedIn() throws Exception {
+    public void loginUser_validInput_UserLoggedIn() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setPassword("Test User");
