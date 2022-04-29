@@ -21,8 +21,6 @@ public class Game{
 
 
     public void Game(){
-        // Generates the pile
-
     }
 
 
