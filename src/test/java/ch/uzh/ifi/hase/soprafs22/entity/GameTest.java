@@ -30,8 +30,8 @@ public class GameTest {
     public void startGameTestWithTwo() {
         Game game = new Game();
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -59,11 +59,11 @@ public class GameTest {
     public void startGameTestMoreThanTwo() {
         Game game = new Game();
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
-        Player player4 = new Player("player4", new Long("4"));
-        Player player5 = new Player("player5", new Long("5"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
+        Player player4 = new Player("player4", 4L);
+        Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -91,9 +91,9 @@ public class GameTest {
     @Test
     public void updateGameFromTGOInformationTest() {
         Game game = new Game();
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
 
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
@@ -148,11 +148,11 @@ public class GameTest {
     public void updateCurrentPlayerTest() {
         Game game = new Game();
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
-        Player player4 = new Player("player4", new Long("4"));
-        Player player5 = new Player("player5", new Long("5"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
+        Player player4 = new Player("player4", 4L);
+        Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -187,11 +187,11 @@ public class GameTest {
 
         List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
-        Player player4 = new Player("player4", new Long("4"));
-        Player player5 = new Player("player5", new Long("5"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
+        Player player4 = new Player("player4", 4L);
+        Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -216,11 +216,11 @@ public class GameTest {
 
         List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
-        Player player4 = new Player("player4", new Long("4"));
-        Player player5 = new Player("player5", new Long("5"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
+        Player player4 = new Player("player4", 4L);
+        Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -244,12 +244,11 @@ public class GameTest {
     @Test
     public void onePlayerFurtherTest() {
         Game game = new Game();
-
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
-        Player player4 = new Player("player4", new Long("4"));
-        Player player5 = new Player("player5", new Long("5"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
+        Player player4 = new Player("player4", 4L);
+        Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -280,9 +279,10 @@ public class GameTest {
 
         List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
+
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -311,9 +311,10 @@ public class GameTest {
 
         List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
+
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -340,9 +341,9 @@ public class GameTest {
 
         List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -365,8 +366,9 @@ public class GameTest {
 
         List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -398,9 +400,9 @@ public class GameTest {
 
         List<Card> emptyCardList = new ArrayList<>();
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
@@ -423,9 +425,9 @@ public class GameTest {
         Game game = new Game();
 
 
-        Player player1 = new Player("player1", new Long("1"));
-        Player player2 = new Player("player2", new Long("2"));
-        Player player3 = new Player("player3", new Long("3"));
+        Player player1 = new Player("player1", 1L);
+        Player player2 = new Player("player2", 2L);
+        Player player3 = new Player("player3", 3L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
