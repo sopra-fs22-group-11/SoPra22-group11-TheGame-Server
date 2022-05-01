@@ -17,6 +17,7 @@ public class Deck {
         return cards;
     }
 
+
     public Deck(){ // Constructor of the Deck
         for(int i = 2; i<DeckSize; i++){
             cards.add(new Card(i));
