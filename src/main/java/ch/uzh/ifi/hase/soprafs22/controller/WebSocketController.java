@@ -98,7 +98,7 @@ public class WebSocketController {
 
        //exampleList.add(p1);
        //exampleList.add(p2);
-
+        System.out.println("In startgame() method");
         //game.startGame(exampleList, userService);
         game.startGame(waitingRoom.getPlayerList(), userService);
         System.out.println(game.getNoOfCardsOnDeck());

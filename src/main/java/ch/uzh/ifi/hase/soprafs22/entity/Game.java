@@ -47,7 +47,13 @@ public class Game{
             //Change the status of each player
             userService.setStatusInRepo(player.getId(), UserStatus.INGAME);
             }
-        whoseTurn = playerList.get(0).getPlayerName();
+        if(playerList.size()!=0) {
+            whoseTurn = playerList.get(0).getPlayerName();
+        }
+        else{
+            whoseTurn = "No players in playerlist";
+        }
+
 
     }
 
