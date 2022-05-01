@@ -22,6 +22,10 @@ public class WaitingRoom {
         return this.playerList;
     }
 
+    public void removeAllPlayers(){
+        playerList.clear();
+        System.out.println("playerlist size after remove them all: " + playerList.size());
+    }
 
 
     // only when we have more than two players in waiting room we could start game
