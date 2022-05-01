@@ -7,6 +7,7 @@ import ch.uzh.ifi.hase.soprafs22.entity.TransferGameObject;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
 import com.solidfire.gson.Gson;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,6 +50,9 @@ public class WebSocketControllerTest {
     @Value("${local.server.port}")
     private int port;
     private WebSocketStompClient webSocketStompClient;
+    private StompSession session;
+    List<String> list = new ArrayList<>();
+
 
 
     //TODO /hello
@@ -56,6 +60,23 @@ public class WebSocketControllerTest {
     //TODO /game
 
     //TODO /start
+
+    @BeforeEach
+    public void setup() throws InterruptedException, ExecutionException, TimeoutException {
+        this.webSocketStompClient = new WebSocketStompClient(new SockJsClient(
+                List.of(new WebSocketTransport(new StandardWebSocketClient()))));
+
+
+        webSocketStompClient.setMessageConverter(new StringMessageConverter());
+        Thread.sleep(1000);
+
+        session = webSocketStompClient
+                .connect(String.format("ws://localhost:%d/ws", this.port), new StompSessionHandlerAdapter() {
+                })
+                .get(1, TimeUnit.SECONDS);
+
+
+    }
 
     @Test
     public void testStartEndpoint() throws Exception{
@@ -72,21 +93,21 @@ public class WebSocketControllerTest {
 
 */
         //Setup before each
-        this.webSocketStompClient = new WebSocketStompClient(new SockJsClient(
-                List.of(new WebSocketTransport(new StandardWebSocketClient()))));
-
-
-        //BlockingQueue<String> blockingQueue = new ArrayBlockingQueue(1);
-        List<String> list = new ArrayList<>();
-
-        webSocketStompClient.setMessageConverter(new StringMessageConverter());
-        Thread.sleep(1000);
-
-
-        StompSession session = webSocketStompClient
-                .connect(String.format("ws://localhost:%d/ws", this.port), new StompSessionHandlerAdapter() {
-                })
-                .get(1, TimeUnit.SECONDS);
+       // this.webSocketStompClient = new WebSocketStompClient(new SockJsClient(
+       //         List.of(new WebSocketTransport(new StandardWebSocketClient()))));
+//
+//
+       // //BlockingQueue<String> blockingQueue = new ArrayBlockingQueue(1);
+       // List<String> list = new ArrayList<>();
+//
+       // webSocketStompClient.setMessageConverter(new StringMessageConverter());
+       // Thread.sleep(1000);
+//
+//
+       // StompSession session = webSocketStompClient
+       //         .connect(String.format("ws://localhost:%d/ws", this.port), new StompSessionHandlerAdapter() {
+       //         })
+       //         .get(1, TimeUnit.SECONDS);
 
 //subscription
         session.subscribe("/topic/start", new StompFrameHandler() {
