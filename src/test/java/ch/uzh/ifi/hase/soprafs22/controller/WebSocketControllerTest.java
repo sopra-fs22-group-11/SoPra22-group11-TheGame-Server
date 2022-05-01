@@ -3,8 +3,10 @@ package ch.uzh.ifi.hase.soprafs22.controller;
 
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.Player;
+import ch.uzh.ifi.hase.soprafs22.entity.TransferGameObject;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
+import com.solidfire.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +26,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
@@ -73,7 +76,8 @@ public class WebSocketControllerTest {
                 List.of(new WebSocketTransport(new StandardWebSocketClient()))));
 
 
-        BlockingQueue<String> blockingQueue = new ArrayBlockingQueue(1);
+        //BlockingQueue<String> blockingQueue = new ArrayBlockingQueue(1);
+        List<String> list = new ArrayList<>();
 
         webSocketStompClient.setMessageConverter(new StringMessageConverter());
         Thread.sleep(1000);
@@ -95,15 +99,25 @@ public class WebSocketControllerTest {
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
                 System.out.println("Received message: " + payload);
-                blockingQueue.add((String) payload);
+                String pl = (String) payload;
+                //blockingQueue.add((String) payload);
+                System.out.println("in handle Frame");
+                list.add(pl);
             }
         });
         System.out.println("Port: " + this.port);
 //sending request
-        session.send("/app/start", null);
 
-        System.out.println("blockingQueue: "+ blockingQueue);
+        session.send("/app/start", null);
+        Thread.sleep(1000);
+
+
+        //System.out.println("blockingQueue: "+ blockingQueue);
+        System.out.println(list.get(0));
           //assertEquals(, blockingQueue.poll(1, TimeUnit.SECONDS));
+        Gson g = new Gson();
+        TransferGameObject tgo = g.fromJson(list.get(0), TransferGameObject.class);
+        assertEquals(tgo.gameRunning, true);
 
         // {"noCardsOnDeck":84,"whoseTurn":"Anna","pilesList":[{"topCard":{"value":100},"direction":"TOPDOWN"},
         // {"topCard":{"value":100},"direction":"TOPDOWN"},{"topCard":{"value":1},"direction":"DOWNUP"},
