@@ -81,8 +81,11 @@ public class UserService {
         // Updates the user with the information given by another User-Object
         Optional<User> foundById = userRepository.findById(player.getId());
 
-        foundById.get().setGameCount(foundById.get().getGameCount()+i);
-
+        if (foundById.isPresent())
+        {foundById.get().setGameCount(foundById.get().getGameCount()+i);}
+        else{
+            //TODO Throw Exception
+        }
         userRepository.save(foundById.get());
         userRepository.flush();
     }
@@ -93,7 +96,12 @@ public class UserService {
 
         Optional<User> foundById = userRepository.findById(player.getId());
 
-        foundById.get().setWinningCount(foundById.get().getWinningCount()+i);
+        if (foundById.isPresent())
+        { foundById.get().setWinningCount(foundById.get().getWinningCount()+i);}
+        else{
+            //TODO Throw Exception
+        }
+
 
         userRepository.save(foundById.get());
         userRepository.flush();
