@@ -120,6 +120,15 @@ public class UserController {
     public void logout_updateStatus(@PathVariable long userId) {
         userService.setStatusInRepo(userId, UserStatus.OFFLINE);
     }
+
+    @GetMapping("/users/{userId}/score")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String returnScore(@PathVariable long userId) {
+        //TODO actually implement this
+      return "20"; //Please return the score as a string
+        //Please return "0" if the user has not played any games
+    }
 }
 
 
