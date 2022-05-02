@@ -9,8 +9,8 @@ public class UserGetDTO {
   private String username;
   private UserStatus status;
   //private Boolean yourTurn;
-  private int winningCount;
-  private int gameCount;
+  private int score;
+
 
   public Long getId() {
     return id;
@@ -48,14 +48,11 @@ public class UserGetDTO {
 
     //public void setYourTurn(Boolean yourTurn){this.yourTurn = yourTurn;}
 
-    public int getWinningCount(){return winningCount;}
+    public int getScore(){return score;}
 
-    public void setWinningCount(int winningCount){this.winningCount = winningCount;}
+    public void setScore(int score){this.score = score;}
 
 
-    public int getGameCount(){return gameCount;}
-
-    public void setGameCount(int gameCount){this.gameCount = gameCount;}
 
 
 }

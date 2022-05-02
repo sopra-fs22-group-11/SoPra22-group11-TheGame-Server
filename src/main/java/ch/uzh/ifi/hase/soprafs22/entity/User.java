@@ -39,10 +39,8 @@ public class User implements Serializable {
   private UserStatus status;
 
   @Column(nullable = false)
-  private int winningCount;
+  private int score;
 
-  @Column(nullable = false)
-  private int gameCount;
 
 
   public Long getId() {
@@ -87,13 +85,10 @@ public class User implements Serializable {
     this.status = status;
   }
 
-  public int getWinningCount(){return winningCount;}
+  public int getScore(){return score;}
 
-  public void setWinningCount(int winningCount){this.winningCount = winningCount;}
+  public void setScore(int score){this.score = score;}
 
-  public int getGameCount(){return gameCount;}
-
-  public void setGameCount(int gameCount){this.gameCount = gameCount;}
 
 
 }

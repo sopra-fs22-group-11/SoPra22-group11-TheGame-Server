@@ -44,8 +44,8 @@ public class UserService {
   public User createUser(User newUser) {
     newUser.setToken(UUID.randomUUID().toString());
     newUser.setStatus(UserStatus.READY);
-    newUser.setGameCount(0);
-    newUser.setWinningCount(0);
+    newUser.setScore(0);
+
 
     checkIfPlayerExists(newUser);
 
@@ -77,29 +77,30 @@ public class UserService {
       }
   }
 
-    public void increaseGameCount(Player player, int i){
-        // Updates the user with the information given by another User-Object
-        Optional<User> foundById = userRepository.findById(player.getId());
+  //lic void increaseGameCount(Player player, int i){
+  // // Updates the user with the information given by another User-Object
+  // Optional<User> foundById = userRepository.findById(player.getId());
 
-        if (foundById.isPresent())
-        {   foundById.get().setGameCount(foundById.get().getGameCount()+i);
-            userRepository.save(foundById.get());
-            userRepository.flush();
-        }
-        else{
-            //TODO Throw Exception
-        }
+  // if (foundById.isPresent())
+  // {   foundById.get().setGameCount(foundById.get().getGameCount()+i);
+  //     userRepository.save(foundById.get());
+  //     userRepository.flush();
+  // }
+  // else{
+  //     //TODO Throw Exception
+  // }
 
-    }
+  //
 
-    public void increaseWinningCount(Player player, int i){
+
+    public void updateScore(Player player, int i){
         // TODO Make sure this works and test it in C.3.3 Winning the Game
         // Updates the user with the information given by another User-Object
 
         Optional<User> foundById = userRepository.findById(player.getId());
 
         if (foundById.isPresent())
-        {   foundById.get().setWinningCount(foundById.get().getWinningCount()+i);
+        {   foundById.get().setScore(foundById.get().getScore()+i);
             userRepository.save(foundById.get());
             userRepository.flush();
 
