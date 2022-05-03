@@ -40,8 +40,7 @@ public class DTOMapperTest {
     user.setPassword("pw");
     user.setStatus(UserStatus.OFFLINE);
     user.setToken("1");
-    user.setWinningCount(0);
-    user.setGameCount(0);
+    user.setScore(0);
     //user.setYourTurn(true);
 
     // MAP -> Create UserGetDTO
@@ -52,8 +51,7 @@ public class DTOMapperTest {
     assertEquals(user.getPassword(), userGetDTO.getPassword());
     assertEquals(user.getUsername(), userGetDTO.getUsername());
     assertEquals(user.getStatus(), userGetDTO.getStatus());
-    assertEquals(user.getWinningCount(), userGetDTO.getWinningCount());
-    assertEquals(user.getGameCount(), userGetDTO.getGameCount());
+    assertEquals(user.getScore(), userGetDTO.getScore());
     //assertEquals(user.getYourTurn(), userGetDTO.getYourTurn());
   }
 
@@ -65,8 +63,8 @@ public class DTOMapperTest {
           userPutDTO.setUsername("Firstname Lastname");
           userPutDTO.setPassword("pw");
           userPutDTO.setStatus(UserStatus.OFFLINE);
-          userPutDTO.setWinningCount(0);
-          userPutDTO.setGameCount(0);
+          userPutDTO.setScore(0);
+
 
         User user = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
 
@@ -74,8 +72,7 @@ public class DTOMapperTest {
         assertEquals(userPutDTO.getPassword(), user.getPassword());
         assertEquals(userPutDTO.getUsername(), user.getUsername());
         assertEquals(userPutDTO.getStatus(), user.getStatus());
-        assertEquals(userPutDTO.getWinningCount(), user.getWinningCount());
-        assertEquals(userPutDTO.getGameCount(), user.getGameCount());
+        assertEquals(userPutDTO.getScore(), user.getScore());
         assertEquals(user.getId(), userPutDTO.getId());
     }
 /*

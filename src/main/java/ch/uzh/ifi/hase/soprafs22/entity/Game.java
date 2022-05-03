@@ -118,19 +118,26 @@ public class Game{
         playerObject.fillCards(fillUpToNoOfCards, deck);
     }
 
+
     public void onGameTerminated(){
         for(Player player:playerList){
             userService.setStatusInRepo(player.getId(), UserStatus.READY);
-
-            if(!gameStatus.getUserLeft()){
-                userService.increaseGameCount(player, 1);
-            }
             if(gameStatus.getGameWon()){
-                userService.increaseWinningCount(player, 1);
+                userService.updateScore(player, 100);
+            }
+            else if (gameStatus.getGameLost()){
+                userService.updateScore(player,100 - remainingCards());
             }
         }
     }
-
+    public int remainingCards(){
+        int cardsInGame;
+        cardsInGame = this.deck.getNoOfCards();
+        for(Player pl:playerList){
+            cardsInGame += pl.getNoOfCards();
+        }
+        return cardsInGame;
+    }
 
     public List<Player> getListOfPlayers() {return this.playerList;}
 

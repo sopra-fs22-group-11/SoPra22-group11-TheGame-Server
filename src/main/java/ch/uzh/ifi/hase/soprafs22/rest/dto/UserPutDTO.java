@@ -8,8 +8,8 @@ public class UserPutDTO {
         private String password; // Can maybe be removed if no one is using it
         private String username;
         private UserStatus status; // Can maybe be removed if no one is using it
-        private int winningCount; // Can maybe be removed if no one is using it
-        private int gameCount; // Can maybe be removed if no one is using it
+        private int score; // Can maybe be removed if no one is using it
+
 
         public Long getId() {
             return id;
@@ -44,14 +44,10 @@ public class UserPutDTO {
         }
 
 
-        public int getWinningCount(){return winningCount;}
+        public int getScore(){return score;}
 
-        public void setWinningCount(int winningCount){this.winningCount = winningCount;}
+        public void setScore(int score){this.score = score;}
 
-
-        public int getGameCount(){return gameCount;}
-
-        public void setGameCount(int gameCount){this.gameCount = gameCount;}
 
 
     }
