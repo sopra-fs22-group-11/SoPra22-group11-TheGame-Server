@@ -74,32 +74,11 @@ public class WebSocketController {
     }
 
 
-   // // TODO delete later when start ok
-   // @MessageMapping("/game1")
-   // @SendTo("/topic/gameObject")
-   // public String sendGameUpdate(){
-   //     Game gameObject= game;
-   //     System.out.println("vor tgo");
-   //     TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(gameObject);
-   //     System.out.println("vor Gson");
-   //     String json = new Gson().toJson(tgo);
-   //     System.out.println(json);
-   //     System.out.println("vor Return in sendGameUpdate");
-   //     return json;
-   // }
-
     @MessageMapping ("/start")
     @SendTo("/topic/start")
     public String startGame(){ // TODO Think whether waitingRoom list needs to get players again from user
         game = new Game();
-        //List<Player> exampleList= new ArrayList<>();
-       //Player p1 = new Player("Anna",new Long(1));
-       //Player p2 = new Player("Ben", new Long(2));
-
-       //exampleList.add(p1);
-       //exampleList.add(p2);
         System.out.println("In startgame() method");
-        //game.startGame(exampleList, userService);
         game.startGame(waitingRoom.getPlayerList(), userService);
         System.out.println(game.getNoOfCardsOnDeck());
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);   //

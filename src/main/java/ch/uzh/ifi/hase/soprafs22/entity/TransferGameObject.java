@@ -9,5 +9,6 @@ public class TransferGameObject {
     public String whoseTurn; // TODO get from game
     public List<Pile> pilesList;
     public Map<String, List<Card>> playerCards;
+    //public List<Player> playerList;
     public boolean gameRunning;
 }
