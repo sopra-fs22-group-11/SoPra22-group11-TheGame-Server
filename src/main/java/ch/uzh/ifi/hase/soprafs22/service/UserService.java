@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.Player;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
+import com.solidfire.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,6 +133,41 @@ public class UserService {
         userRepository.flush();
         user = getUserById(user.getId());
         return user;
+    }
+    public boolean checkDuplicateForUsername(String username, long id){
+        // Used in put, returns true if there is another user with the same
+        // username which does NOT have the same Id and therefore is not that user
+        User userSameUsername = userRepository.findByUsername(username);
+        if(userSameUsername != null){
+            if (!(userSameUsername.getId() == (id))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public void updateUser(User updatedUser, long id){
+        User userDB = getUserById(id);
+
+        /*if (userDB ==null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("The user with userId %s was not found.", userId));
+        }*/ //Should never even be necessary and otherwise UserController takes care of it
+
+        if (updatedUser.getUsername() != null) {
+            userDB.setUsername(updatedUser.getUsername());
+        }
+        if (updatedUser.getUsername() != null) {
+            userDB.setUsername(updatedUser.getUsername());
+        }
+
+        if (updatedUser.getPassword() != null) {
+            userDB.setPassword(updatedUser.getPassword());
+        }
+        System.out.println(new Gson().toJson(userDB));
+
+        userRepository.save(userDB);
+        userRepository.flush();
     }
 
     public void setStatusInRepo(long playerId, UserStatus userStatus) {

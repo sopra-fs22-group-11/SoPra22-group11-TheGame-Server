@@ -6,9 +6,11 @@ import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
+import com.solidfire.gson.Gson;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import com.solidfire.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,21 +76,29 @@ public class UserController {
     public void updateUser(@RequestBody UserPostDTO userPostDTO, @PathVariable long userId) {
         // convert API User to internal representation
         User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+        System.out.println(new Gson().toJson(userInput));
+
         User userDB = userService.getUserById(userId);
 
         if (userDB ==null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("The user with userId %s was not found.", userId));
         }
-
+        else if(userService.checkDuplicateForUsername(userInput.getUsername(), userId)){
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "This username is already taken");}
+        else{
+            userService.updateUser(userInput, userId);
+        }
+        /*
         if (userInput.getUsername() != null) {
             userDB.setUsername(userInput.getUsername());
         }
 
-        if (userInput.getUsername() != null) {
-            userDB.setUsername(userInput.getUsername());
+        if (userInput.getPassword() != null) {
+            userDB.setPassword(userInput.getPassword());
         }
 
-        userService.saveUpdate(userDB);
+        userService.saveUpdate(userDB);*/
     }
 
 
@@ -124,11 +134,12 @@ public class UserController {
     @GetMapping("/users/{userId}/score")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String returnScore(@PathVariable long userId) {
-        //TODO actually implement this
-      return "20"; //Please return the score as a string
-        //Please return "0" if the user has not played any games
+    public String getScore(@PathVariable long userId) {
+        User userDB = userService.getUserById(userId);
+        String json = new Gson().toJson(userDB.getScore());
+       return (json);
     }
+
 }
 
 

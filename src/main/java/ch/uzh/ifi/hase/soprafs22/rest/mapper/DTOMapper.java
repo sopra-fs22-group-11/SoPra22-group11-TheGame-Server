@@ -32,8 +32,8 @@ public interface DTOMapper {
   @Mapping(source = "password", target = "password")
   @Mapping(source = "username", target = "username")
   @Mapping(source = "status", target = "status")
-  @Mapping(source = "winningCount", target = "winningCount")
-  @Mapping(source = "gameCount", target = "gameCount")
+  @Mapping(source = "score", target = "score")
+  //@Mapping(source = "gameCount", target = "gameCount")
   UserGetDTO convertEntityToUserGetDTO(User user);
 
 
@@ -41,8 +41,8 @@ public interface DTOMapper {
   @Mapping(source = "password", target = "password")
   @Mapping(source = "username", target = "username")
   @Mapping(source = "status", target = "status")
-  @Mapping(source = "winningCount", target = "winningCount")
-  @Mapping(source = "gameCount", target = "gameCount")
+  @Mapping(source = "score", target = "score")
+  //@Mapping(source = "gameCount", target = "gameCount")
   User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
 
