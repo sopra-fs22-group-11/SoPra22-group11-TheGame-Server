@@ -6,6 +6,7 @@ import java.util.List;
 public class WaitingRoom {
     private final int MaxPlayers = 5;
     private List<Player> playerList = new ArrayList<>();
+    private List<String> playerNames = new ArrayList<>();
     private int noOfPlayers;
 
     public int getNoOfPlayers() {return noOfPlayers;}
@@ -13,6 +14,7 @@ public class WaitingRoom {
 
     public void addPlayer(Player player){
         playerList.add(player);
+        playerNames.add(player.getPlayerName());
     }
 
     public void removePlayer(Player player){
@@ -20,6 +22,10 @@ public class WaitingRoom {
     }
     public List<Player> getPlayerList (){
         return this.playerList;
+    }
+
+    public List<String> getPlayerNames (){
+        return this.playerNames;
     }
 
     public void removeAllPlayers(){

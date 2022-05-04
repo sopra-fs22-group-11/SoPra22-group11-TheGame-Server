@@ -60,17 +60,10 @@ public class WebSocketController {
         //System.out.println("the name is:"+userObject.getUsername());
         Player newPlayer = new Player(userObject.getUsername(), userObject.getId());
         waitingRoom.addPlayer(newPlayer);
-        String json = new Gson().toJson(waitingRoom.getPlayerList());
-        //System.out.println(json);
-        //System.out.println("in addlpayersInWatitingRoom method");
-        //System.out.println("vor add player");
-        ////game.addPlayer(newPlayer);
-        //System.out.println("vor send game update");
-        //sendGameUpdate();
-        //System.out.println("vor return in addPlayersWatiningRoom");
+        System.out.println(waitingRoom.getPlayerNames());
+        String json = new Gson().toJson(waitingRoom.getPlayerNames());
         return json;
 
-        //return waitingRoom.getPlayerList();
     }
 
 
