@@ -83,7 +83,7 @@ public class UserController {
         if (userDB ==null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("The user with userId %s was not found.", userId));
         }
-        else if(userService.checkDuplicateForUsername(userInput.getUsername(), userId)){
+        else if(userService.checkForDuplicateUsername(userInput.getUsername(), userId)){
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "This username is already taken");}
         else{

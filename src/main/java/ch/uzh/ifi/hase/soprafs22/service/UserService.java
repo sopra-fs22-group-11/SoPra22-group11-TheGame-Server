@@ -134,7 +134,7 @@ public class UserService {
         user = getUserById(user.getId());
         return user;
     }
-    public boolean checkDuplicateForUsername(String username, long id){
+    public boolean checkForDuplicateUsername(String username, long id){
         // Used in put, returns true if there is another user with the same
         // username which does NOT have the same Id and therefore is not that user
         User userSameUsername = userRepository.findByUsername(username);
