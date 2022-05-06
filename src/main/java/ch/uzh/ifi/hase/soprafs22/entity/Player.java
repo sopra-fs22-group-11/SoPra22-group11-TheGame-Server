@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -29,8 +30,8 @@ public class Player {
     public Deck fillCards(int fillTo, Deck deck){
         while(getNoOfCards() < fillTo && deck.getNoOfCards() > 0){
             handCards.add(deck.pop());
-            //deck.removeCardOnDeck();
         }
+        handCards.sort(Comparator.naturalOrder());
         return deck;
     }
 
