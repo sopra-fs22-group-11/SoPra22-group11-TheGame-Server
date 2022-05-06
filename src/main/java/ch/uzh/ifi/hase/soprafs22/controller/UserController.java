@@ -89,16 +89,7 @@ public class UserController {
         else{
             userService.updateUser(userInput, userId);
         }
-        /*
-        if (userInput.getUsername() != null) {
-            userDB.setUsername(userInput.getUsername());
-        }
 
-        if (userInput.getPassword() != null) {
-            userDB.setPassword(userInput.getPassword());
-        }
-
-        userService.saveUpdate(userDB);*/
     }
 
 
@@ -136,6 +127,9 @@ public class UserController {
     @ResponseBody
     public String getScore(@PathVariable long userId) {
         User userDB = userService.getUserById(userId);
+        if (userDB ==null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("The user with userId %s was not found.", userId));
+        }
         String json = new Gson().toJson(userDB.getScore());
        return (json);
     }
