@@ -49,7 +49,7 @@ public class GameTest {
             assertEquals(7, player.getNoOfCards());
         }
 
-        assertEquals(98-14,game.getDeck().getNoOfCards());
+        assertEquals(98 - 14, game.getDeck().getNoOfCards());
 
 
     }
@@ -83,7 +83,7 @@ public class GameTest {
         for (Player player : pl) {
             assertEquals(6, player.getNoOfCards());
         }
-        assertEquals(98-5*6,game.getDeck().getNoOfCards());
+        assertEquals(98 - 5 * 6, game.getDeck().getNoOfCards());
     }
 
     //test updateGamefromTGOInformation
@@ -295,7 +295,7 @@ public class GameTest {
         player3.setHandCards(emptyCardList);
 
 
-        while(game.getDeck().getNoOfCards()>0) {
+        while (game.getDeck().getNoOfCards() > 0) {
             game.getDeck().pop();
         }
 
@@ -325,7 +325,7 @@ public class GameTest {
         player1.setHandCards(emptyCardList);
         player2.setHandCards(emptyCardList);
 
-        while(game.getDeck().getNoOfCards()>0) {
+        while (game.getDeck().getNoOfCards() > 0) {
             game.getDeck().pop();
         }
 
@@ -340,7 +340,6 @@ public class GameTest {
     public void checkWinDeckNonEmptyTest() {
         Game game = new Game();
 
-        List<Card> emptyCardList = new ArrayList<>();
 
         Player player1 = new Player("player1", 1L);
         Player player2 = new Player("player2", 2L);
@@ -376,20 +375,20 @@ public class GameTest {
 
 
         game.startGame(pl, userService);
-        System.out.println("first test before draw: " );
-        for (Card c: player1.getHandCards()) {
-            System.out.println( c.getValue());
+        System.out.println("first test before draw: ");
+        for (Card c : player1.getHandCards()) {
+            System.out.println(c.getValue());
         }
         player1.setHandCards(emptyCardList);
         assertEquals(0, player1.getNoOfCards());
         game.draw();
-        System.out.println("first test after draw: " );
-        for (Card c: player1.getHandCards()) {
-            System.out.println( c.getValue());
+        System.out.println("first test after draw: ");
+        for (Card c : player1.getHandCards()) {
+            System.out.println(c.getValue());
         }
         assertEquals(7, player1.getNoOfCards());
 
-        assertEquals(98-21,game.getDeck().getNoOfCards());
+        assertEquals(98 - 21, game.getDeck().getNoOfCards());
 
     }
 
@@ -415,7 +414,7 @@ public class GameTest {
         game.draw();
         assertEquals(6, player1.getNoOfCards());
 
-        assertEquals(98-24,game.getDeck().getNoOfCards());
+        assertEquals(98 - 24, game.getDeck().getNoOfCards());
 
     }
 
@@ -448,15 +447,40 @@ public class GameTest {
         assertEquals(6, player1.getNoOfCards());
 
     }
-}
 
-/*
+
     //test onGameTerminated
-    //
+    //when won
     @Test
-    public void onGameTerminatedTest(){
+    public void onGameTerminatedTest_won() {
         Game game = new Game();
 
+        Player player1 = new Player("player1", 1l);
+        Player player2 = new Player("player2", 2l);
+        Player player3 = new Player("player3", 3l);
+        List<Player> pl = new ArrayList<>();
+        pl.add(player1);
+        pl.add(player2);
+        pl.add(player3);
+
+        game.startGame(pl, userService);
+        game.getGameStatus().setGameWon(true);
+        game.onGameTerminated();
+
+        //  for(Player player : pl){
+        //      assertEquals(UserStatus.READY, userService.getUserById(player.getId()).getStatus());
+        //      assertEquals(100, userService.getUserById(player.getId()).getScore());
+        //  }
+
+    }
+
+
+    //test remaining cards method
+    //
+    @Test
+    public void remainigCardsTest(){
+        Game game = new Game();
+        List<Card> emptyCardList = new ArrayList<>();
         Player player1 = new Player("player1",new Long("1"));
         Player player2 = new Player("player2",new Long("2"));
         Player player3 = new Player("player3",new Long("3"));
@@ -465,15 +489,33 @@ public class GameTest {
         pl.add(player2);
         pl.add(player3);
 
-        game.startGame(pl, userService);
-        game.onGameTerminated();
 
-        for(Player player : pl){
-            assertEquals(UserStatus.READY, userService.getUserById(player.getId()).getStatus());
-        }
+        game.startGame(pl, userService);
+
+        assertEquals(98, game.remainingCards());
+        player1.setHandCards(emptyCardList);
+        player2.setHandCards(emptyCardList);
+        assertEquals(98-2*6, game.remainingCards());
+        //player 1 draws cards, but no. of cards in game remains same
+      //  System.out.println("pile:" + game.getNoOfCardsOnDeck());
+      //  System.out.println("hansdcards p1 " + game.getListOfPlayers().get(0).getNoOfCards());
+      //  System.out.println("hansdcards p2 " + game.getListOfPlayers().get(1).getNoOfCards());
+      //  System.out.println("hansdcards p3 " + game.getListOfPlayers().get(2).getNoOfCards());
+      //  game.draw();
+      //  System.out.println(game.getWhoseTurn());
+      //  System.out.println("pile:" + game.getNoOfCardsOnDeck());
+      //  System.out.println("hansdcards p1 " + game.getListOfPlayers().get(0).getNoOfCards());
+      //  System.out.println("hansdcards p2 " + game.getListOfPlayers().get(1).getNoOfCards());
+      //  System.out.println("hansdcards p3 " + game.getListOfPlayers().get(2).getNoOfCards());
+      //  assertEquals(98-2*6, game.remainingCards());
 
     }
-    */
+}
+
+
+
+
+
 
 
 
