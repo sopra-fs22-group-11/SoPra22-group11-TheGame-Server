@@ -36,20 +36,6 @@ public class WebSocketController {
     }
 
 
-    @MessageMapping("/hello")
-    @SendTo("/topic/users")
-    public List<UserGetDTO> getUsers() {
-        // fetch all users in the internal representation
-        List<User> users = userService.getUsers();
-        List<UserGetDTO> userGetDTOS = new ArrayList<>();
-
-        // convert each User to the API representation
-        for (User user : users) {
-            userGetDTOS.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
-        }
-        return userGetDTOS;
-    }
-
     @MessageMapping("/game")
     @SendTo("/topic/players")
     public String addPlayersInWaitingroom(String userData){
@@ -124,17 +110,6 @@ public class WebSocketController {
         return json;
     }
 
-    @MessageMapping ("/gameTerminated") //TODO this endpoint will not stay in Sprint2
-    @SendTo("/topic/terminated")
-    public String terminated(){
-        waitingRoom.removeAllPlayers();
-        game = null;
-        //game.getGameStatus().setGameRunning(false);
-        //TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
-        String json = new Gson().toJson(game);
-        System.out.println("\n\nWe reset everything\n\n");
-        return json;
-    }
 
     @MessageMapping ("/gameStatus")
     @SendTo("/topic/status")
@@ -142,19 +117,27 @@ public class WebSocketController {
         game.onGameTerminated();
 
         if(game.getGameStatus().getGameWon()){
-            return "won";
+            waitingRoom.removeAllPlayers();
+            game = null;
+            return new Gson().toJson("won");
         }
         else if(game.getGameStatus().getGameLost()){
-            return "lost";
+            waitingRoom.removeAllPlayers();
+            game = null;
+            return new Gson().toJson("lost");
         }
         else if(game.getGameStatus().getUserLeft()) {
-            return "left";
+            waitingRoom.removeAllPlayers();
+            game = null;
+            return new Gson().toJson("left");
         }
         else if(game.getGameStatus().getGameRunning()){
-            return "running";
+            waitingRoom.removeAllPlayers();
+            game = null;
+            return new Gson().toJson("running");
         }
         else{
-            return "oh on";
+            return new Gson().toJson("oh no");
 
         }
 
