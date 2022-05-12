@@ -35,7 +35,6 @@ public class WebSocketController {
         this.gameService = gameService;
     }
 
-
     @MessageMapping("/game")
     @SendTo("/topic/players")
     public String addPlayersInWaitingroom(String userData){
@@ -49,7 +48,17 @@ public class WebSocketController {
         System.out.println(waitingRoom.getPlayerNames());
         String json = new Gson().toJson(waitingRoom.getPlayerNames());
         return json;
+    }
 
+    @MessageMapping("/leave")
+    @SendTo("/topic/players")
+    public String removePlayerFromWaitingRoom(String userData){
+        Gson gson = new Gson();
+        String userString = gson.fromJson(userData, String.class);
+        waitingRoom.removePlayer(userString);
+        System.out.println(waitingRoom.getPlayerNames());
+        String json = new Gson().toJson(waitingRoom.getPlayerNames());
+        return json;
     }
 
 
@@ -142,5 +151,6 @@ public class WebSocketController {
         }
 
     }
+
 
 }

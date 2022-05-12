@@ -13,12 +13,26 @@ public class WaitingRoom {
 
 
     public void addPlayer(Player player){
-        playerList.add(player);
-        playerNames.add(player.getPlayerName());
+        //if (!checkIfPlayerInList(player)) {
+            playerList.add(player);
+            playerNames.add(player.getPlayerName());
+        //}
     }
 
-    public void removePlayer(Player player){
-        playerList.remove(player);
+    /*
+    public boolean checkIfPlayerInList(Player player) {
+        for (int i = 0; i <= playerList.size(); i++) {
+            if (this.playerList.get(i).getPlayerName().equals(player.getPlayerName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+     */
+
+    public void removePlayer(String playerName){
+        playerNames.remove(playerName);
     }
     public List<Player> getPlayerList (){
         return this.playerList;

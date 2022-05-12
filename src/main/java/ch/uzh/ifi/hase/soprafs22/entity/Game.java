@@ -36,7 +36,7 @@ public class Game{
         pileList.add(new Pile(Directions.DOWNUP));
         // Check what's the amount of cards on a hand
         if(playerList.size()==2) { fillUpToNoOfCards = 7; }
-        else if (playerList.size() <= 5 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
+        else if (playerList.size() <= 4 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
         //else{throw new Exception();}// TODO The Websocket request which handles the game start will catch this exception and throw a ResponseStatusException
 
 
