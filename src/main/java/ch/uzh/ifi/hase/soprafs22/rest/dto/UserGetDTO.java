@@ -5,7 +5,6 @@ import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 public class UserGetDTO {
 
   private Long id;
-  private String password; // Can maybe be removed if no one is using it
   private String username;
   private UserStatus status;
   //private Boolean yourTurn;
@@ -18,14 +17,6 @@ public class UserGetDTO {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
   public String getUsername() {
