@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WaitingRoom {
-    private final int MaxPlayers = 5;
+    private final int MaxPlayers = 4;
     private List<Player> playerList = new ArrayList<>();
     private List<String> playerNames = new ArrayList<>();
     private int noOfPlayers;

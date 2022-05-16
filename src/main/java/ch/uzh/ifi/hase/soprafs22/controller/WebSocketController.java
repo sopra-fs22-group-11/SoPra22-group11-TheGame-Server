@@ -42,11 +42,20 @@ public class WebSocketController {
         Gson gson = new Gson();
         String userString = gson.fromJson(userData, String.class);
         User userObject = userService.getUserByUsername(userString);
-        //System.out.println("the name is:"+userObject.getUsername());
+        System.out.println("the name is:"+userObject.getUsername());
         Player newPlayer = new Player(userObject.getUsername(), userObject.getId());
+        System.out.println(newPlayer);
         waitingRoom.addPlayer(newPlayer);
         System.out.println(waitingRoom.getPlayerNames());
         String json = new Gson().toJson(waitingRoom.getPlayerNames());
+        return json;
+    }
+
+    @MessageMapping("/getPlayers")
+    @SendTo("/topic/getPlayers")
+    public String getPlayers(){
+        String json = new Gson().toJson(waitingRoom.getPlayerNames());
+        System.out.println("in getplayers: " + waitingRoom.getPlayerNames());
         return json;
     }
 
