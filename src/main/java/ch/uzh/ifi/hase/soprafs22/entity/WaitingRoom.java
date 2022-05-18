@@ -34,6 +34,7 @@ public class WaitingRoom {
     public void removePlayer(String playerName){
         playerNames.remove(playerName);
     }
+
     public List<Player> getPlayerList (){
         return this.playerList;
     }
@@ -45,6 +46,10 @@ public class WaitingRoom {
     public void removeAllPlayers(){
         playerList.clear();
         System.out.println("playerlist size after remove them all: " + playerList.size());
+    }
+
+    public void removeAllPlayerNames() {
+        playerNames.clear();
     }
 
 

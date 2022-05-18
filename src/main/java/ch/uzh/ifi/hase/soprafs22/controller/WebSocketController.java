@@ -65,7 +65,15 @@ public class WebSocketController {
         Gson gson = new Gson();
         String userString = gson.fromJson(userData, String.class);
         waitingRoom.removePlayer(userString);
-        System.out.println(waitingRoom.getPlayerNames());
+        String json = new Gson().toJson(waitingRoom.getPlayerNames());
+        return json;
+    }
+
+    @MessageMapping("/clearWaitingRoom")
+    @SendTo("/topic/clearWaitingRoom")
+    public String removeAllPlayerNamesFromWaitingRoom(){
+        waitingRoom.removeAllPlayerNames();
+        System.out.println("clearWaitingRoom: "+waitingRoom.getPlayerNames());
         String json = new Gson().toJson(waitingRoom.getPlayerNames());
         return json;
     }
