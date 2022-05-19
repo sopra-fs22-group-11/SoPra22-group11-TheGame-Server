@@ -145,6 +145,8 @@ public class Game{
 
     public GameStatus getGameStatus(){return this.gameStatus;}
 
+    public Boolean isGameRunning(){return this.gameStatus.getGameRunning();}
+
     public String getWhoseTurn(){return this.whoseTurn;}
 
     public int getNoOfCardsOnDeck() {return this.deck.getNoOfCards();}

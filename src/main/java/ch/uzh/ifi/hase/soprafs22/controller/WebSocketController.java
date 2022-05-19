@@ -78,6 +78,19 @@ public class WebSocketController {
         return json;
     }
 
+    @MessageMapping ("/isRunning")
+    @SendTo("/topic/isRunning")
+    public String isRunning(){
+        if (game == null) {
+            System.out.println("game is null");
+            return new Gson().toJson(false);
+        }
+        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
+        String json = new Gson().toJson(tgo);
+        System.out.println("current game status: " + tgo.gameRunning);
+        return json;
+    }
+
 
     @MessageMapping ("/start")
     @SendTo("/topic/start")
