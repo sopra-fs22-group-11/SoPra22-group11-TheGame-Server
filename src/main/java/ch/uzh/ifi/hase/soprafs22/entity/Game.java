@@ -120,18 +120,23 @@ public class Game{
 
 
     public void onGameTerminated(){
+        int i = remainingCards();
+
         for(Player player:playerList){
             userService.setStatusInRepo(player.getId(), UserStatus.READY);
+            System.out.println("Game Won:" +gameStatus.getGameWon() + " Game Lost:" +gameStatus.getGameLost());
             if(gameStatus.getGameWon()){
                 userService.updateScore(player, 100);
+                System.out.println("Winning: " + player.getPlayerName());
             }
             else if (gameStatus.getGameLost()){
                 userService.updateScore(player,100 - remainingCards());
+                System.out.println("Losing: " + player.getPlayerName());
             }
         }
     }
     public int remainingCards(){
-        int cardsInGame;
+        int cardsInGame = 0;
         cardsInGame = this.deck.getNoOfCards();
         for(Player pl:playerList){
             cardsInGame += pl.getNoOfCards();
