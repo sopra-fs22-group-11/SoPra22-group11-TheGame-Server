@@ -128,12 +128,12 @@ public class UserService {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This user cannot be found.");
     }
 
-    public User saveUpdate(User user) {
-        user = userRepository.save(user);
-        userRepository.flush();
-        user = getUserById(user.getId());
-        return user;
-    }
+   // public User saveUpdate(User user) {
+   //     user = userRepository.save(user);
+   //     userRepository.flush();
+   //     user = getUserById(user.getId());
+   //     return user;
+   // }
     public boolean checkForDuplicateUsername(String username, long id){
         // Used in put, returns true if there is another user with the same
         // username which does NOT have the same Id and therefore is not that user

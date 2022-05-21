@@ -12,10 +12,10 @@ public class Deck {
 
     public int getNoOfCards(){return cards.size();} //cards.size()
 
-    public List<Card> removeCardOnDeck(){
-        cards.remove(0);
-        return cards;
-    }
+   //public List<Card> removeCardOnDeck(){
+   //    cards.remove(0);
+   //    return cards;
+   //}
 
 
     public Deck(){ // Constructor of the Deck
