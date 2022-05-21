@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WaitingRoom {
-    //private final int MaxPlayers = 5;
+    private final int MaxPlayers = 4;
     private List<Player> playerList = new ArrayList<>();
     private List<String> playerNames = new ArrayList<>();
-    //private int noOfPlayers;
+    private int noOfPlayers;
 
-    //public int getNoOfPlayers() {return noOfPlayers;}
+    public int getNoOfPlayers() {return noOfPlayers;}
 
 
     public void addPlayer(Player player){
@@ -34,6 +34,7 @@ public class WaitingRoom {
     public void removePlayer(String playerName){
         playerNames.remove(playerName);
     }
+
     public List<Player> getPlayerList (){
         return this.playerList;
     }
@@ -47,13 +48,17 @@ public class WaitingRoom {
         System.out.println("playerlist size after remove them all: " + playerList.size());
     }
 
+    public void removeAllPlayerNames() {
+        playerNames.clear();
+    }
+
 
     // only when we have more than two players in waiting room we could start game
-//    public Boolean checkStartGamePossible() {
-//        if (noOfPlayers >= 2) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
+    public Boolean checkStartGamePossible() {
+        if (noOfPlayers >= 2) {
+            return true;
+        }
+        return false;
+    }
+
 }

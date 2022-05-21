@@ -28,6 +28,7 @@ public class WebSocketController {
     private WaitingRoom waitingRoom = new WaitingRoom();
     private final GameService gameService;
     private Game game;
+    private int cnt = 0;
 
 
     WebSocketController(UserService userService, GameService gameService) { //TODO check only one userRepository
@@ -42,11 +43,20 @@ public class WebSocketController {
         Gson gson = new Gson();
         String userString = gson.fromJson(userData, String.class);
         User userObject = userService.getUserByUsername(userString);
-        //System.out.println("the name is:"+userObject.getUsername());
+        System.out.println("the name is:"+userObject.getUsername());
         Player newPlayer = new Player(userObject.getUsername(), userObject.getId());
+        System.out.println(newPlayer);
         waitingRoom.addPlayer(newPlayer);
         System.out.println(waitingRoom.getPlayerNames());
         String json = new Gson().toJson(waitingRoom.getPlayerNames());
+        return json;
+    }
+
+    @MessageMapping("/getPlayers")
+    @SendTo("/topic/getPlayers")
+    public String getPlayers(){
+        String json = new Gson().toJson(waitingRoom.getPlayerNames());
+        System.out.println("in getplayers: " + waitingRoom.getPlayerNames());
         return json;
     }
 
@@ -56,8 +66,29 @@ public class WebSocketController {
         Gson gson = new Gson();
         String userString = gson.fromJson(userData, String.class);
         waitingRoom.removePlayer(userString);
-        System.out.println(waitingRoom.getPlayerNames());
         String json = new Gson().toJson(waitingRoom.getPlayerNames());
+        return json;
+    }
+
+    @MessageMapping("/clearWaitingRoom")
+    @SendTo("/topic/clearWaitingRoom")
+    public String removeAllPlayerNamesFromWaitingRoom(){
+        waitingRoom.removeAllPlayerNames();
+        System.out.println("clearWaitingRoom: "+waitingRoom.getPlayerNames());
+        String json = new Gson().toJson(waitingRoom.getPlayerNames());
+        return json;
+    }
+
+    @MessageMapping ("/isRunning")
+    @SendTo("/topic/isRunning")
+    public String isRunning(){
+        if (game == null) {
+            System.out.println("game is null");
+            return new Gson().toJson(false);
+        }
+        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
+        String json = new Gson().toJson(tgo);
+        System.out.println("current game status: " + tgo.gameRunning);
         return json;
     }
 
@@ -66,6 +97,7 @@ public class WebSocketController {
     @SendTo("/topic/start")
     public String startGame(){ // TODO Think whether waitingRoom list needs to get players again from user
         game = new Game();
+        cnt = 0;
         System.out.println("In startgame() method");
         game.startGame(waitingRoom.getPlayerList(), userService);
         System.out.println(game.getNoOfCardsOnDeck());
@@ -123,27 +155,34 @@ public class WebSocketController {
     @MessageMapping ("/gameStatus")
     @SendTo("/topic/status")
     public String gameStatus(){ // Should not return json, but a string lost/won/left
-        game.onGameTerminated();
+        boolean doITidyUp = false;
+        if (cnt == 0){
+            cnt++;
+            doITidyUp = true;
+            game.onGameTerminated();
+        }
+
 
         if(game.getGameStatus().getGameWon()){
-            waitingRoom.removeAllPlayers();
-            game = null;
+            if (doITidyUp){
+                waitingRoom.removeAllPlayers();
+                game = null;
+            }
             return new Gson().toJson("won");
         }
         else if(game.getGameStatus().getGameLost()){
-            waitingRoom.removeAllPlayers();
-            game = null;
+            if (doITidyUp){
+                waitingRoom.removeAllPlayers();
+                game = null;
+            }
             return new Gson().toJson("lost");
         }
         else if(game.getGameStatus().getUserLeft()) {
-            waitingRoom.removeAllPlayers();
-            game = null;
+            if (doITidyUp){
+                waitingRoom.removeAllPlayers();
+                game = null;
+            }
             return new Gson().toJson("left");
-        }
-        else if(game.getGameStatus().getGameRunning()){
-            waitingRoom.removeAllPlayers();
-            game = null;
-            return new Gson().toJson("running");
         }
         else{
             return new Gson().toJson("oh no");
