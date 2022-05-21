@@ -20,8 +20,8 @@ public class Game{
     private UserService userService;
 
 
-    public void Game(){
-    }
+   // public void Game(){
+    //}
 
 
     public void startGame(List<Player> playerList, UserService userService) {
@@ -150,7 +150,7 @@ public class Game{
 
     public GameStatus getGameStatus(){return this.gameStatus;}
 
-    public Boolean isGameRunning(){return this.gameStatus.getGameRunning();}
+    //public Boolean isGameRunning(){return this.gameStatus.getGameRunning();}
 
     public String getWhoseTurn(){return this.whoseTurn;}
 
