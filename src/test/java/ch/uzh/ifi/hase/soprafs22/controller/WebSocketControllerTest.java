@@ -148,6 +148,38 @@ public class WebSocketControllerTest {
         // so that we don't have to mock all the cards
     }
 
+    @Test
+    public void testGameWatinigroomEndpoint() throws Exception{
+
+        session.subscribe("/topic/game", new StompFrameHandler() {
+
+            @Override
+            public Class<String> getPayloadType(StompHeaders headers) {
+                return String.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("Received message: " + payload);
+                String pl = (String) payload;
+                //blockingQueue.add((String) payload);
+                System.out.println("in handle Frame");
+                list.add(pl);
+            }
+        });
+
+        System.out.println("Port: " + this.port);
+//sending request
+
+        session.send("/app/game", "TestUser");
+        Thread.sleep(1000);
+
+
+
+
+
+    }
+
     //TODO /discard
 
     //TODO /draw

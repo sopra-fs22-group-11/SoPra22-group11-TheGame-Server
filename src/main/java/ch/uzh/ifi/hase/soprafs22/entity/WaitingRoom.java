@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WaitingRoom {
-    private final int MaxPlayers = 5;
+    //private final int MaxPlayers = 5;
     private List<Player> playerList = new ArrayList<>();
     private List<String> playerNames = new ArrayList<>();
-    private int noOfPlayers;
+    //private int noOfPlayers;
 
-    public int getNoOfPlayers() {return noOfPlayers;}
+    //public int getNoOfPlayers() {return noOfPlayers;}
 
 
     public void addPlayer(Player player){
@@ -49,11 +49,11 @@ public class WaitingRoom {
 
 
     // only when we have more than two players in waiting room we could start game
-    public Boolean checkStartGamePossible() {
-        if (noOfPlayers >= 2) {
-            return true;
-        }
-        return false;
-    }
-
+//    public Boolean checkStartGamePossible() {
+//        if (noOfPlayers >= 2) {
+//            return true;
+//        }
+//        return false;
+//    }
+//
 }

@@ -63,13 +63,13 @@ public class GameTest {
         Player player2 = new Player("player2", 2L);
         Player player3 = new Player("player3", 3L);
         Player player4 = new Player("player4", 4L);
-        Player player5 = new Player("player5", 5L);
+        //Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
         pl.add(player3);
         pl.add(player4);
-        pl.add(player5);
+        //pl.add(player5);
 
         game.startGame(pl, userService);
 
@@ -78,12 +78,12 @@ public class GameTest {
         //fillUpToNoOfCards
         assertEquals(6, game.getFillUpToNoOfCards());
         //playerList
-        assertEquals(5, game.getListOfPlayers().size());
+        assertEquals(4, game.getListOfPlayers().size());
         //handcards
         for (Player player : pl) {
             assertEquals(6, player.getNoOfCards());
         }
-        assertEquals(98-5*6,game.getDeck().getNoOfCards());
+        assertEquals(98-4*6,game.getDeck().getNoOfCards());
     }
 
     //test updateGamefromTGOInformation
@@ -153,13 +153,13 @@ public class GameTest {
         Player player2 = new Player("player2", 2L);
         Player player3 = new Player("player3", 3L);
         Player player4 = new Player("player4", 4L);
-        Player player5 = new Player("player5", 5L);
+        
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
         pl.add(player3);
         pl.add(player4);
-        pl.add(player5);
+
 
         game.startGame(pl, userService);
 
@@ -171,9 +171,6 @@ public class GameTest {
 
         game.updateCurrentPlayer();
         assertEquals(player4.getPlayerName(), game.getWhoseTurn());
-
-        game.updateCurrentPlayer();
-        assertEquals(player5.getPlayerName(), game.getWhoseTurn());
 
         game.updateCurrentPlayer();
         assertEquals(player1.getPlayerName(), game.getWhoseTurn());
@@ -221,13 +218,13 @@ public class GameTest {
         Player player2 = new Player("player2", 2L);
         Player player3 = new Player("player3", 3L);
         Player player4 = new Player("player4", 4L);
-        Player player5 = new Player("player5", 5L);
+        //Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
         pl.add(player3);
         pl.add(player4);
-        pl.add(player5);
+        //pl.add(player5);
 
         game.startGame(pl, userService);
         player2.setHandCards(emptyCardList);
@@ -250,13 +247,13 @@ public class GameTest {
         Player player2 = new Player("player2", 2L);
         Player player3 = new Player("player3", 3L);
         Player player4 = new Player("player4", 4L);
-        Player player5 = new Player("player5", 5L);
+        //Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
         pl.add(player3);
         pl.add(player4);
-        pl.add(player5);
+        //pl.add(player5);
 
         game.startGame(pl, userService);
 
@@ -267,9 +264,9 @@ public class GameTest {
 
         assertEquals(player4.getPlayerName(), game.onePlayerFurther(player3.getPlayerName()));
 
-        assertEquals(player5.getPlayerName(), game.onePlayerFurther(player4.getPlayerName()));
+        assertEquals(player1.getPlayerName(), game.onePlayerFurther(player4.getPlayerName()));
 
-        assertEquals(player1.getPlayerName(), game.onePlayerFurther(player5.getPlayerName()));
+        //assertEquals(player1.getPlayerName(), game.onePlayerFurther(player5.getPlayerName()));
 
     }
 
