@@ -27,7 +27,7 @@ public class WebSocketController {
     private final UserService userService;
     private WaitingRoom waitingRoom = new WaitingRoom();
     private final GameService gameService;
-    private Game game;
+    private Game game = null;
     private int cnt = 0;
 
 
