@@ -52,13 +52,4 @@ public class WaitingRoom {
         playerNames.clear();
     }
 
-
-    // only when we have more than two players in waiting room we could start game
-    //public Boolean checkStartGamePossible() {
-    //    if (noOfPlayers >= 2) {
-    //        return true;
-    //    }
-    //    return false;
-    //}
-
 }

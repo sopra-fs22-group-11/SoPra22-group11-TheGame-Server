@@ -84,12 +84,10 @@ public class WebSocketController {
     @SendTo("/topic/isRunning")
     public String isRunning(){
         if (game == null) {
-            System.out.println("game is null");
             return new Gson().toJson(false);
         }
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
-        String json = new Gson().toJson(tgo);
-        System.out.println("current game status: " + tgo.gameRunning);
+        String json = new Gson().toJson(tgo.gameRunning);
         return json;
     }
 
