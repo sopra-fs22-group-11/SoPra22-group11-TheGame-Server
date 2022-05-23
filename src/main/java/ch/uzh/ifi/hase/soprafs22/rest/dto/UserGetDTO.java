@@ -7,6 +7,7 @@ public class UserGetDTO {
   private Long id;
   private String username;
   private UserStatus status;
+  private String token;
   //private Boolean yourTurn;
   private int score;
 
@@ -35,10 +36,12 @@ public class UserGetDTO {
     this.status = status;
   }
 
-  //public Boolean getYourTurn(){return yourTurn;}
-
-    //public void setYourTurn(Boolean yourTurn){this.yourTurn = yourTurn;}
-
+    public String getToken() {
+        return token;
+    }
+    public void setToken(String token) {
+        this.token = token;
+    }
     public int getScore(){return score;}
 
     public void setScore(int score){this.score = score;}

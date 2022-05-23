@@ -2,20 +2,24 @@ package ch.uzh.ifi.hase.soprafs22.entity;
 
 import ch.uzh.ifi.hase.soprafs22.constant.Directions;
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs22.controller.UserController;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.messaging.simp.user.UserDestinationResolver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+
+import static org.mockito.Mockito.mock;
+
+
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+
 
 public class GameTest {
     @Mock
@@ -23,6 +27,13 @@ public class GameTest {
 
     @InjectMocks
     private UserService userService = new UserService(userRepository);
+
+
+    @Autowired
+    private UserRepository ur;
+    @Autowired
+    private UserService us = new UserService(ur);
+
 
 
     //test startGame with 2 players
@@ -63,13 +74,13 @@ public class GameTest {
         Player player2 = new Player("player2", 2L);
         Player player3 = new Player("player3", 3L);
         Player player4 = new Player("player4", 4L);
-        Player player5 = new Player("player5", 5L);
+        //Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
         pl.add(player3);
         pl.add(player4);
-        pl.add(player5);
+        //pl.add(player5);
 
         game.startGame(pl, userService);
 
@@ -78,12 +89,12 @@ public class GameTest {
         //fillUpToNoOfCards
         assertEquals(6, game.getFillUpToNoOfCards());
         //playerList
-        assertEquals(5, game.getListOfPlayers().size());
+        assertEquals(4, game.getListOfPlayers().size());
         //handcards
         for (Player player : pl) {
             assertEquals(6, player.getNoOfCards());
         }
-        assertEquals(98-5*6,game.getDeck().getNoOfCards());
+        assertEquals(98-4*6,game.getDeck().getNoOfCards());
     }
 
     //test updateGamefromTGOInformation
@@ -153,13 +164,13 @@ public class GameTest {
         Player player2 = new Player("player2", 2L);
         Player player3 = new Player("player3", 3L);
         Player player4 = new Player("player4", 4L);
-        Player player5 = new Player("player5", 5L);
+        
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
         pl.add(player3);
         pl.add(player4);
-        pl.add(player5);
+
 
         game.startGame(pl, userService);
 
@@ -171,9 +182,6 @@ public class GameTest {
 
         game.updateCurrentPlayer();
         assertEquals(player4.getPlayerName(), game.getWhoseTurn());
-
-        game.updateCurrentPlayer();
-        assertEquals(player5.getPlayerName(), game.getWhoseTurn());
 
         game.updateCurrentPlayer();
         assertEquals(player1.getPlayerName(), game.getWhoseTurn());
@@ -221,13 +229,13 @@ public class GameTest {
         Player player2 = new Player("player2", 2L);
         Player player3 = new Player("player3", 3L);
         Player player4 = new Player("player4", 4L);
-        Player player5 = new Player("player5", 5L);
+        //Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
         pl.add(player3);
         pl.add(player4);
-        pl.add(player5);
+        //pl.add(player5);
 
         game.startGame(pl, userService);
         player2.setHandCards(emptyCardList);
@@ -250,13 +258,13 @@ public class GameTest {
         Player player2 = new Player("player2", 2L);
         Player player3 = new Player("player3", 3L);
         Player player4 = new Player("player4", 4L);
-        Player player5 = new Player("player5", 5L);
+        //Player player5 = new Player("player5", 5L);
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
         pl.add(player3);
         pl.add(player4);
-        pl.add(player5);
+        //pl.add(player5);
 
         game.startGame(pl, userService);
 
@@ -267,9 +275,9 @@ public class GameTest {
 
         assertEquals(player4.getPlayerName(), game.onePlayerFurther(player3.getPlayerName()));
 
-        assertEquals(player5.getPlayerName(), game.onePlayerFurther(player4.getPlayerName()));
+        assertEquals(player1.getPlayerName(), game.onePlayerFurther(player4.getPlayerName()));
 
-        assertEquals(player1.getPlayerName(), game.onePlayerFurther(player5.getPlayerName()));
+        //assertEquals(player1.getPlayerName(), game.onePlayerFurther(player5.getPlayerName()));
 
     }
 
@@ -448,24 +456,54 @@ public class GameTest {
         assertEquals(6, player1.getNoOfCards());
 
     }
-}
 
-/*
     //test onGameTerminated
-    //
+    /*
     @Test
-    public void onGameTerminatedTest(){
+    public void onGameTerminatedTest() throws InterruptedException {
         Game game = new Game();
 
-        Player player1 = new Player("player1",new Long("1"));
-        Player player2 = new Player("player2",new Long("2"));
-        Player player3 = new Player("player3",new Long("3"));
+
+
+
+        User u1 = new User();
+        User u2 = new User();
+        User u3 = new User();
+
+        u1.setUsername("u1");
+        u2.setUsername("u2");
+        u3.setUsername("u3");
+
+        u1.setPassword("uu1");
+        u2.setPassword("uu2");
+        u3.setPassword("uu3");
+
+        us.createUser(u1);
+        us.createUser(u2);
+        us.createUser(u3);
+        Thread.sleep(3000);
+
+        List<User> users = us.getUsers();
+        System.out.println("before for loop");
+        System.out.println("user size" + users.size());
+
+        for( User user: users){
+            System.out.println("in for loop");
+            System.out.println(user.getUsername());
+            System.out.println(user.getId());
+        }
+
+
+
+        Player player1 = new Player(u1.getUsername(),us.getUserByUsername("u1").getId());
+        Player player2 = new Player(u2.getUsername(),us.getUserByUsername("u2").getId());
+        Player player3 = new Player(u3.getUsername(),us.getUserByUsername("u3").getId());
         List<Player> pl = new ArrayList<>();
         pl.add(player1);
         pl.add(player2);
         pl.add(player3);
 
-        game.startGame(pl, userService);
+        game.startGame(pl, us);
         game.onGameTerminated();
 
         for(Player player : pl){
@@ -473,7 +511,9 @@ public class GameTest {
         }
 
     }
-    */
+
+     */
+}
 
 
 

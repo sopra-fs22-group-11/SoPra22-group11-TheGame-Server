@@ -49,6 +49,7 @@ public class WebSocketController {
         waitingRoom.addPlayer(newPlayer);
         System.out.println(waitingRoom.getPlayerNames());
         String json = new Gson().toJson(waitingRoom.getPlayerNames());
+        System.out.println("The player names are now sent back");
         return json;
     }
 

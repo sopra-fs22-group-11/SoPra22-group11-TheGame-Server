@@ -51,8 +51,7 @@ public class UserController {
 
         // convert each User to the API representation
         for (User user : users) {
-            userGetDTOS.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
-        }
+            userGetDTOS.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));}
         return userGetDTOS;
     }
 
@@ -132,6 +131,10 @@ public class UserController {
         }
         String json = new Gson().toJson(userDB.getScore());
         return (json);
+    }
+
+    public UserService getUserService(){
+        return  this.userService;
     }
 
 

@@ -10,4 +10,9 @@ public class CardTest {
         Card card = new Card(12);
         assertEquals(12, card.getValue());
     }
+    @Test
+    public void compareSameTest(){
+        Card c =  new Card(12);
+        assertEquals(0, c.compareTo(c));
+    }
 }
