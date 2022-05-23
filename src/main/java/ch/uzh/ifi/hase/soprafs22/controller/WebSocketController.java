@@ -123,7 +123,7 @@ public class WebSocketController {
 
     @MessageMapping ("/draw")
     @SendTo("/topic/game")
-    public String draw(){ // TODO we don't pass anything, server knows how to handle (TK)
+    public String draw(){
         game.draw();
         game.updateCurrentPlayer();
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
