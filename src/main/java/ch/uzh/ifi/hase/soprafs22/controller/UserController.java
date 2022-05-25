@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs22.controller;
 
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
-import ch.uzh.ifi.hase.soprafs22.entity.WaitingRoom;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
@@ -62,7 +61,6 @@ public class UserController {
         // fetch all users in the internal representation
         User userDB = userService.getUserById(userId);
 
-
         // convert each User to the API representation
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(userDB);
 
@@ -75,7 +73,6 @@ public class UserController {
     public void updateUser(@RequestBody UserPostDTO userPostDTO, @PathVariable long userId) {
         // convert API User to internal representation
         User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-        System.out.println(new Gson().toJson(userInput));
 
         User userDB = userService.getUserById(userId);
 

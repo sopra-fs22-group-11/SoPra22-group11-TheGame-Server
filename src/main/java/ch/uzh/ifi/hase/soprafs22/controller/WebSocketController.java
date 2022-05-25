@@ -2,20 +2,12 @@ package ch.uzh.ifi.hase.soprafs22.controller;
 
 
 import ch.uzh.ifi.hase.soprafs22.entity.*;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs22.service.GameService;
 import com.solidfire.gson.Gson;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 
@@ -39,17 +31,12 @@ public class WebSocketController {
     @MessageMapping("/game")
     @SendTo("/topic/players")
     public String addPlayersInWaitingroom(String userData){
-        //System.out.println(userData);
         Gson gson = new Gson();
         String userString = gson.fromJson(userData, String.class);
         User userObject = userService.getUserByUsername(userString);
-        System.out.println("the name is:"+userObject.getUsername());
         Player newPlayer = new Player(userObject.getUsername(), userObject.getId());
-        System.out.println(newPlayer);
         waitingRoom.addPlayer(newPlayer);
-        System.out.println(waitingRoom.getPlayerNames());
         String json = new Gson().toJson(waitingRoom.getPlayerNames());
-        System.out.println("The player names are now sent back");
         return json;
     }
 
@@ -57,7 +44,6 @@ public class WebSocketController {
     @SendTo("/topic/getPlayers")
     public String getPlayers(){
         String json = new Gson().toJson(waitingRoom.getPlayerNames());
-        System.out.println("in getplayers: " + waitingRoom.getPlayerNames());
         return json;
     }
 
@@ -75,7 +61,6 @@ public class WebSocketController {
     @SendTo("/topic/clearWaitingRoom")
     public String removeAllPlayerNamesFromWaitingRoom(){
         waitingRoom.removeAllPlayerNames();
-        System.out.println("clearWaitingRoom: "+waitingRoom.getPlayerNames());
         String json = new Gson().toJson(waitingRoom.getPlayerNames());
         return json;
     }
@@ -97,12 +82,9 @@ public class WebSocketController {
     public String startGame(){ // TODO Think whether waitingRoom list needs to get players again from user
         game = new Game();
         cnt = 0;
-        System.out.println("In startgame() method");
         game.startGame(waitingRoom.getPlayerList(), userService);
-        System.out.println(game.getNoOfCardsOnDeck());
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);   //
         String json = new Gson().toJson(tgo);
-        System.out.println(json);
         return json;
     }
 
@@ -111,7 +93,6 @@ public class WebSocketController {
     public String discard(String jsonTGO){
         //Transform to TGO
         Gson g = new Gson();
-        System.out.println("vor json in tgo umwandeln, jsontgo:"+ jsonTGO);
         TransferGameObject tgo = g.fromJson(jsonTGO, TransferGameObject.class);
         game.updateGameFromTGOInformation(tgo);
         game.checkWin();
@@ -134,7 +115,6 @@ public class WebSocketController {
     @SendTo("/topic/game")
     public String lost(){
         game.getGameStatus().setGameLost(true);
-
         TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
         String json = new Gson().toJson(tgo);
         return json;

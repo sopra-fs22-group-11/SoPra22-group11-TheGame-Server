@@ -4,13 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WaitingRoom {
-    //private final int MaxPlayers = 4;
+
     private List<Player> playerList = new ArrayList<>();
     private List<String> playerNames = new ArrayList<>();
-    //private int noOfPlayers;
-
-   // public int getNoOfPlayers() {return noOfPlayers;}
-
 
     public void addPlayer(Player player){
         //if (!checkIfPlayerInList(player)) {
@@ -19,17 +15,6 @@ public class WaitingRoom {
         //}
     }
 
-    /*
-    public boolean checkIfPlayerInList(Player player) {
-        for (int i = 0; i <= playerList.size(); i++) {
-            if (this.playerList.get(i).getPlayerName().equals(player.getPlayerName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-     */
 
     public void removePlayer(String playerName){
         playerNames.remove(playerName);

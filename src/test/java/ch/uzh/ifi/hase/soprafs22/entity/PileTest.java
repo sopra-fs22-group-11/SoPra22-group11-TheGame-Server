@@ -23,37 +23,6 @@ public class PileTest {
         assertEquals(100, pileTD.getTopCard().getValue());
     }
 
-    @Test
-    public void checkIfCardCanBePlayedDUTest(){
-        Pile pileDU = new Pile(Directions.DOWNUP);
-        pileDU.setTopCard(new Card(12));
-
-        try{
-            assertTrue(pileDU.checkIfCardCanBePlayed(new Card(2))); // Jump
-            assertTrue(pileDU.checkIfCardCanBePlayed(new Card(13))); // Strictly bigger
-            assertFalse(pileDU.checkIfCardCanBePlayed(new Card(10))); // Strictly smaller no jump
-            assertFalse(pileDU.checkIfCardCanBePlayed(new Card(12))); // Same value
-        }
-        catch (Exception e){
-            fail(); // This only happens if the Direction is unknown, which doesn't happen here
-        }
-    }
-
-    @Test
-    public void checkIfCardCanBePlayedTDTest(){
-        Pile pileDU = new Pile(Directions.TOPDOWN);
-        pileDU.setTopCard(new Card(80));
-
-        try{
-            assertTrue(pileDU.checkIfCardCanBePlayed(new Card(90))); // Jump
-            assertTrue(pileDU.checkIfCardCanBePlayed(new Card(79))); // Strictly smaller
-            assertFalse(pileDU.checkIfCardCanBePlayed(new Card(81))); // Strictly bigger no jump
-            assertFalse(pileDU.checkIfCardCanBePlayed(new Card(80))); // Same value
-        }
-        catch (Exception e){
-            fail(); // This only happens if the Direction is unknown, which doesn't happen here
-        }
-    }
 
 
 

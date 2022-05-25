@@ -4,7 +4,7 @@ import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+
 
 /**
  * Internal User Representation
