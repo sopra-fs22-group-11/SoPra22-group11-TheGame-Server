@@ -4,12 +4,12 @@ public class GameStatus {
     private boolean gameRunning = true; //At creation of the Object the game just started running
     private boolean gameWon = false;
     private boolean gameLost = false;
-    private boolean userLeft = false; //I assume this is set to true once a single user leaves
+    private boolean userLeft = false; //This is set to true once a single user leaves
 
 
     public boolean getGameRunning() {return gameRunning;}
 
-   // public void setGameRunning(boolean gameRunning) {this.gameRunning = gameRunning;}
+
 
 
     public boolean getGameWon() {return gameWon;}
@@ -34,8 +34,5 @@ public class GameStatus {
         this.userLeft = userLeft;
         this.gameRunning = !this.gameWon & !this.gameLost & !this.userLeft;
     }
-
-
-
 
 }

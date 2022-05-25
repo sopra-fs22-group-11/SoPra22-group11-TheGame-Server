@@ -14,14 +14,11 @@ public class Game{
     private GameStatus gameStatus = new GameStatus();
 
     private List<Player> playerList;
-    private String whoseTurn; //playerName
+    private String whoseTurn; //a playerName
     private int fillUpToNoOfCards;
 
     private UserService userService;
 
-
-   // public void Game(){
-    //}
 
 
     public void startGame(List<Player> playerList, UserService userService) {
@@ -37,8 +34,6 @@ public class Game{
         // Check what's the amount of cards on a hand
         if(playerList.size()==2) { fillUpToNoOfCards = 7; }
         else if (playerList.size() <= 4 && playerList.size() >= 3){ fillUpToNoOfCards = 6;}
-        //else{throw new Exception();}// TODO The Websocket request which handles the game start will catch this exception and throw a ResponseStatusException
-
 
         for(Player player:playerList){
             // Fill all users hand-cards
@@ -82,15 +77,15 @@ public class Game{
 
         whoseTurn = newPlayer;
     }
-    public String onePlayerFurther(String oldPlayer){  // TODO throws Exception { : the Rest Request which will handle the "end of turn" will have to catch this exception and throw a BadRequestException
+    public String onePlayerFurther(String oldPlayer){
         int oldIndex = findPlayerInPlayerList(oldPlayer);
         int newIndex = (oldIndex+1) % playerList.size();
 
         return playerList.get(newIndex).getPlayerName();
     }
 
-    //TODO Feel free to implement a more elegant solution if you want
-    private int findPlayerInPlayerList(String oldPlayer) {// TODO throws Exception {
+
+    private int findPlayerInPlayerList(String oldPlayer) {
         int len = playerList.size();
         for (int i = 0; i < len; i++){
             if (oldPlayer.equals(playerList.get(i).getPlayerName())){
@@ -98,11 +93,10 @@ public class Game{
             }
         }
         return -200;
-        //TODO throw new Exception();
+
     }
     
     public void checkWin() {
-        // TODO Make sure this works and test it in C.3.3 Winning the Game
         if (deck.getNoOfCards() == 0) {
             for (Player player : playerList) {
                 if (player.getNoOfCards() != 0) {
@@ -120,18 +114,15 @@ public class Game{
 
 
     public void onGameTerminated(){
-        int i = remainingCards();
 
         for(Player player:playerList){
             userService.setStatusInRepo(player.getId(), UserStatus.READY);
-            System.out.println("Game Won:" +gameStatus.getGameWon() + " Game Lost:" +gameStatus.getGameLost());
+
             if(gameStatus.getGameWon()){
                 userService.updateScore(player, 100);
-                System.out.println("Winning: " + player.getPlayerName());
             }
             else if (gameStatus.getGameLost()){
                 userService.updateScore(player,100 - remainingCards());
-                System.out.println("Losing: " + player.getPlayerName());
             }
         }
     }
@@ -149,8 +140,6 @@ public class Game{
     public List<Pile> getPileList(){return this.pileList;}
 
     public GameStatus getGameStatus(){return this.gameStatus;}
-
-    //public Boolean isGameRunning(){return this.gameStatus.getGameRunning();}
 
     public String getWhoseTurn(){return this.whoseTurn;}
 

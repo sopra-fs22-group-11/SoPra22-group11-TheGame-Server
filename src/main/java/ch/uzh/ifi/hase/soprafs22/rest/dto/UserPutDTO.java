@@ -5,10 +5,10 @@ import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 public class UserPutDTO {
 
         private Long id;
-        private String password; // Can maybe be removed if no one is using it
+        private String password;
         private String username;
-        private UserStatus status; // Can maybe be removed if no one is using it
-        private int score; // Can maybe be removed if no one is using it
+        private UserStatus status;
+        private int score;
 
 
         public Long getId() {
@@ -43,11 +43,9 @@ public class UserPutDTO {
             this.status = status;
         }
 
-
         public int getScore(){return score;}
 
         public void setScore(int score){this.score = score;}
-
 
 
     }

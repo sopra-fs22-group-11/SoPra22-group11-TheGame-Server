@@ -50,8 +50,6 @@ public class UserService {
 
     checkIfPlayerExists(newUser);
 
-    // saves the given entity but data is only persisted in the database once
-    // flush() is called
     newUser = userRepository.save(newUser);
     userRepository.flush();
 
@@ -59,17 +57,6 @@ public class UserService {
     return newUser;
   }
 
-
-  /**
-   * This is a helper method that will check the uniqueness criteria of the
-   * playername and the name
-   * defined in the User entity. The method will do nothing if the input is unique
-   * and throw an error otherwise.
-   *
-   * @param userToBeCreated
-   * @throws org.springframework.web.server.ResponseStatusException
-   * @see User
-   */
   private void checkIfPlayerExists(User userToBeCreated) {
       User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
       String baseErrorMessage = "The %s provided is not unique. Therefore, the player could not be created!";
@@ -78,24 +65,10 @@ public class UserService {
       }
   }
 
-  //lic void increaseGameCount(Player player, int i){
-  // // Updates the user with the information given by another User-Object
-  // Optional<User> foundById = userRepository.findById(player.getId());
-
-  // if (foundById.isPresent())
-  // {   foundById.get().setGameCount(foundById.get().getGameCount()+i);
-  //     userRepository.save(foundById.get());
-  //     userRepository.flush();
-  // }
-  // else{
-  //     //TODO Throw Exception
-  // }
-
-  //
 
 
     public void updateScore(Player player, int i){
-        // TODO Make sure this works and test it in C.3.3 Winning the Game
+
         // Updates the user with the information given by another User-Object
 
         Optional<User> foundById = userRepository.findById(player.getId());
@@ -106,10 +79,6 @@ public class UserService {
             userRepository.flush();
 
         }
-        else{
-            //TODO Throw Exception
-        }
-
     }
 
     public User getUserById(long userId) {
@@ -128,12 +97,6 @@ public class UserService {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This user cannot be found.");
     }
 
-   // public User saveUpdate(User user) {
-   //     user = userRepository.save(user);
-   //     userRepository.flush();
-   //     user = getUserById(user.getId());
-   //     return user;
-   // }
     public boolean checkForDuplicateUsername(String username, long id){
         // Used in put, returns true if there is another user with the same
         // username which does NOT have the same Id and therefore is not that user
@@ -149,10 +112,6 @@ public class UserService {
 
     public void updateUser(User updatedUser, long id){
         User userDB = getUserById(id);
-
-        /*if (userDB ==null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("The user with userId %s was not found.", userId));
-        }*/ //Should never even be necessary and otherwise UserController takes care of it
 
         if (updatedUser.getUsername() != null) {
             userDB.setUsername(updatedUser.getUsername());

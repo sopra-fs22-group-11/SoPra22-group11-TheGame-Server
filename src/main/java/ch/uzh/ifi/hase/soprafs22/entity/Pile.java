@@ -17,24 +17,6 @@ public class Pile {
     }
 
 
-    // TODO this will be in the client
-    public boolean checkIfCardCanBePlayed(Card card)  {
-        if (direction == Directions.TOPDOWN){
-            if(card.getValue() < topCard.getValue() || card.getValue() - 10  == topCard.getValue())
-            {return true;}
-            else {return false;}
-        }
-        else{
-            if(card.getValue() > topCard.getValue() || card.getValue() + 10  == topCard.getValue())
-            {return true;}
-            else {return false;}
-
-        }
-        //throw new Exception(); // This exception should actually never be necessary
-        // TODO the Rest Request which handles playing a card will catch this exception and throw a BadRequestException
-
-    }
-
     public void setTopCard(Card card){
         this.topCard = card;
     }
