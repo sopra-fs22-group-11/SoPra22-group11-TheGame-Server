@@ -22,9 +22,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -93,30 +91,27 @@ public class WebSocketControllerTest {
  /*
         Player player1 = new Player("player1", 1L);
         Player player2 = new Player("player2", 1L);
-
-
         List<Player> allPlayers ;
         allPlayers.add(player1);
         allPlayers.add(player2);
         given(waitingRoom.getPlayerList()).willReturn(allUsers);
-
 */
         //Setup before each
-       // this.webSocketStompClient = new WebSocketStompClient(new SockJsClient(
-       //         List.of(new WebSocketTransport(new StandardWebSocketClient()))));
+        // this.webSocketStompClient = new WebSocketStompClient(new SockJsClient(
+        //         List.of(new WebSocketTransport(new StandardWebSocketClient()))));
 //
 //
-       // //BlockingQueue<String> blockingQueue = new ArrayBlockingQueue(1);
-       // List<String> list = new ArrayList<>();
+        // //BlockingQueue<String> blockingQueue = new ArrayBlockingQueue(1);
+        // List<String> list = new ArrayList<>();
 //
-       // webSocketStompClient.setMessageConverter(new StringMessageConverter());
-       // Thread.sleep(1000);
+        // webSocketStompClient.setMessageConverter(new StringMessageConverter());
+        // Thread.sleep(1000);
 //
 //
-       // StompSession session = webSocketStompClient
-       //         .connect(String.format("ws://localhost:%d/ws", this.port), new StompSessionHandlerAdapter() {
-       //         })
-       //         .get(1, TimeUnit.SECONDS);
+        // StompSession session = webSocketStompClient
+        //         .connect(String.format("ws://localhost:%d/ws", this.port), new StompSessionHandlerAdapter() {
+        //         })
+        //         .get(1, TimeUnit.SECONDS);
 
 //subscription
         session.subscribe("/topic/start", new StompFrameHandler() {
@@ -144,7 +139,7 @@ public class WebSocketControllerTest {
 
         //System.out.println("blockingQueue: "+ blockingQueue);
         System.out.println(list.get(0));
-          //assertEquals(, blockingQueue.poll(1, TimeUnit.SECONDS));
+        //assertEquals(, blockingQueue.poll(1, TimeUnit.SECONDS));
         Gson g = new Gson();
         TransferGameObject tgo = g.fromJson(list.get(0), TransferGameObject.class);
         assertEquals(tgo.gameRunning, true);
@@ -305,8 +300,8 @@ public class WebSocketControllerTest {
         Thread.sleep(500);
 
         Gson gson = new Gson();
-        TransferGameObject tg = gson.fromJson(list.get(0), TransferGameObject.class);
-        assertEquals(true, tg.gameRunning);
+        boolean b = gson.fromJson(list.get(0), boolean.class);
+        assertEquals(true, b);
 
 
     }
@@ -471,6 +466,243 @@ public class WebSocketControllerTest {
         }
         assertEquals(expected,tg2.whoseTurn);
 
+
+
+
+    }
+    @Test
+    @Order(2)
+    public void getPlayersTest() throws InterruptedException {
+        session.subscribe("/topic/getPlayers", new StompFrameHandler() {
+
+
+            @Override
+            public Class<String> getPayloadType(StompHeaders headers) {
+                System.out.println(headers);
+                return String.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("Received message: " + payload);
+                String pl = (String) payload;
+                //blockingQueue.add((String) payload);
+                System.out.println("in handle Frame");
+                list.add(pl);
+            }
+        });
+        putPlayersInWaitingRoom();
+        session.send("/app/getPlayers", null);
+        Thread.sleep(500);
+
+        Gson gson = new Gson();
+        List l = gson.fromJson(list.get(0), List.class);
+        assertEquals(2,l.size());
+
+
+    }
+
+    @Test
+    //@Order (6)
+    public void gameStatusWonTest() throws InterruptedException {
+        cleanGame();
+        List<String> startList = new ArrayList<>();
+
+        session.subscribe("/topic/start", new StompFrameHandler() {
+
+
+            @Override
+            public Class<String> getPayloadType(StompHeaders headers) {
+                System.out.println(headers);
+                return String.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("Received message: " + payload);
+                String pl = (String) payload;
+                //blockingQueue.add((String) payload);
+                System.out.println("in handle Frame1");
+                startList.clear();
+                startList.add(pl);
+            }
+        });
+
+        session.subscribe("/topic/game", new StompFrameHandler() {
+
+
+            @Override
+            public Class<String> getPayloadType(StompHeaders headers) {
+                System.out.println(headers);
+                return String.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("Received message: " + payload);
+                String pl = (String) payload;
+                //blockingQueue.add((String) payload);
+                System.out.println("in handle Frame1");
+                startList.clear();
+                startList.add(pl);
+            }
+        });
+
+        session.subscribe("/topic/status", new StompFrameHandler() {
+
+
+            @Override
+            public Class<String> getPayloadType(StompHeaders headers) {
+                System.out.println(headers);
+                return String.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("Received message: " + payload);
+                String pl = (String) payload;
+                //blockingQueue.add((String) payload);
+                System.out.println("in handle Frame2");
+                list.add(pl);
+            }
+        });
+
+        setUpRunningGame();
+        Thread.sleep(200);
+        Gson gson = new Gson();
+        for(int i=0; i<13;i++) {
+            TransferGameObject tg = gson.fromJson(startList.get(0), TransferGameObject.class);
+            Map<String, List<Card>> dictionary = new HashMap<>();
+            List<Card> emptyCards = new ArrayList<Card>();
+            dictionary.put("TestUser", emptyCards);
+            dictionary.put("TestUser1", emptyCards);
+            tg.playerCards = dictionary;
+            session.send("/app/discard", new Gson().toJson(tg));
+            System.out.println("nach app discard");
+            Thread.sleep(200);
+            session.send("/app/draw",null);
+            Thread.sleep(200);
+
+
+        }
+
+        session.send("/app/gameStatus", null);
+        Thread.sleep(500);
+
+        Gson g = new Gson();
+        String reason = g.fromJson(list.get(0), String.class);
+        assertEquals("won", reason);
+
+
+    }
+
+    public void putPlayersInWaitingRoom() throws InterruptedException {
+        User testUser = new User();
+        testUser.setUsername("TestUser");
+        testUser.setPassword("aa");
+        testUser.setId(1L);
+        testUser.setStatus(UserStatus.READY);
+        testUser.setScore(0);
+        testUser.setToken("aaaa");
+
+        User testUser1 = new User();
+        testUser1.setUsername("TestUser1");
+        testUser1.setPassword("aa");
+        testUser1.setId(2L);
+        testUser1.setStatus(UserStatus.READY);
+        testUser1.setScore(0);
+        testUser1.setToken("aaaaf");
+        given(userService.getUserByUsername("TestUser")).willReturn(testUser);
+        given(userService.getUserByUsername("TestUser1")).willReturn(testUser1);
+
+
+
+        session.send("/app/game", "TestUser");
+        Thread.sleep(500);
+        session.send("/app/game", "TestUser1");
+        Thread.sleep(500);
+    }
+    @Test
+    //@Order (7)
+    public void gameStatusLostTest() throws InterruptedException {
+        cleanGame();
+        session.subscribe("/topic/status", new StompFrameHandler() {
+
+
+            @Override
+            public Class<String> getPayloadType(StompHeaders headers) {
+                System.out.println(headers);
+                return String.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("Received message: " + payload);
+                String pl = (String) payload;
+                //blockingQueue.add((String) payload);
+                System.out.println("in handle Frame");
+                list.add(pl);
+            }
+        });
+        setUpRunningGame();
+        session.send("/app/gameLost", null);
+        Thread.sleep(500);
+        session.send("/app/gameStatus", null);
+        Thread.sleep(500);
+
+        Gson g = new Gson();
+        String reason = g.fromJson(list.get(0), String.class);
+        assertEquals(reason, "lost");
+
+
+    }
+
+    @Test
+    // @Order (8)
+    public void gameStatusLeftTest() throws InterruptedException {
+        cleanGame();
+        session.subscribe("/topic/status", new StompFrameHandler() {
+
+
+            @Override
+            public Class<String> getPayloadType(StompHeaders headers) {
+                System.out.println(headers);
+                return String.class;
+            }
+
+            @Override
+            public void handleFrame(StompHeaders headers, Object payload) {
+                System.out.println("Received message: " + payload);
+                String pl = (String) payload;
+                //blockingQueue.add((String) payload);
+                System.out.println("in handle Frame");
+                list.add(pl);
+            }
+        });
+        setUpRunningGame();
+        session.send("/app/gameLeft", null);
+        Thread.sleep(500);
+        session.send("/app/gameStatus", null);
+        Thread.sleep(500);
+
+        Gson g = new Gson();
+        String reason = g.fromJson(list.get(0), String.class);
+        assertEquals(reason, "left");
+
+
+
+    }
+
+
+
+
+
+    public void cleanGame() throws InterruptedException {
+        session.send("/app/gameLeft", null);
+        Thread.sleep(200);
+
+        session.send("/app/gameStatus", null);
+        Thread.sleep(200);
 
 
 
