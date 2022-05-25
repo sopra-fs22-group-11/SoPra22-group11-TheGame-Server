@@ -305,8 +305,8 @@ public class WebSocketControllerTest {
         Thread.sleep(500);
 
         Gson gson = new Gson();
-        TransferGameObject tg = gson.fromJson(list.get(0), TransferGameObject.class);
-        assertEquals(true, tg.gameRunning);
+        boolean tg = gson.fromJson(list.get(0), boolean.class);
+        assertEquals(true, tg);
 
 
     }
@@ -475,6 +475,63 @@ public class WebSocketControllerTest {
 
 
     }
+   // @Test
+   // @AfterAll
+   // public void getPlayersTest() throws InterruptedException {
+   //     session.subscribe("/topic/getPlayers", new StompFrameHandler() {
+//
+//
+   //         @Override
+   //         public Class<String> getPayloadType(StompHeaders headers) {
+   //             System.out.println(headers);
+   //             return String.class;
+   //         }
+//
+   //         @Override
+   //         public void handleFrame(StompHeaders headers, Object payload) {
+   //             System.out.println("Received message: " + payload);
+   //             String pl = (String) payload;
+   //             //blockingQueue.add((String) payload);
+   //             System.out.println("in handle Frame");
+   //             list.add(pl);
+   //         }
+   //     });
+//
+//
+   //     User testUser = new User();
+   //     testUser.setUsername("TestUser");
+   //     testUser.setPassword("aa");
+   //     testUser.setId(1L);
+   //     testUser.setStatus(UserStatus.READY);
+   //     testUser.setScore(0);
+   //     testUser.setToken("aaaa");
+//
+   //     User testUser1 = new User();
+   //     testUser1.setUsername("TestUser1");
+   //     testUser1.setPassword("aa");
+   //     testUser1.setId(2L);
+   //     testUser1.setStatus(UserStatus.READY);
+   //     testUser1.setScore(0);
+   //     testUser1.setToken("aaaaf");
+   //     given(userService.getUserByUsername("TestUser")).willReturn(testUser);
+   //     given(userService.getUserByUsername("TestUser1")).willReturn(testUser1);
+//
+//
+//
+   //     session.send("/app/game", "TestUser");
+   //     Thread.sleep(500);
+   //     session.send("/app/game", "TestUser1");
+   //     Thread.sleep(500);
+//
+   //     session.send("/app/getPlayers", null);
+   //     Thread.sleep(500);
+//
+   //     Gson gson = new Gson();
+   //     List l = gson.fromJson(list.get(0), List.class);
+   //     assertEquals(2,l.size());
+//
+//
+   // }
 
     public void setUpRunningGame() throws InterruptedException {
 
