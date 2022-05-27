@@ -119,10 +119,10 @@ public class Game{
             userService.setStatusInRepo(player.getId(), UserStatus.READY);
 
             if(gameStatus.getGameWon()){
-                userService.updateScore(player, 100);
+                userService.updateScore(player, deck.getDeckSize());
             }
             else if (gameStatus.getGameLost()){
-                userService.updateScore(player,100 - remainingCards());
+                userService.updateScore(player,deck.getDeckSize() - remainingCards());
             }
         }
     }
