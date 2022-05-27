@@ -15,7 +15,7 @@ public class GameService {
 
 
 
-    public TransferGameObject ConvertGameIntoTransferObject(Game gameObject){
+    public TransferGameObject convertGameIntoTransferObject(Game gameObject){
         TransferGameObject tgo = new TransferGameObject();
         tgo.noCardsOnDeck = gameObject.getNoOfCardsOnDeck();
         tgo.whoseTurn = gameObject.getWhoseTurn();
@@ -26,7 +26,7 @@ public class GameService {
 
     }
 
-    public Map<String, List<Card>> getPlayerCardsDictionary(Game gameObject){ //TODO doesn't work at the moment
+    public Map<String, List<Card>> getPlayerCardsDictionary(Game gameObject){ 
         List<Player> pl = gameObject.getListOfPlayers();
 
         Map<String, List<Card>> dictionary = new HashMap<>();

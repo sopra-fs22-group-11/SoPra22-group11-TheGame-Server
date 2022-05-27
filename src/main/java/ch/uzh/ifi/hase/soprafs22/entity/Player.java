@@ -8,7 +8,7 @@ import java.util.List;
 public class Player {
     private String playerName;
     private Long id; // same as user id
-    private List<Card> handCards = new ArrayList<Card>();
+    private List<Card> handCards = new ArrayList<>();
 
     public Player(String playerName, Long id){
         this.playerName = playerName;

@@ -57,7 +57,7 @@ public class UserController {
     @GetMapping("/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO UserGetDTOgetSpecificUser(@PathVariable long userId) {
+    public UserGetDTO userGetDTOgetSpecificUser(@PathVariable long userId) {
         // fetch all users in the internal representation
         User userDB = userService.getUserById(userId);
 
@@ -114,7 +114,7 @@ public class UserController {
     @GetMapping("/session/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void logout_updateStatus(@PathVariable long userId) {
+    public void logoutUpdateStatus(@PathVariable long userId) {
         userService.setStatusInRepo(userId, UserStatus.OFFLINE);
     }
 

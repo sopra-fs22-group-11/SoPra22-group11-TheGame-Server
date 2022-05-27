@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game{
-    // we need some sort of gameId for each game: private final int gameId;
     private Deck deck;
     private List<Pile> pileList = new ArrayList<>();
     private GameStatus gameStatus = new GameStatus();
@@ -42,7 +41,7 @@ public class Game{
             //Change the status of each player
             userService.setStatusInRepo(player.getId(), UserStatus.INGAME);
             }
-        if(playerList.size()!=0) {
+        if(!playerList.isEmpty()) {
             whoseTurn = playerList.get(0).getPlayerName();
         }
         else{
@@ -69,7 +68,7 @@ public class Game{
 
         //Failsafe counter
         int cnt = 0;
-        while (playerObject.getNoOfCards()<1 & cnt <= playerList.size()){
+        while (playerObject.getNoOfCards()<1 && cnt <= playerList.size()){
             newPlayer = onePlayerFurther(newPlayer);
             playerObject = playerList.get(findPlayerInPlayerList(newPlayer));
             cnt += 1;

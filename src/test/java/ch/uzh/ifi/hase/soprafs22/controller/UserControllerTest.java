@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * This tests if the UserController works.
  */
 @WebMvcTest(UserController.class)
-public class UserControllerTest {
+ class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,7 +45,7 @@ public class UserControllerTest {
     private UserService userService;
 
     @Test
-    public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
+    void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
         // given
         User user = new User();
         user.setUsername("Firstname Lastname");
@@ -69,7 +69,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void givenUser_whenGetUserById_thenReturnJsonArray() throws Exception {
+    void givenUser_whenGetUserById_thenReturnJsonArray() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -94,7 +94,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void givenUser_whenGetUserById_NotFound() throws Exception {
+    void givenUser_whenGetUserById_NotFound() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -118,7 +118,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void givenUser_whenGetUserById_NotAuthorized() throws Exception {
+    void givenUser_whenGetUserById_NotAuthorized() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -143,7 +143,7 @@ public class UserControllerTest {
 
     }
     @Test
-    public void createUser_validInput_UserCreated() throws Exception {
+     void createUser_validInput_UserCreated() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -173,7 +173,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUser_invalidInput_UserNotCreated() throws Exception {
+    void createUser_invalidInput_UserNotCreated() throws Exception {
 
         given(userService.createUser(Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.CONFLICT,
                 String.format("The username provided is not unique. Therefore, the User could not be created!")));
@@ -194,7 +194,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void loginUser_validInput_UserLoggedIn() throws Exception {
+    void loginUser_validInput_UserLoggedIn() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setPassword("Test User");
@@ -224,7 +224,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void loginUser_invalidPassword() throws Exception {
+    void loginUser_invalidPassword() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setUsername("Test User");
@@ -252,7 +252,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void loginUser_notRegistered() throws Exception {
+    void loginUser_notRegistered() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setUsername("Test User");
@@ -280,7 +280,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void updateUser_success() throws Exception {
+    void updateUser_success() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setPassword("Test User");
@@ -306,7 +306,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void updateUser_IdNotFound_fail() throws Exception {
+    void updateUser_IdNotFound_fail() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setPassword("Test User");
@@ -331,7 +331,7 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
     @Test
-    public void updateUser_NotAuthorized() throws Exception {
+    void updateUser_NotAuthorized() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setPassword("Test User");

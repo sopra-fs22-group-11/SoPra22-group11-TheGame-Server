@@ -23,7 +23,7 @@ public class WebSocketController {
     private int cnt = 0;
 
 
-    WebSocketController(UserService userService, GameService gameService) { //TODO check only one userRepository
+    WebSocketController(UserService userService, GameService gameService) {
         this.userService = userService;
         this.gameService = gameService;
     }
@@ -36,15 +36,14 @@ public class WebSocketController {
         User userObject = userService.getUserByUsername(userString);
         Player newPlayer = new Player(userObject.getUsername(), userObject.getId());
         waitingRoom.addPlayer(newPlayer);
-        String json = new Gson().toJson(waitingRoom.getPlayerNames());
-        return json;
+        return new Gson().toJson(waitingRoom.getPlayerNames());
     }
 
     @MessageMapping("/getPlayers")
     @SendTo("/topic/getPlayers")
     public String getPlayers(){
-        String json = new Gson().toJson(waitingRoom.getPlayerNames());
-        return json;
+        return new Gson().toJson(waitingRoom.getPlayerNames());
+
     }
 
     @MessageMapping("/leave")
@@ -53,16 +52,16 @@ public class WebSocketController {
         Gson gson = new Gson();
         String userString = gson.fromJson(userData, String.class);
         waitingRoom.removePlayer(userString);
-        String json = new Gson().toJson(waitingRoom.getPlayerNames());
-        return json;
+        return new Gson().toJson(waitingRoom.getPlayerNames());
+
     }
 
     @MessageMapping("/clearWaitingRoom")
     @SendTo("/topic/clearWaitingRoom")
     public String removeAllPlayerNamesFromWaitingRoom(){
         waitingRoom.removeAllPlayerNames();
-        String json = new Gson().toJson(waitingRoom.getPlayerNames());
-        return json;
+        return new Gson().toJson(waitingRoom.getPlayerNames());
+
     }
 
     @MessageMapping ("/isRunning")
@@ -71,21 +70,21 @@ public class WebSocketController {
         if (game == null) {
             return new Gson().toJson(false);
         }
-        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
-        String json = new Gson().toJson(tgo.gameRunning);
-        return json;
+        TransferGameObject tgo = gameService.convertGameIntoTransferObject(game);
+        return new Gson().toJson(tgo.gameRunning);
+
     }
 
 
     @MessageMapping ("/start")
     @SendTo("/topic/start")
-    public String startGame(){ // TODO Think whether waitingRoom list needs to get players again from user
+    public String startGame(){
         game = new Game();
         cnt = 0;
         game.startGame(waitingRoom.getPlayerList(), userService);
-        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);   //
-        String json = new Gson().toJson(tgo);
-        return json;
+        TransferGameObject tgo = gameService.convertGameIntoTransferObject(game);   //
+        return new Gson().toJson(tgo);
+
     }
 
     @MessageMapping ("/discard")
@@ -96,9 +95,9 @@ public class WebSocketController {
         TransferGameObject tgo = g.fromJson(jsonTGO, TransferGameObject.class);
         game.updateGameFromTGOInformation(tgo);
         game.checkWin();
-        TransferGameObject tgo1 = gameService.ConvertGameIntoTransferObject(game);
-        String json = new Gson().toJson(tgo1);
-        return json;
+        TransferGameObject tgo1 = gameService.convertGameIntoTransferObject(game);
+        return new Gson().toJson(tgo1);
+
     }
 
     @MessageMapping ("/draw")
@@ -106,18 +105,18 @@ public class WebSocketController {
     public String draw(){
         game.draw();
         game.updateCurrentPlayer();
-        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
-        String json = new Gson().toJson(tgo);
-        return json;
-    } //TODO String etc can be void
+        TransferGameObject tgo = gameService.convertGameIntoTransferObject(game);
+        return new Gson().toJson(tgo);
+
+    }
 
     @MessageMapping ("/gameLost")
     @SendTo("/topic/game")
     public String lost(){
         game.getGameStatus().setGameLost(true);
-        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
-        String json = new Gson().toJson(tgo);
-        return json;
+        TransferGameObject tgo = gameService.convertGameIntoTransferObject(game);
+        return new Gson().toJson(tgo);
+
     }
 
     @MessageMapping ("/gameLeft")
@@ -125,9 +124,9 @@ public class WebSocketController {
     public String left(){
         game.getGameStatus().setUserLeft(true);
 
-        TransferGameObject tgo = gameService.ConvertGameIntoTransferObject(game);
-        String json = new Gson().toJson(tgo);
-        return json;
+        TransferGameObject tgo = gameService.convertGameIntoTransferObject(game);
+        return new Gson().toJson(tgo);
+
     }
 
 

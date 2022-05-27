@@ -36,7 +36,7 @@ import static org.mockito.BDDMockito.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class WebSocketControllerTest {
+ class WebSocketControllerTest {
 
     //  @Autowired
     //  private MockMvc mockMvc;
@@ -63,7 +63,7 @@ public class WebSocketControllerTest {
     //TODO /start
 
     @BeforeEach
-    public void setup() throws InterruptedException, ExecutionException, TimeoutException {
+    void setup() throws InterruptedException, ExecutionException, TimeoutException {
         this.webSocketStompClient = new WebSocketStompClient(new SockJsClient(
                 List.of(new WebSocketTransport(new StandardWebSocketClient()))));
 
@@ -85,7 +85,7 @@ public class WebSocketControllerTest {
     }
 
     @Test
-    public void testStartEndpoint() throws Exception{
+    void testStartEndpoint() throws Exception{
 
 
  /*
@@ -153,7 +153,7 @@ public class WebSocketControllerTest {
     }
 
     @Test
-    public void testGameWatinigroomEndpoint() throws Exception{
+    void testGameWatinigroomEndpoint() throws Exception{
 
 
         session.subscribe("/topic/players", new StompFrameHandler() {
@@ -201,7 +201,7 @@ public class WebSocketControllerTest {
     }
 
     @Test
-    public void testLostEndpoint() throws Exception {
+    void testLostEndpoint() throws Exception {
 
 
         session.subscribe("/topic/game", new StompFrameHandler() {
@@ -243,7 +243,7 @@ public class WebSocketControllerTest {
     }
 
     @Test
-    public void gameStatusTest() throws InterruptedException {
+    void gameStatusTest() throws InterruptedException {
         session.subscribe("/topic/status", new StompFrameHandler() {
 
 
@@ -276,7 +276,7 @@ public class WebSocketControllerTest {
     }
 
     @Test
-    public void gameIsRunningTest() throws InterruptedException {
+    void gameIsRunningTest() throws InterruptedException {
         session.subscribe("/topic/isRunning", new StompFrameHandler() {
 
 
@@ -307,7 +307,7 @@ public class WebSocketControllerTest {
     }
     @Test
     @Order(1)
-    public void gameIsRunningFalseTest() throws InterruptedException {
+    void gameIsRunningFalseTest() throws InterruptedException {
         session.subscribe("/topic/isRunning", new StompFrameHandler() {
 
 
@@ -341,7 +341,7 @@ public class WebSocketControllerTest {
     }
 
     @Test
-    public void PlayerLeavesWaitingRoomTest() throws InterruptedException {
+    void PlayerLeavesWaitingRoomTest() throws InterruptedException {
         session.subscribe("/topic/players", new StompFrameHandler() {
 
 
@@ -395,7 +395,7 @@ public class WebSocketControllerTest {
     }
 
     @Test
-    public void discardDrawTest() throws InterruptedException { //Tests that change of turn is handled correctly
+    void discardDrawTest() throws InterruptedException { //Tests that change of turn is handled correctly
 
         List<String> startList = new ArrayList<>();
 
@@ -472,7 +472,7 @@ public class WebSocketControllerTest {
     }
     @Test
     @Order(2)
-    public void getPlayersTest() throws InterruptedException {
+    void getPlayersTest() throws InterruptedException {
         session.subscribe("/topic/getPlayers", new StompFrameHandler() {
 
 
@@ -504,7 +504,7 @@ public class WebSocketControllerTest {
 
     @Test
     //@Order (6)
-    public void gameStatusWonTest() throws InterruptedException {
+    void gameStatusWonTest() throws InterruptedException {
         cleanGame();
         List<String> startList = new ArrayList<>();
 
@@ -623,8 +623,7 @@ public class WebSocketControllerTest {
         Thread.sleep(500);
     }
     @Test
-    //@Order (7)
-    public void gameStatusLostTest() throws InterruptedException {
+    void gameStatusLostTest() throws InterruptedException {
         cleanGame();
         session.subscribe("/topic/status", new StompFrameHandler() {
 
@@ -658,8 +657,7 @@ public class WebSocketControllerTest {
     }
 
     @Test
-    // @Order (8)
-    public void gameStatusLeftTest() throws InterruptedException {
+    void gameStatusLeftTest() throws InterruptedException {
         cleanGame();
         session.subscribe("/topic/status", new StompFrameHandler() {
 
@@ -696,7 +694,6 @@ public class WebSocketControllerTest {
 
 
 
-
     public void cleanGame() throws InterruptedException {
         session.send("/app/gameLeft", null);
         Thread.sleep(200);
@@ -728,15 +725,6 @@ public class WebSocketControllerTest {
         given(userService.getUserByUsername("TestUser")).willReturn(testUser);
         given(userService.getUserByUsername("TestUser1")).willReturn(testUser1);
 
-        //Game g = new Game();
-        //List pl = new ArrayList<>();
-        //pl.add("TestUser");
-        //pl.add ("TestUser1");
-        //g.startGame(pl,userService);
-        //TransferGameObject tgo;
-        //tgo = gameService.ConvertGameIntoTransferObject(g);
-        //given(gameService.ConvertGameIntoTransferObject(g)).willReturn(tgo);
-
 
         session.send("/app/game", "TestUser");
         Thread.sleep(500);
@@ -745,17 +733,5 @@ public class WebSocketControllerTest {
         session.send("/app/start", null);
         Thread.sleep(500);
     }
-
-
-    //TODO /discard
-
-    //TODO /draw
-
-    //TODO /gameLost
-
-    //TODO /gameLeft
-
-    //TODO /gameStatus
-
 
 }
