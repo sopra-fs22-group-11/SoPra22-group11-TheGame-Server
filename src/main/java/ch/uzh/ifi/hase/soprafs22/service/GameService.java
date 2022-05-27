@@ -22,9 +22,7 @@ public class GameService {
         tgo.pilesList = gameObject.getPileList();
         tgo.playerCards = getPlayerCardsDictionary(gameObject);
         tgo.gameRunning = gameObject.getGameStatus().getGameRunning();
-
         return tgo;
-
 
     }
 

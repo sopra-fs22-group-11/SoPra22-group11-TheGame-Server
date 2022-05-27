@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs22.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class WaitingRoom {
 
@@ -9,15 +10,21 @@ public class WaitingRoom {
     private List<String> playerNames = new ArrayList<>();
 
     public void addPlayer(Player player){
-        //if (!checkIfPlayerInList(player)) {
-            playerList.add(player);
-            playerNames.add(player.getPlayerName());
-        //}
+        playerList.add(player);
+        playerNames.add(player.getPlayerName());
     }
 
 
     public void removePlayer(String playerName){
         playerNames.remove(playerName);
+        for (int i=0; i< playerList.size(); i++) {
+            Player pl = playerList.get(i);
+            if ((pl.getPlayerName().equals(playerName))) {
+                playerList.remove(pl);
+            }
+        }
+        System.out.println("list player names: " + playerNames);
+        System.out.println("lis players: "+playerList);
     }
 
     public List<Player> getPlayerList (){
