@@ -11,7 +11,7 @@ public class Deck {
 
 
     public int getNoOfCards(){return cards.size();}
-    public int getDeckSize(){return DeckSize;}
+    public int getDeckSize(){return deckSize;}
 
 
 
