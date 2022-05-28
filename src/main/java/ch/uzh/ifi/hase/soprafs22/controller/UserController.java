@@ -127,6 +127,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("The user with userId %s was not found.", userId));
         }
         String json = new Gson().toJson(userDB.getScore());
+        System.out.println("json from test "+json);
         return (json);
     }
 

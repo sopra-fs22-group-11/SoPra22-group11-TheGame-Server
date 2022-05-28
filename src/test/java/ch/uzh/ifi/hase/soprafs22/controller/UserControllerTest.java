@@ -26,8 +26,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * UserControllerTest
@@ -358,7 +357,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     }
 
     @Test
-    void offline_after_Logout() throws Exception { // Deborah
+    void offline_after_Logout() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setPassword("Test User");
@@ -368,6 +367,32 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
         MockHttpServletRequestBuilder getRequest = get("/session/{userId}",1L).contentType(MediaType.APPLICATION_JSON);
         mockMvc.perform(getRequest).andExpect(status().isOk());
+    }
+
+    @Test
+    void getScore_success() throws Exception {
+        User user = new User();
+        user.setId(1L);
+        user.setPassword("Test User");
+        user.setUsername("testUsername");
+        user.setToken("1");
+        user.setScore(300);
+
+        given(userService.getUserById(1L)).willReturn(user);
+
+        MockHttpServletRequestBuilder getRequest = get("/users/{userId}/score",1L).contentType(MediaType.APPLICATION_JSON);
+        mockMvc.perform(getRequest).andExpect(status().isOk())
+                .andExpect(content().json("300"));
+
+
+    }
+
+    @Test
+    void getScore_failure() throws Exception {
+        given(userService.getUserById(1L)).willReturn(null);
+
+        MockHttpServletRequestBuilder getRequest = get("/users/{userId}/score",1L).contentType(MediaType.APPLICATION_JSON);
+        mockMvc.perform(getRequest).andExpect(status().isNotFound());
     }
 
 

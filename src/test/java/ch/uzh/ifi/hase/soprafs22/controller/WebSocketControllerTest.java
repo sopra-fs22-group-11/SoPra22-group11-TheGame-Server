@@ -56,11 +56,6 @@ import static org.mockito.BDDMockito.given;
 
 
 
-    //TODO /hello
-
-    //TODO /game
-
-    //TODO /start
 
     @BeforeEach
     void setup() throws InterruptedException, ExecutionException, TimeoutException {
@@ -86,6 +81,7 @@ import static org.mockito.BDDMockito.given;
 
     @Test
     void testStartEndpoint() throws Exception{
+        cleanGame();
 
 
  /*
@@ -154,6 +150,7 @@ import static org.mockito.BDDMockito.given;
 
     @Test
     void testGameWatinigroomEndpoint() throws Exception{
+        cleanGame();
 
 
         session.subscribe("/topic/players", new StompFrameHandler() {
@@ -202,6 +199,7 @@ import static org.mockito.BDDMockito.given;
 
     @Test
     void testLostEndpoint() throws Exception {
+        cleanGame();
 
 
         session.subscribe("/topic/game", new StompFrameHandler() {
@@ -244,6 +242,8 @@ import static org.mockito.BDDMockito.given;
 
     @Test
     void gameStatusTest() throws InterruptedException {
+        cleanGame();
+
         session.subscribe("/topic/status", new StompFrameHandler() {
 
 
@@ -277,6 +277,7 @@ import static org.mockito.BDDMockito.given;
 
     @Test
     void gameIsRunningTest() throws InterruptedException {
+        cleanGame();
         session.subscribe("/topic/isRunning", new StompFrameHandler() {
 
 
@@ -342,6 +343,7 @@ import static org.mockito.BDDMockito.given;
 
     @Test
     void PlayerLeavesWaitingRoomTest() throws InterruptedException {
+        cleanGame();
         session.subscribe("/topic/players", new StompFrameHandler() {
 
 
@@ -396,6 +398,7 @@ import static org.mockito.BDDMockito.given;
 
     @Test
     void discardDrawTest() throws InterruptedException { //Tests that change of turn is handled correctly
+        cleanGame();
 
         List<String> startList = new ArrayList<>();
 
