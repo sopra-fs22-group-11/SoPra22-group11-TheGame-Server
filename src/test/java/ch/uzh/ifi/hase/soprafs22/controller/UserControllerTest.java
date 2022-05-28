@@ -357,6 +357,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void offline_after_Logout() throws Exception { // Deborah
+        User user = new User();
+        user.setId(1L);
+        user.setPassword("Test User");
+        user.setUsername("testUsername");
+        user.setToken("1");
+        user.setStatus(UserStatus.READY);
+
+        MockHttpServletRequestBuilder getRequest = get("/session/{userId}",1L).contentType(MediaType.APPLICATION_JSON);
+        mockMvc.perform(getRequest).andExpect(status().isOk());
+    }
+
 
     /**
      * Helper Method to convert userPostDTO into a JSON string such that the input
