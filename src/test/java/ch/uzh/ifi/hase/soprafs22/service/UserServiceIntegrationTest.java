@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs22.entity.Player;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,4 +74,63 @@ public class UserServiceIntegrationTest {
     // check that an error is thrown
     assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser2));
   }
+
+    @Test
+    public void update_User_Success() {
+        assertNull(userRepository.findByUsername("testUsername"));
+
+        User testUser = new User();
+        testUser.setPassword("testName");
+        testUser.setUsername("testUsername");
+        User createdUser = userService.createUser(testUser);
+
+        // create user to update old user with
+        User updatedUser = new User();
+        long id = createdUser.getId();
+
+        updatedUser.setPassword("testPassword2");
+        updatedUser.setUsername("testUsername2");
+        updatedUser.setId(id);
+
+        userService.updateUser(updatedUser, id);
+
+        assertEquals(id,createdUser.getId());
+        assertEquals("testPassword2" ,userService.getUserById(id).getPassword());
+        assertEquals( "testUsername2",userService.getUserById(id).getUsername());
+    }
+
+    @Test
+    public void update_Score(){ //tests that score of new user is 0 and wheter update score works
+        User testUser = new User();
+        testUser.setPassword("testName");
+        testUser.setUsername("testUsername");
+        User createdUser = userService.createUser(testUser);
+        long id = createdUser.getId();
+        Player newPlayer = new Player(createdUser.getUsername(), createdUser.getId());
+        assertEquals( 0,userService.getUserById(id).getScore());
+
+        userService.updateScore(newPlayer,200);
+        assertEquals( 200,userService.getUserById(id).getScore());
+
+
+    }
+
+    @Test
+    public void duplicate_Username(){
+        User testUser = new User();
+        testUser.setPassword("testName");
+        testUser.setUsername("testUsername");
+        User createdUser = userService.createUser(testUser);
+        long id = createdUser.getId();
+        long id2 = id+1;
+
+
+        assertEquals( true,userService.checkForDuplicateUsername("testUsername",id2));
+
+
+    }
+
+
+
+
 }
